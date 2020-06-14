@@ -27,6 +27,7 @@
 
 <script>
   function addTweet(body) {
+    if (body.trim() === '') return
     fetch('/tweets.json', {
       method: 'POST',
       headers: {'content-type': 'application/json'},
