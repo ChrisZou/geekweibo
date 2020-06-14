@@ -6,22 +6,40 @@
   </div>
   <button
     class="py-2 px-4 mt-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue focus:bg-indigo-500 active:bg-indigo-600 transition duration-150 ease-in-out"
-    @click="fetch('/tweets.json', {method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({tweet: {body: new_tweet, user_id: 'f50e8bcb-4c3d-4c58-b25c-2c88ac3a0a05'}})})
-        .then(response => response.json())
-        .then(data => {
-          location.reload();
-        })
-    ">
+    @click="addTweet(new_tweet)">
     发布
   </button>
 </div>
 <h1 class="text-4xl mt-4">Latest Tweets</h1>
 <% @tweets.each do |tweet| %>
-  <div>
-    <%= tweet.user.nickname %>
+  <div class="bg-white shadow sm:rounded-lg mb-4">
+    <div class="flex flex-row">
+
+      <img class="inline-block mt-4 ml-4 h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
+
+      <div class="px-4 py-5 sm:p-5">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          <%= tweet.user.nickname %>
+        </h3>
+        <div class="mt-2 max-w-xl text-sm leading-5 text-gray-500">
+          <p><%= tweet.body %></p>
+        </div>
+      </div>
+
+    </div>
   </div>
-  <div><%= tweet.body %></div>
 <% end %>
 
+<script>
+  function addTweet(body) {
+    fetch('/tweets.json', {
+      method: 'POST',
+      headers: {'content-type': 'application/json'},
+      body: JSON.stringify({tweet: {body: body, user_id: 'f50e8bcb-4c3d-4c58-b25c-2c88ac3a0a05'}})
+    })
+      .then(response => response.json())
+      .then(data => {
+        location.reload();
+      })
+  }
+</script>
