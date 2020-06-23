@@ -38,7 +38,7 @@ append :linked_files, 'localstorage.store'
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'public/packs', 'node_modules', '.bundle'
 
 # Default value for default_env is {}
-set :default_env, PATH: '/home/linuxbrew/.linuxbrew/bin:/opt/ruby/bin:$PATH', 'NODE_ENV' => 'production'
+set :default_env, PATH: '$PATH:/home/linuxbrew/.linuxbrew/bin:/opt/ruby/bin', 'NODE_ENV' => 'production'
 
 
 namespace :puma do
