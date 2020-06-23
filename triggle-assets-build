@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+system("echo '//triggle build' >> app/javascript/packs/application.js")
+system("git commit -am 'chore: triggle assets build'")

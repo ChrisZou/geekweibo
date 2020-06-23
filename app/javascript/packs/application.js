@@ -18,3 +18,4 @@ require("alpinejs")
 // const imagePath = (name) => images(name, true)
 
 require("css/application.scss")
+//triggle build
