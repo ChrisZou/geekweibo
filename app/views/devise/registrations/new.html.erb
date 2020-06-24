@@ -3,27 +3,28 @@
     注册账号
   </h2>
 </div>
+
 <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
   <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <div class="field">
-        <%= f.label :email, class: "block text-sm font-medium leading-5 text-gray-700" %>
+        <%= f.label :email, "邮箱", class: "block text-sm font-medium leading-5 text-gray-700" %>
         <div class="mt-1 rounded-md shadow-sm">
           <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-input block w-full sm:text-sm sm:leading-5" %>
         </div>
       </div>
 
       <div class="field">
-        <%= f.label :password, class: "block text-sm font-medium leading-5 text-gray-700" %>
+        <%= f.label :password, "密码", class: "block text-sm font-medium leading-5 text-gray-700" %>
         <div class="mt-1 rounded-md shadow-sm">
           <%= f.password_field :password, placeholder: "最少 #{@minimum_password_length} 位", autocomplete: "new-password", class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" %>
         </div>
       </div>
 
       <div class="field">
-        <%= f.label :password_confirmation, class: "block text-sm font-medium leading-5 text-gray-700" %>
+        <%= f.label :password_confirmation, "确认密码", class: "block text-sm font-medium leading-5 text-gray-700" %>
         <div class="mt-1 rounded-md shadow-sm">
           <%= f.password_field :password_confirmation, placeholder: "最少 #{@minimum_password_length} 位", autocomplete: "new-password", class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" %>
         </div>
@@ -37,15 +38,17 @@
         </span>
       </div>
     <% end %>
-<div class="relative mt-8">
-  <div class="absolute inset-0 flex items-center">
-    <div class="w-full border-t border-gray-300"></div>
-  </div>
-  <div class="relative flex justify-center text-sm leading-5">
+
+    <div class="relative mt-8">
+      <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-t border-gray-300"></div>
+      </div>
+      <div class="relative flex justify-center text-sm leading-5">
             <span class="px-2 bg-white">
               已有账号？去 <span class="text-indigo-400"><%= render "devise/shared/links" %></span>
             </span>
-  </div>
-</div>
+      </div>
+    </div>
+
   </div>
 </div>
