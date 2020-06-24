@@ -6,8 +6,6 @@ set :repo_url, "git@github.com:ChrisZou/geekweibo.git"
 set :deploy_to, "/var/www/#{fetch(:application)}"
 
 set :pty,             true
-set :default_shell, '/usr/bin/zsh --login'
-set :shell, '/usr/bin/zsh --login'
 
 set :user,            'chris'
 set :puma_threads,    [4, 16]
