@@ -62,3 +62,5 @@ group :development do
   gem 'capistrano3-puma',   require: false
   gem 'annotate', require: false
 end
+
+gem "mini_magick"

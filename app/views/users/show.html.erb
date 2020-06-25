@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<%= image_tag user_avatar(@user, 200), class: 'w-24 h-24 object-cover rounded-full mt-8' %>
+
 <p>
   <strong>Nickname:</strong>
   <%= @user.nickname %>

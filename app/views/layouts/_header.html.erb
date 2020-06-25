@@ -16,8 +16,7 @@
       </div>
       <div class="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
         <div class="max-w-lg w-full lg:max-w-xs">
-          <label for="search" class="sr-only">Search
-          </label>
+          <label for="search" class="sr-only">Search</label>
           <div class="relative">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
@@ -52,8 +51,8 @@
           <!-- Profile dropdown -->
           <div class="ml-4 relative flex-shrink-0" x-data="{open: false}">
             <div>
-              <button @click="open = !open" class="flex text-sm rounded-full text-white focus:outline-none focus:shadow-solid transition duration-150 ease-in-out" id="user-menu" aria-label="User menu" aria-haspopup="true">
-                <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+              <button @click="open = !open" class="flex text-sm rounded-full text-white focus:outline-none overflow-hidden focus:shadow-solid transition duration-150 ease-in-out" id="user-menu" aria-label="User menu" aria-haspopup="true">
+                <%= image_tag user_avatar(current_user), class: "w-8 h-8 object-cover" %>
               </button>
             </div>
             <!--
