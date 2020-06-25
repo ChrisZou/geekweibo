@@ -64,3 +64,4 @@ group :development do
 end
 
 gem "mini_magick"
+gem 'activestorage-aliyun'
