@@ -3,7 +3,7 @@ module ApplicationHelper
     if user && user.avatar.attached?
       user.avatar.variant(resize: "#{size}x#{size}")
     else
-      "/images/avatar-not-logged-in.png"
+      "avatar-not-logged-in.png"
     end
   end
 end
