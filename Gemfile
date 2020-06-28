@@ -65,3 +65,5 @@ end
 
 gem "mini_magick"
 gem 'activestorage-aliyun'
+gem 'omniauth'
+gem 'omniauth-github'
