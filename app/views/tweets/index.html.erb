@@ -13,7 +13,7 @@
 <h1 class="text-4xl mt-4 mb-8">最新动态</h1>
 <% @tweets.each do |tweet| %>
   <div class="bg-white shadow sm:rounded-lg mb-4 flex flex-row">
-    <img class="inline-block mt-4 ml-4 h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
+    <%= image_tag user_avatar(tweet.user), class: "inline-block mt-4 ml-4 h-12 w-12 rounded-full" %>
     <div class="px-4 py-5 sm:p-5">
       <h3 class="text-lg leading-6 font-medium text-gray-900">
         <%= tweet.user.nickname %>
@@ -31,7 +31,7 @@
     fetch('/tweets.json', {
       method: 'POST',
       headers: {'content-type': 'application/json'},
-      body: JSON.stringify({tweet: {body: body, user_id: 'f50e8bcb-4c3d-4c58-b25c-2c88ac3a0a05'}})
+      body: JSON.stringify({tweet: {body: body, user_id: sessionStorage.getItem("current_user_id")}})
     })
       .then(response => response.json())
       .then(data => {

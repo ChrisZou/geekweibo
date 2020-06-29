@@ -8,6 +8,12 @@
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+  <% if current_user %>
+    <script>
+      sessionStorage.setItem("current_user_id", "<%= current_user.id %>")
+    </script>
+  <% end %>
 </head>
 
 <body class="min-h-screen bg-gray-100">
