@@ -1,18 +1,18 @@
 <p id="notice"><%= notice %></p>
 
-<%= image_tag user_avatar(@user, 300), class: 'w-24 h-24 object-cover rounded-full mt-16' %>
+<%= image_tag user_avatar(@user, 300), class: 'w-24 h-24 object-cover rounded-full mt-20' %>
 
-<div class="flex flex-row items-center justify-between mt-4">
-  <div class="text-4xl font-bold">
+<div class="flex flex-row items-center justify-between mt-2">
+  <div class="text-2xl font-bold">
     <%= @user.nickname %>
   </div>
   <%= link_to '编辑信息', edit_user_path(@user), class: "text-indigo-600 border-indigo-500 border-2 text-sm px-6 py-2 rounded-full font-semibold" %>
 </div>
-<div class="text-gray-500 mt-1">
+<div class="text-gray-500 mt-1 text-sm">
   <%= @user.bio %>
 </div>
 
-<h1 class="text-4xl mt-4 mb-8">最新动态</h1>
+<h1 class="text-4xl mt-8 mb-4">最新动态</h1>
 <% @tweets.each do |tweet| %>
   <div class="bg-white shadow sm:rounded-lg mb-4 flex flex-row">
     <img class="inline-block mt-4 ml-4 h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
