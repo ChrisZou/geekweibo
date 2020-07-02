@@ -27,7 +27,7 @@ class User < ApplicationRecord
     info = auth.info
     mock_password = Devise.friendly_token[0, 20]
     user = where(email: info.email).first_or_create!(email: info.email, nickname: info.nickname, phone: "", password: mock_password)
-   # if !user.avatar.attached? && info.image && info.image.length > 0
+    # if !user.avatar.attached? && info.image && info.image.length > 0
     #   url = info.image
     #   user.avatar.attach(io: URI.open(url), filename: File.basename(URI.parse(url).path))
     #   user.save

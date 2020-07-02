@@ -1,16 +1,16 @@
 <p id="notice"><%= notice %></p>
 
 <div class="flex flex-col items-end mt-4" x-data="{new_tweet: ''}">
-  <div class="rounded-md shadow-sm w-full">
-    <textarea id="about" x-model="new_tweet" rows="3" class="form-textarea mt-1 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 overflow-hidden" placeholder="学到什么了呢？跟大家分享一下"></textarea>
+  <div class="w-full rounded-md shadow-sm">
+    <textarea id="about" x-model="new_tweet" rows="3" class="block w-full mt-1 overflow-hidden form-textarea transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="学到什么了呢？跟大家分享一下"></textarea>
   </div>
   <button
-    class="py-2 px-4 mt-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue focus:bg-indigo-500 active:bg-indigo-600 transition duration-150 ease-in-out"
+    class="px-4 py-2 mt-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue focus:bg-indigo-500 active:bg-indigo-600 transition duration-150 ease-in-out"
     @click="addTweet(new_tweet)">
     发布
   </button>
 </div>
-<h1 class="text-4xl mt-4 mb-8">最新动态</h1>
+<h1 class="mt-4 mb-8 text-4xl">最新动态</h1>
 <%= render @tweets %>
 
 <script>
