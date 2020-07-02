@@ -14,24 +14,24 @@
   <div>
 
     <div>
-      <h3 class="text-lg leading-6 font-medium text-gray-900">Profile</h3>
-      <p class="mt-1 text-sm leading-5 text-gray-500">
+      <h3 class="text-lg font-medium text-gray-900 leading-6">Profile</h3>
+      <p class="mt-1 text-sm text-gray-500 leading-5">
         This information will be displayed publicly so be careful what you share.
       </p>
     </div>
 
-    <div class="sm:col-span-6 mt-6">
-      <label for="photo" class="block text-sm leading-5 font-medium text-gray-700">
+    <div class="mt-6 sm:col-span-6">
+      <label for="photo" class="block text-sm font-medium text-gray-700 leading-5">
         Photo
       </label>
-      <div class="mt-2 flex items-center" x-data="avatarData()">
-        <span class="h-12 w-12 rounded-full overflow-hidden bg-gray-100">
+      <div class="flex items-center mt-2" x-data="avatarData()">
+        <span class="w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
           <%= image_tag user_avatar(@user), "x-ref" => "imagePreview", "class" => "w-full h-full object-cover" %>
         </span>
         <span class="ml-5 rounded-md shadow-sm">
           <input type="file" x-ref="file" name="user[avatar]" id="user_avatar" @change="updateAvatar($refs.file.files[0])" x-model="avatarImage" accept="image/*" class="hidden"/>
           <%= form.file_field :avatar, "x-ref" => "file", class: 'hidden', "@change" => "updateAvatar($refs.file.files[0])", "x-model" => "avatarImage", accept: "images/*" %>
-          <button type="button" @click="$refs.file.click()" class="py-2 px-3 border border-gray-300 rounded-md text-sm leading-4 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
+          <button type="button" @click="$refs.file.click()" class="px-3 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md leading-4 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
             Change
           </button>
         </span>
@@ -41,13 +41,13 @@
     <div class="mt-6 grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
       <div class="sm:col-span-4">
         <%= form.label :nickname, class: "block text-sm font-medium leading-5 text-gray-700" %>
-        <div class="mt-1 flex rounded-md shadow-sm">
+        <div class="flex mt-1 rounded-md shadow-sm">
           <%= form.text_field :nickname, class: "flex-1 form-input block w-full min-w-0 transition duration-150 ease-in-out sm:text-sm sm:leading-5" %>
         </div>
       </div>
 
       <div class="sm:col-span-6">
-        <label for="about" class="block text-sm font-medium leading-5 text-gray-700">About</label>
+        <label for="about" class="block text-sm font-medium text-gray-700 leading-5">About</label>
         <div class="mt-1 rounded-md shadow-sm">
           <%= form.text_area :bio, class: "form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5", rows: "3" %>
         </div>
@@ -58,14 +58,14 @@
   </div>
 
 
-  <div class="mt-8 border-t border-gray-200 pt-5">
+  <div class="pt-5 mt-8 border-t border-gray-200">
     <div class="flex justify-end">
       <span class="inline-flex rounded-md shadow-sm">
-        <a href="/" class="py-2 px-4 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
+        <a href="/" class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md leading-5 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
           Cancel
         </a>
       </span>
-      <span class="ml-3 inline-flex rounded-md shadow-sm">
+      <span class="inline-flex ml-3 rounded-md shadow-sm">
         <%= form.submit "Save",  class: "inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"%>
       </span>
     </div>
