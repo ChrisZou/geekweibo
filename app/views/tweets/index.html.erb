@@ -11,7 +11,7 @@
   </button>
 </div>
 <h1 class="mt-4 mb-8 text-4xl">最新动态</h1>
-<%= render @tweets %>
+<%= render @tweets if @tweets %>
 
 <script>
   function addTweet(body) {

@@ -4,7 +4,14 @@ class TweetsController < ApplicationController
   # GET /tweets
   # GET /tweets.json
   def index
-    @tweets = Tweet.includes(:user).order(created_at: :desc)
+    query = params[:q]
+    if query
+      puts "-=-----------has query"
+      @tweets = Tweet.search(query)
+    else
+      puts "has no query"
+      @tweets = Tweet.includes(:user).order(created_at: :desc)
+    end
   end
 
   # GET /tweets/1

@@ -71,3 +71,4 @@ gem 'omniauth-github'
 gem 'redcarpet'
 
 gem "coderay", "~> 1.1"
+gem 'searchkick'
