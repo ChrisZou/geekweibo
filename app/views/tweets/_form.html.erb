@@ -1,27 +1,11 @@
 <%= form_with(model: tweet, local: true) do |form| %>
-  <% if tweet.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(tweet.errors.count, "error") %> prohibited this tweet from being saved:</h2>
+  <%= render 'errors', item: tweet %>
 
-      <ul>
-        <% tweet.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :body %>
-    <%= form.text_area :body %>
+  <div class="mt-4 field">
+    <%= form.text_area :body, class: "form-textarea block w-full h-28 transition duration-150 mt-2 ease-in-out sm:leading-5" %>
   </div>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="flex flex-row actions">
+    <%= form.submit "修改", class: "px-4 text-lg py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent font-bold rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue focus:bg-indigo-500 active:bg-indigo-600 transition duration-150 ease-in-out" %>
   </div>
 <% end %>

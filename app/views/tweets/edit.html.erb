@@ -1,6 +1,8 @@
-<h1>Editing Tweet</h1>
+<h1 class="mt-8 text-4xl">修改推文</h1>
 
 <%= render 'form', tweet: @tweet %>
 
-<%= link_to 'Show', @tweet %> |
-<%= link_to 'Back', tweets_path %>
+<div class="mt-8">
+<%= link_to '查看', @tweet %> |
+<%= link_to '返回', tweets_path %>
+</div>
