@@ -11,23 +11,25 @@ module ApplicationHelper
     def block_code(code, language)
       CodeRay.scan(code, language || :ruby).div
     end
+
+    def header(text, header_level)
+      "#" * header_level + " #{text}"
+    end
   end
 
   def markdown(text)
-    rndr = MarkdownRenderer.new(:filter_html => true, :hard_wrap => true)
+    renderer = MarkdownRenderer.new(filter_html: true, hard_wrap: true)
     options = {
-      :fenced_code_blocks => true,
-      :no_intra_emphasis => true,
-      :autolink => true,
-      :strikethrough => true,
-      :lax_html_blocks => true,
-      :superscript => true
+      fenced_code_blocks: true,
+      no_intra_emphasis: true,
+      autolink: true,
+      strikethrough: true,
+      lax_html_blocks: true,
+      superscript: true,
+      space_after_headers: true
     }
-    markdown_to_html = Redcarpet::Markdown.new(rndr, options)
+    markdown_to_html = Redcarpet::Markdown.new(renderer, options)
     markdown_to_html.render(text).html_safe
   end
-  # def markdown(text)
-  #   options = [:hard_wrap, :autolink, :no_intra_emphasis, :fenced_code_blocks]
-  #   Markdown.new(text, *options).to_html.html_safe
-  # end
+
 end
