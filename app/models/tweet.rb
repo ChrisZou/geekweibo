@@ -7,9 +7,11 @@
 #  user_id :uuid             not null
 #
 class Tweet < ApplicationRecord
+  validates :body, presence: true, length: { minimum: 1 }
+
   belongs_to :user
 
-  validates :body, presence: true, length: { minimum: 1 }
+  scope :with_tag, -> (tag) { where("body like ?", "%##{tag}%") }
 
   searchkick word_middle: [:body]
 end

@@ -1,2 +1,5 @@
-<h1>Tag#show</h1>
-<p>Find me in app/views/tag/show.html.erb</p>
+<h1><%= @tag %></h1>
+<div id="app">
+  <app :tweets="<%= @tweets.to_json(include: :user) %>"></app>
+</div>
+<%= javascript_pack_tag 'tweets/list', 'data-turbolinks-track': 'reload' %>

@@ -41,4 +41,25 @@ class User < ApplicationRecord
     #   user.password = Devise.friendly_token[0,20]
     # end
   end
+
+  def avatar_sized(size = 200)
+    avatar.service_url(params: {"x-oss-process" => "image/resize,h_#{size},w_#{size}"})
+  end
+
+  def avatar_url
+    avatar.service_url
+  end
+
+  def serializable_hash(options = {})
+    puts "calling to_json"
+    h = super({only: public_infos}.merge(options))
+    h[:avatar] = avatar_url
+    h
+  end
+
+  private
+  def public_infos
+    [:id, :nickname]
+  end
+
 end
