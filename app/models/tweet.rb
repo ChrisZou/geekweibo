@@ -10,6 +10,7 @@ class Tweet < ApplicationRecord
   validates :body, presence: true, length: { minimum: 1 }
 
   belongs_to :user
+  has_many :likes, as: :likable
 
   scope :with_tag, -> (tag) { where("body like ?", "%##{tag}%") }
 

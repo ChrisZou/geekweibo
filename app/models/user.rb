@@ -19,6 +19,7 @@ class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: %i[github]
   has_one_attached :avatar
   has_many :tweets
+  has_many :likes
 
   validates :email, uniqueness: true, allow_blank: true
   validates :phone, uniqueness: true, allow_blank: true
