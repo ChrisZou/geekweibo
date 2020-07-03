@@ -72,3 +72,5 @@ gem 'redcarpet'
 
 gem "coderay", "~> 1.1"
 gem 'searchkick'
+
+gem "honeybadger", "~> 4.7"
