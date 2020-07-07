@@ -14,16 +14,13 @@
 <%= render @tweets if @tweets %>
 
 <script>
+
   function addTweet(body) {
-    if (body.trim() === '') return
-    fetch('/tweets.json', {
-      method: 'POST',
-      headers: {'content-type': 'application/json'},
-      body: JSON.stringify({tweet: {body: body, user_id: sessionStorage.getItem("current_user_id")}})
-    })
-      .then(response => response.json())
-      .then(data => {
-        location.reload();
-      })
+    if (sessionStorage.getItem("loggedIn")) {
+      if (body.trim() === '') return
+      post('/tweets', {tweet: {body}})
+        .then(data => location.reload())
+    }
   }
+
 </script>
