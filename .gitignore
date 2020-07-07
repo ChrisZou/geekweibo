@@ -37,3 +37,4 @@ yarn-debug.log*
 /.idea/
 .generators
 .rakeTasks
+.DS_store
