@@ -15,7 +15,9 @@ class LikesController < ApplicationController
   # POST /likes
   # POST /likes.json
   def create
-    @like = Like.new(like_params)
+    p = like_params
+    p[:user_id] = current_user.id
+    @like = Like.new(p)
 
     if @like.save
       render :show, status: :created, location: @like

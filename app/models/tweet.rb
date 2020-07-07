@@ -12,7 +12,18 @@ class Tweet < ApplicationRecord
   belongs_to :user
   has_many :likes, as: :likable
 
-  scope :with_tag, -> (tag) { where("body like ?", "%##{tag}%") }
+  scope :with_tag, -> (tag) { where("body ilike ?", "%##{tag}%") }
+  attr_accessor :current_user
 
   searchkick word_middle: [:body]
+
+  def liked
+    return false unless @current_user
+    likes.map { _1.user_id }.include? @current_user.id
+  end
+
+  def like_count
+    likes.count
+  end
+
 end

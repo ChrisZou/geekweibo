@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2020_07_02_180053) do
   create_table "likes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "likable_type", null: false
-    t.bigint "likable_id", null: false
+    t.uuid "likable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["likable_type", "likable_id"], name: "index_likes_on_likable_type_and_likable_id"

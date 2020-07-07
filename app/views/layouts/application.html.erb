@@ -9,11 +9,15 @@
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-  <% if current_user %>
-    <script>
-      sessionStorage.setItem("current_user_id", "<%= current_user.id %>")
-    </script>
-  <% end %>
+  <script>
+    <% if current_user %>
+    sessionStorage.setItem("loggedIn", "true")
+    sessionStorage.setItem("current_user_id", "<%= current_user.id %>")
+    <% else %>
+    sessionStorage.removeItem("loggedIn")
+    sessionStorage.removeItem("current_user_id")
+    <% end %>
+  </script>
 </head>
 
 <body class="min-h-screen bg-gray-100">

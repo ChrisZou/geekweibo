@@ -1,5 +1,6 @@
-<h1><%= @tag %></h1>
-<div id="app">
-  <app :tweets="<%= @tweets.to_json(include: :user) %>"></app>
+<h1 class="mt-16">标签: <%= @tag %></h1>
+<div id="app" class="mt-8">
+  <app :tweets="<%= @tweets.to_json(include: :user, methods: [:liked, :like_count]) %>"></app>
+
 </div>
-<%= javascript_pack_tag 'tweets/list', 'data-turbolinks-track': 'reload' %>
+<%= javascript_pack_tag 'tweets/list.js', 'data-turbolinks-track': 'reload' %>
