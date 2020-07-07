@@ -11,11 +11,9 @@
 
   <script>
     <% if current_user %>
-    sessionStorage.setItem("loggedIn", "true")
-    sessionStorage.setItem("current_user_id", "<%= current_user.id %>")
+      sessionStorage.setItem("loggedIn", "true")
     <% else %>
-    sessionStorage.removeItem("loggedIn")
-    sessionStorage.removeItem("current_user_id")
+      sessionStorage.removeItem("loggedIn")
     <% end %>
   </script>
 </head>
