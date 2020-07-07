@@ -39,8 +39,6 @@
 </template>
 
 <script>
-const likeIcon = require("./icon-heart.svg");
-
 export default {
   props: ["tweets"],
   data: function() {
