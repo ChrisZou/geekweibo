@@ -7,7 +7,7 @@
     <textarea id="about" 
               x-model="new_tweet" 
               rows="3" 
-              class="block w-full mt-1 overflow-hidden form-textarea transition duration-150 ease-in-out sm:text-sm sm:leading-5" 
+              class="block w-full mt-1 form-textarea transition duration-150 ease-in-out sm:text-sm sm:leading-5" 
               x-on:keydown.cmd.enter="addTweet"
               x-on:keyup="saveTweetLocally"
               placeholder="学到什么了呢？跟大家分享一下" >
@@ -68,7 +68,10 @@
 <%= render @tweets if @tweets %>
 
 </div>
+
 <script>
+
+  autosize(document.querySelector('textarea'))
 
   function indexData() {
     return {
@@ -78,7 +81,8 @@
       addTweet() {
         if (sessionStorage.getItem("loggedIn")) {
           if (this.new_tweet.trim() === '') return
-          post('/tweets', {tweet: {this.new_tweet}})
+
+          post('/tweets', {tweet: { body: this.new_tweet }})
             .then(data => location.reload())
         } else {
           this.show_login = true

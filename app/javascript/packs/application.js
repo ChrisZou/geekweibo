@@ -16,6 +16,8 @@ import "alpinejs"
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
+import autosize from "autosize"
+window.autosize = autosize
 import "../src/common/global.js"
 
 import "css/application.scss"
