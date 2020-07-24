@@ -77,8 +77,8 @@
 
       addTweet() {
         if (sessionStorage.getItem("loggedIn")) {
-          if (new_tweet.trim() === '') return
-          post('/tweets', {tweet: {new_tweet}})
+          if (this.new_tweet.trim() === '') return
+          post('/tweets', {tweet: {this.new_tweet}})
             .then(data => location.reload())
         } else {
           this.show_login = true
