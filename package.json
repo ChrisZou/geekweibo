@@ -12,6 +12,7 @@
     "tailwindcss": "^1.4.6",
     "turbolinks": "^5.2.0",
     "vue": "^2.6.11",
+    "vue-click-outside": "^1.1.0",
     "vue-loader": "^15.9.2",
     "vue-template-compiler": "^2.6.11",
     "vue-turbolinks": "^2.1.0"
