@@ -19,7 +19,7 @@ class Tweet < ApplicationRecord
 
   def liked
     return false unless @current_user
-    likes.map { _1.user_id }.include? @current_user.id
+    likes.any? { _1.user_id == @current_user.id }
   end
 
   def like_count

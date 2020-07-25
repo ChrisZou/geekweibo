@@ -10,7 +10,9 @@ class TweetsController < ApplicationController
       @tweets = Tweet.search(query)
     else
       puts "has no query"
-      @tweets = Tweet.includes(:user).order(created_at: :desc)
+      user = current_user
+      @tweets = Tweet.includes(:user).all.map { _1.current_user = user; _1 }
+      # @tweets = Tweet.includes(:user).order(created_at: :desc)
     end
   end
 
