@@ -13,4 +13,7 @@
 </div>
 
 <h1 class="mt-8 mb-4 text-4xl">最新动态</h1>
-<%= render @tweets if @tweets %>
+<div id="app" class="mt-8">
+  <tweet-list :tweets="<%= @tweets.to_json(include: :user, methods: [:liked, :like_count]) %>"></tweet-list>
+</div>
+<%= javascript_pack_tag 'tweets/list.js' %>

@@ -1,6 +1,6 @@
 import Vue from 'vue/dist/vue.esm'
-import TweetIndex from '../../src/tweets/Index.vue'
+import TweetList from '../../src/tweets/list.vue'
 
-Vue.component('tweet-index', TweetIndex)
+Vue.component('tweet-list', TweetList)
 
 new Vue({el: '#app'})

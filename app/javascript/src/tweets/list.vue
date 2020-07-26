@@ -67,7 +67,7 @@ export default {
         likable_id: tweet.id,
         likable_type: "Tweet",
         liked: !tweet.liked
-      }).then(res => res.json());
+      }).then(res => console.log("like succeed"));
 
       this.items = this.items.map(t => {
         if (t.id == tweet.id) t.liked = !t.liked;
