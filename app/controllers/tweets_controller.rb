@@ -10,8 +10,7 @@ class TweetsController < ApplicationController
       @tweets = Tweet.search(query)
     else
       puts "has no query"
-      user = current_user
-      @tweets = Tweet.includes(:user).order(created_at: :desc).map { _1.current_user = user; _1 }
+      @tweets = Tweet.includes({user: {avatar_attachment: [:blob]}}, :likes).order(created_at: :desc)
     end
   end
 

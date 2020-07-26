@@ -13,13 +13,12 @@ class Tweet < ApplicationRecord
   has_many :likes, as: :likable
 
   scope :with_tag, -> (tag) { where("body ilike ?", "%##{tag}%") }
-  attr_accessor :current_user
 
   searchkick word_middle: [:body]
 
   def liked
-    return false unless @current_user
-    likes.any? { _1.user_id == @current_user.id }
+    return false unless Current.user
+    likes.any? { _1.user_id == Current.user.id }
   end
 
   def like_count

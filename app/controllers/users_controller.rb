@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @tweets = @user.tweets
+    @tweets = @user.tweets.includes(:likes).order(created_at: :desc)
   end
 
   # GET /users/1/edit
