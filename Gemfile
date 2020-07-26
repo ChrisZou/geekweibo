@@ -62,7 +62,7 @@ group :development do
   gem 'capistrano3-puma',   require: false
   gem 'annotate', require: false
   gem 'bullet'
-  gem 'awesome_print'
+  gem 'amazing_print'
 end
 
 gem "mini_magick"
