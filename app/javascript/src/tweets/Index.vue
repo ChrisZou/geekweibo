@@ -40,7 +40,7 @@ import LoginDialog from "../common/login.vue";
 export default {
   components: { TweetList, LoginDialog },
   props: ["tweets"],
-  created() {
+  mounted() {
     autosize(document.querySelector("textarea"));
   },
   data() {
