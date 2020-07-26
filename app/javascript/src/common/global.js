@@ -1,9 +1,9 @@
 window.get = (url) => {
   return fetch(url, {
-    method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    method: 'GET', 
     headers: { 'content-type': 'application/json' },
   })
-  .then(response => response.json()) // parses response to JSON
+  .then(response => response.json()) 
 }
 
 window.post = (url, data) => {
@@ -12,5 +12,5 @@ window.post = (url, data) => {
     headers: { 'content-type': 'application/json', "accept": "application/json" },
     body: JSON.stringify(data),
   })
-  .then(res => res.json()) // parses response to JSON
+  .then(res => res.json())
 }
