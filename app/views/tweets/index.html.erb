@@ -3,32 +3,7 @@
 <div id="app" class="mt-8">
   <tweet-index :tweets="<%= @tweets.to_json(include: :user, methods: [:liked, :like_count]) %>"></tweet-index>
 </div>
-<%= javascript_pack_tag 'tweets/index.js', 'data-turbolinks-track': 'reload' %>
+<%= javascript_pack_tag 'tweets/index.js' %>
 
 <script>
-autosize(document.querySelector('textarea'))
-
-function indexData() {
-  return {
-    new_tweet: localStorage.getItem("new_tweet_backup"),
-    show_login: false,
-
-    addTweet() {
-      if (sessionStorage.getItem("loggedIn")) {
-        if (this.new_tweet.trim() === '') return
-
-        post('/tweets', {tweet: { body: this.new_tweet }})
-          .then(data => location.reload())
-      } else {
-        this.show_login = true
-      }
-    },
-
-    saveTweetLocally() {
-      localStorage.setItem("new_tweet_backup", this.new_tweet)
-    }
-  }
-}
-
-
 </script>

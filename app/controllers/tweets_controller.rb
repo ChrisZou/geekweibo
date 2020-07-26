@@ -11,8 +11,7 @@ class TweetsController < ApplicationController
     else
       puts "has no query"
       user = current_user
-      @tweets = Tweet.includes(:user).all.map { _1.current_user = user; _1 }
-      # @tweets = Tweet.includes(:user).order(created_at: :desc)
+      @tweets = Tweet.includes(:user).order(created_at: :desc).map { _1.current_user = user; _1 }
     end
   end
 

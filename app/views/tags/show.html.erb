@@ -3,4 +3,4 @@
   <app :tweets="<%= @tweets.to_json(include: :user, methods: [:liked, :like_count]) %>"></app>
 
 </div>
-<%= javascript_pack_tag 'tweets/list.js', 'data-turbolinks-track': 'reload' %>
+<%= javascript_pack_tag 'tweets/list.js' %>
