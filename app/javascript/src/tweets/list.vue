@@ -7,7 +7,7 @@
     >
       <img
         :src="tweet.user.avatar"
-        class="inline-block w-12 h-12 mt-4 ml-4 rounded-full"
+        class="inline-block object-cover w-12 h-12 mt-4 ml-4 rounded-full"
       />
       <div class="w-full p-4">
         <h3 class="text-lg font-medium text-gray-900 leading-6">
