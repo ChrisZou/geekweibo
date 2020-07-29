@@ -14,3 +14,12 @@ window.post = (url, data) => {
   })
   .then(res => res.json())
 }
+
+window.delete = (url, data) => {
+  return fetch(url, {
+    method: 'DELETE',
+    headers: { 'content-type': 'application/json', "accept": "application/json" },
+    body: JSON.stringify(data),
+  })
+  .then(res => res.json())
+}

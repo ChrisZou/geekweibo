@@ -57,22 +57,19 @@ export default {
   },
   methods: {
     toggleLike(tweet) {
-      console.log(`toggling like state of ${tweet.id}`);
       if (!sessionStorage.getItem("loggedIn")) {
         this.dialogShower();
         return;
       }
 
-      post("/likes", {
+      const action = tweet.liked ? window.delete : window.post;
+      action("/likes", {
         likable_id: tweet.id,
-        likable_type: "Tweet",
-        liked: !tweet.liked
+        likable_type: "Tweet"
       }).then(res => console.log("like succeed"));
 
-      this.items = this.items.map(t => {
-        if (t.id == tweet.id) t.liked = !t.liked;
-        return t;
-      });
+      tweet.liked = !tweet.liked;
+      tweet.like_count += tweet.liked ? 1 : -1;
     },
     markdown(body) {
       return marked(body);
