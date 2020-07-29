@@ -24,3 +24,4 @@ import "css/application.scss"
 //triggle build
 
 //triggle build
+//triggle build
