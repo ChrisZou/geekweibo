@@ -3,12 +3,12 @@
     <div class="relative flex items-center justify-between h-16">
       <div class="flex items-center px-2 lg:px-0">
         <div class="flex-shrink-0">
-          <a href="/" class="text-xl text-white">极客微博</a>
+          <%= image_tag "logo_transparent.png", class: 'w-40 h-12 object-cover' %>
         </div>
         <div class="hidden lg:block lg:ml-6">
         </div>
       </div>
-      <div class="flex justify-center flex-1 px-2 lg:ml-6 lg:justify-end">
+      <div class="flex justify-center flex-1 px-2 lg:ml-6 lg:justify-end" x-data="searchData()">
         <div class="w-full max-w-lg lg:max-w-xs">
           <label for="search" class="sr-only">Search</label>
           <div class="relative">
@@ -17,7 +17,7 @@
                 <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
               </svg>
             </div>
-            <input id="search" class="block w-full py-2 pl-10 pr-3 text-gray-300 placeholder-gray-400 bg-gray-700 border border-transparent rounded-md leading-5 focus:outline-none focus:bg-white focus:text-gray-900 sm:text-sm transition duration-150 ease-in-out" placeholder="Search" type="search" />
+            <input id="search" class="block w-full py-2 pl-10 pr-3 text-gray-300 placeholder-gray-400 bg-gray-700 border border-transparent rounded-md leading-5 focus:outline-none focus:bg-white focus:text-gray-900 sm:text-sm transition duration-150 ease-in-out" placeholder="Search" type="search" x-model="searchQuery" x-on:keydown.enter="performSearch" />
           </div>
         </div>
       </div>
@@ -114,3 +114,14 @@
     </div>
   </div>
 </nav>
+
+<script type="text/javascript" charset="utf-8">
+  function searchData() {
+    return {
+      searchQuery: '',
+      performSearch() {
+        window.location = "/?q=" + this.searchQuery
+      }
+    }
+  }
+</script>

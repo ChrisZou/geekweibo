@@ -6,10 +6,8 @@ class TweetsController < ApplicationController
   def index
     query = params[:q]
     if query
-      puts "-=-----------has query"
       @tweets = Tweet.search(query)
     else
-      puts "has no query"
       @tweets = Tweet.includes({user: {avatar_attachment: [:blob]}}, :likes).order(created_at: :desc)
     end
   end
