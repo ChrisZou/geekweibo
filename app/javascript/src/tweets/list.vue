@@ -19,10 +19,21 @@
         ></div>
         <div class="flex items-center justify-end mt-4">
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-4 h-4 fill-current"
-            :class="tweet.liked ? 'text-red-500' : 'text-black'"
+            fill="none"
+            class="w-4 h-4"
+            stroke-width="2"
             viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+            ></path>
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            class="w-4 h-4 ml-4 fill-current"
+            :class="tweet.liked ? 'text-red-500' : 'text-black'"
             @click.stop="toggleLike(tweet)"
           >
             <path
