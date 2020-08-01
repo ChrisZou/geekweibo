@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :comments
   resources :tags, only: :show
   resources :likes, only: :create
   delete "/likes", to: 'likes#destroy'
