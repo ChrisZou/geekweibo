@@ -24,13 +24,13 @@
             stroke-width="2"
             viewBox="0 0 24 24"
             stroke="currentColor"
+            @click.stop="showTweetComment(tweet)"
           >
             <path
               d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
             ></path>
           </svg>
           <svg
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             class="w-4 h-4 ml-4 fill-current"
             :class="tweet.liked ? 'text-red-500' : 'text-black'"
@@ -42,6 +42,39 @@
             />
           </svg>
           <span class="inline-block ml-1 text-xs">{{ tweet.like_count }}</span>
+        </div>
+        <div v-if="tweet.show_comment" class="mt-2 rounded">
+          <div class="flex flex-col p-2 bg-gray-100 rounded">
+            <div class="flex flex-row">
+              <img
+                v-if="currentUser"
+                :src="currentUser.avatar"
+                class="object-cover w-8 h-8 rounded-full"
+              />
+              <div
+                contenteditable="plaintext-only"
+                class="w-full p-2 ml-2 bg-white border-indigo-100 border-solid rounded outline-none"
+              ></div>
+            </div>
+            <button
+              @click="postComment"
+              class="self-end px-3 py-2 mt-2 text-xs text-white bg-indigo-500 rounded outline-none focus:outline-none active:bg-indigo-600"
+            >
+              评论
+            </button>
+          </div>
+          <div v-for="comment in tweet.comments" v-bind:key="comment.id">
+            <img :src="comment.user.avatar" class="object-cover w-8 h-8" />
+            <div class="w-full p-4">
+              <h3 class="text-lg font-medium text-gray-900 leading-6">
+                {{ comment.user.nickname }}
+              </h3>
+              <div
+                class="mt-1 text-sm text-gray-500 leading-5 markdown"
+                v-html="markdown(comment.body)"
+              ></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -61,9 +94,10 @@ marked.setOptions({
 
 export default {
   props: ["tweets", "dialogShower"],
-  data: function() {
+  data() {
     return {
-      items: this.tweets
+      items: this.tweets,
+      currentUser: window.currentUser()
     };
   },
   methods: {
@@ -81,6 +115,21 @@ export default {
 
       tweet.liked = !tweet.liked;
       tweet.like_count += tweet.liked ? 1 : -1;
+    },
+    showTweetComment(tweet) {
+      if (!sessionStorage.getItem("loggedIn")) {
+        this.showLoginDialog();
+        return;
+      }
+
+      //show comment modal
+      this.items = this.items.map(t => {
+        if (t.id == tweet.id) {
+          t.show_comment = true;
+        }
+        return t;
+      });
+      tweet.show_comment = true;
     },
     markdown(body) {
       return marked(body);

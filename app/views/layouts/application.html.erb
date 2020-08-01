@@ -10,13 +10,11 @@
   <%= javascript_pack_tag 'application' %>
   <%= stylesheet_pack_tag 'application', media: 'all' %>
 
-  <script>
     <% if current_user %>
-      sessionStorage.setItem("loggedIn", "true")
+      <%= javascript_tag "sessionStorage.setItem('current_user', '#{current_user_json}');\nsessionStorage.setItem('loggedIn', 'true') " %>
     <% else %>
-      sessionStorage.removeItem("loggedIn")
+      <%= javascript_tag "sessionStorage.removeItem('loggedIn')" %> 
     <% end %>
-  </script>
 </head>
 
 <body class="min-h-screen bg-gray-100">
