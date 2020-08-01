@@ -5,4 +5,10 @@ class ApplicationController < ActionController::Base
   def setup_current_user
     Current.user = current_user
   end
+
+  def current_user_json
+    UserBlueprint.render(current_user)
+  end
+  helper_method :current_user_json
+
 end

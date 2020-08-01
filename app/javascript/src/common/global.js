@@ -23,3 +23,14 @@ window.delete = (url, data) => {
   })
   .then(res => res.json())
 }
+
+window.currentUser = () => {
+  if (window._currentUser) {
+    return window._currentUser
+  }
+  const currentUserStr = sessionStorage.getItem("current_user")
+  if (currentUserStr) {
+    window._currentUser = JSON.parse(currentUserStr)
+  }
+  return window._currentUser
+}

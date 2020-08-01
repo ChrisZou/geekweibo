@@ -79,3 +79,6 @@ gem "honeybadger", "~> 4.7"
 
 # For APM
 gem 'skylight'
+
+gem 'blueprinter'
+gem 'oj'
