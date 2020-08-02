@@ -30,6 +30,11 @@
               d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
             ></path>
           </svg>
+          <span
+            class="inline-block ml-1 text-xs"
+            v-if="tweet.comments.length"
+            >{{ tweet.comments.length }}</span
+          >
           <svg
             viewBox="0 0 24 24"
             class="w-4 h-4 ml-4 fill-current"
@@ -41,7 +46,9 @@
               d="M12.76 3.76a6 6 0 018.48 8.48l-8.53 8.54a1 1 0 01-1.42 0l-8.53-8.54a6 6 0 018.48-8.48l.76.75.76-.75zm7.07 7.07a4 4 0 10-5.66-5.66l-1.46 1.47a1 1 0 01-1.42 0L9.83 5.17a4 4 0 10-5.66 5.66L12 18.66l7.83-7.83z"
             />
           </svg>
-          <span class="inline-block ml-1 text-xs">{{ tweet.like_count }}</span>
+          <span v-if="tweet.like_count" class="inline-block ml-1 text-xs">{{
+            tweet.like_count
+          }}</span>
         </div>
         <div v-if="tweet.show_comment" class="mt-2 rounded">
           <div class="flex flex-col p-2 bg-gray-100 rounded">
@@ -67,10 +74,13 @@
           </div>
           <div
             v-for="comment in tweet.comments"
-            class="flex flex-row mt-2"
+            class="flex flex-row mt-3"
             v-bind:key="comment.id"
           >
-            <img :src="comment.user.avatar" class="object-cover w-8 h-8" />
+            <img
+              :src="comment.user.avatar"
+              class="object-cover w-8 h-8 rounded-full"
+            />
             <div class="w-full ml-2">
               <div class="text-xs font-medium text-gray-900">
                 {{ comment.user.nickname }}
@@ -147,12 +157,12 @@ export default {
         tweet_id: tweet.id,
         body: tweet.new_comment
       }).then(data => {
-        tweet.new_comment = "";
-        tweet.comments = this.comments || [];
-        tweet.comments.push({
+        tweet.comments = tweet.comments || [];
+        tweet.comments.unshift({
           user: this.currentUser,
           body: data.body
         });
+        tweet.new_comment = "";
         this.$forceUpdate();
       });
     },

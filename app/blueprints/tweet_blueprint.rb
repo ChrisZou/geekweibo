@@ -1,6 +1,6 @@
 class TweetBlueprint < Blueprinter::Base
   identifier :id
-  field :body
+  fields :body, :liked, :like_count
 
   association :user, blueprint: UserBlueprint
   association :comments, blueprint: CommentBlueprint
