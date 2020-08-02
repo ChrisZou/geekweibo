@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @tweets = @user.tweets.includes(:likes).order(created_at: :desc)
+    tweets = @user.tweets.includes({user: {avatar_attachment: [:blob]}}, :likes, {comments: {user: {avatar_attachment: [:blob]}}}).order(created_at: :desc)
+    @tweets_json = TweetBlueprint.render(tweets)
   end
 
   # GET /users/1/edit
