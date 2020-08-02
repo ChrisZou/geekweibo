@@ -1,4 +1,4 @@
-<%= form_with(model: user, local: true, class: 'mt-8') do |form| %>
+<%= form_with(model: user, local: true, class: 'mt-8', multipart: true) do |form| %>
   <%= render "errors", item: user %>
 
   <div>
@@ -19,8 +19,7 @@
           <%= image_tag user_avatar(@user), "x-ref" => "imagePreview", "class" => "w-full h-full object-cover" %>
         </span>
         <span class="ml-5 rounded-md shadow-sm">
-          <input type="file" x-ref="file" name="user[avatar]" id="user_avatar" @change="updateAvatar($refs.file.files[0])" x-model="avatarImage" accept="image/*" class="hidden"/>
-          <%= form.file_field :avatar, "x-ref" => "file", class: 'hidden', "@change" => "updateAvatar($refs.file.files[0])", "x-model" => "avatarImage", accept: "images/*" %>
+          <input type="file" x-ref="file" name="user[avatar]" @change="updateAvatar($refs.file.files[0])" accept="image/*" class="hidden"/>
           <button type="button" @click="$refs.file.click()" class="px-3 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md leading-4 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
             Change
           </button>
