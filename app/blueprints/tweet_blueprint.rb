@@ -3,5 +3,7 @@ class TweetBlueprint < Blueprinter::Base
   fields :body, :liked, :like_count
 
   association :user, blueprint: UserBlueprint
-  association :comments, blueprint: CommentBlueprint
+  association :comments, blueprint: CommentBlueprint do |tweet|
+    tweet.comments.order(created_at: :desc)
+  end
 end
