@@ -2,7 +2,7 @@
   <div>
     <div
       class="flex flex-row mb-4 bg-white shadow sm:rounded-lg"
-      v-for="tweet in items"
+      v-for="(tweet, index) in items"
       :key="tweet.id"
     >
       <img
@@ -59,14 +59,15 @@
                 class="object-cover w-8 h-8 rounded-full"
               />
               <div
-                contenteditable="plaintext-only"
-                v-text="tweet.new_comment"
+                contenteditable="true"
+                v-bind:ref="'tweet_comment_inbox_' + index"
+                v-html="tweet.new_comment"
                 @input="e => updateNewCommentOf(e, tweet)"
                 class="w-full p-2 ml-2 bg-white border-indigo-100 border-solid rounded outline-none"
               ></div>
             </div>
             <button
-              @click="e => postComment(e, tweet)"
+              @click="e => postComment(e, tweet, index)"
               class="self-end px-3 py-2 mt-2 text-xs text-white bg-indigo-500 rounded outline-none focus:outline-none active:bg-indigo-600"
             >
               评论
@@ -150,20 +151,19 @@ export default {
     updateNewCommentOf(e, tweet) {
       tweet.new_comment = e.target.innerText;
     },
-    postComment(e, tweet) {
+    postComment(e, tweet, index) {
       if (!tweet.new_comment) return;
 
       post("/comments", {
         tweet_id: tweet.id,
         body: tweet.new_comment
       }).then(data => {
-        tweet.comments = tweet.comments || [];
         tweet.comments.unshift({
           user: this.currentUser,
           body: data.body
         });
         tweet.new_comment = "";
-        this.$forceUpdate();
+        this.$refs["tweet_comment_inbox_" + index][0].innerText = "";
       });
     },
     markdown(body) {
