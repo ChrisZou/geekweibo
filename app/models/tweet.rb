@@ -11,6 +11,7 @@ class Tweet < ApplicationRecord
 
   belongs_to :user
   has_many :likes, as: :likable
+  has_many :comments
 
   scope :with_tag, -> (tag) { where("body ilike ?", "%##{tag}%") }
 

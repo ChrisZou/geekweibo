@@ -8,7 +8,8 @@ class TweetsController < ApplicationController
     if query
       @tweets = Tweet.search(query)
     else
-      @tweets = Tweet.includes({user: {avatar_attachment: [:blob]}}, :likes).order(created_at: :desc)
+      tweets = Tweet.includes({user: {avatar_attachment: [:blob]}}, :likes, {comments: {user: {avatar_attachment: [:blob]}}}).order(created_at: :desc)
+      @tweets_json = TweetBlueprint.render(tweets)
     end
   end
 

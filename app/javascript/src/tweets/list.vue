@@ -53,24 +53,30 @@
               />
               <div
                 contenteditable="plaintext-only"
+                v-text="tweet.new_comment"
+                @input="e => updateNewCommentOf(e, tweet)"
                 class="w-full p-2 ml-2 bg-white border-indigo-100 border-solid rounded outline-none"
               ></div>
             </div>
             <button
-              @click="postComment"
+              @click="e => postComment(e, tweet)"
               class="self-end px-3 py-2 mt-2 text-xs text-white bg-indigo-500 rounded outline-none focus:outline-none active:bg-indigo-600"
             >
               评论
             </button>
           </div>
-          <div v-for="comment in tweet.comments" v-bind:key="comment.id">
+          <div
+            v-for="comment in tweet.comments"
+            class="flex flex-row mt-2"
+            v-bind:key="comment.id"
+          >
             <img :src="comment.user.avatar" class="object-cover w-8 h-8" />
-            <div class="w-full p-4">
-              <h3 class="text-lg font-medium text-gray-900 leading-6">
+            <div class="w-full ml-2">
+              <div class="text-xs font-medium text-gray-900">
                 {{ comment.user.nickname }}
-              </h3>
+              </div>
               <div
-                class="mt-1 text-sm text-gray-500 leading-5 markdown"
+                class="text-sm text-gray-500 markdown"
                 v-html="markdown(comment.body)"
               ></div>
             </div>
@@ -130,6 +136,25 @@ export default {
         return t;
       });
       tweet.show_comment = true;
+    },
+    updateNewCommentOf(e, tweet) {
+      tweet.new_comment = e.target.innerText;
+    },
+    postComment(e, tweet) {
+      if (!tweet.new_comment) return;
+
+      post("/comments", {
+        tweet_id: tweet.id,
+        body: tweet.new_comment
+      }).then(data => {
+        tweet.new_comment = "";
+        tweet.comments = this.comments || [];
+        tweet.comments.push({
+          user: this.currentUser,
+          body: data.body
+        });
+        this.$forceUpdate();
+      });
     },
     markdown(body) {
       return marked(body);

@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <div id="app" class="mt-8">
-  <tweet-index :tweets="<%= @tweets.to_json(include: :user, methods: [:liked, :like_count]) %>"></tweet-index>
+  <tweet-index :tweets="<%= @tweets_json %>"></tweet-index>
 </div>
 <%= javascript_pack_tag 'tweets/index.js' %>
 

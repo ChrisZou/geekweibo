@@ -1,4 +1,5 @@
 class UserBlueprint < Blueprinter::Base
-  fields :nickname, :id
+  identifier :id
+  fields :nickname
   field :avatar_url, name: :avatar
 end
