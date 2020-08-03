@@ -6,11 +6,11 @@ class TweetsController < ApplicationController
   def index
     query = params[:q]
     if query
-      @tweets = Tweet.search(query)
+      tweets = Tweet.search(query, includes: [{user: {avatar_attachment: [:blob]}}, :likes, {comments: {user: {avatar_attachment: [:blob]}}}]).results
     else
       tweets = Tweet.includes({user: {avatar_attachment: [:blob]}}, :likes, {comments: {user: {avatar_attachment: [:blob]}}}).order(created_at: :desc)
-      @tweets_json = TweetBlueprint.render(tweets)
     end
+    @tweets_json = TweetBlueprint.render(tweets)
   end
 
   # GET /tweets/1
