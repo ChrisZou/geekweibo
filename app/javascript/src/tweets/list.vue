@@ -128,7 +128,7 @@ export default {
       action("/likes", {
         likable_id: tweet.id,
         likable_type: "Tweet"
-      }).then(res => console.log("like succeed"));
+      }).then(res => console.log("like/unlike succeed"));
 
       tweet.liked = !tweet.liked;
       tweet.like_count += tweet.liked ? 1 : -1;
