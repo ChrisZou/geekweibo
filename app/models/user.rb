@@ -21,6 +21,7 @@ class User < ApplicationRecord
   has_many :tweets
   has_many :likes
   has_many :comments
+  has_many :notifications, foreign_key: :recipient_id
 
   validates :email, uniqueness: true, allow_blank: true
   validates :phone, uniqueness: true, allow_blank: true
