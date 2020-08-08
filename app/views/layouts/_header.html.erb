@@ -48,7 +48,7 @@
                 <span x-show="notifications.length > 0" x-text="notifications.length" class="absolute top-0 right-0 px-1 text-white bg-red-500 rounded-full" style="font-size: 0.5em;"><span>
               </button>
 
-              <div class="absolute right-0 w-48 mt-2 shadow-lg origin-top-right rounded-md" x-show.transition="show_notification_list" @click.away="show_notification_list = false">
+              <div class="absolute right-0 w-48 mt-2 shadow-lg origin-top-right rounded-md" x-show.transition="show_notification_list && notifications.length > 0" @click.away="show_notification_list = false">
                 <div class="py-1 bg-white rounded-md shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                   <template x-for="(notification, index) in notifications" :key="index">
                     <a x-bind:href="notificationUrl(notification)" 
