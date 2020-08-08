@@ -53,6 +53,9 @@ class User < ApplicationRecord
     avatar.attached? && avatar.service_url
   end
 
+  def nickname
+    super || "某个还没有设置昵称的用户"
+  end
   def serializable_hash(options = {})
     h = super({only: public_infos}.merge(options))
     h[:avatar] = avatar_url
