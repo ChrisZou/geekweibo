@@ -40,12 +40,12 @@
             <div x-data="notificationData()" x-init="loadNotification()">
               <button 
                 class="relative flex-shrink-0 p-1 font-bold text-gray-400 border-2 border-transparent rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out" 
-                @click="show_notification_list = true"
+                @click="showNotifications()"
                 aria-label="Notifications">
                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
                 </svg>
-                <span x-show="notifications.length > 0" x-text="notifications.length" class="absolute top-0 right-0 px-1 text-white bg-red-500 rounded-full" style="font-size: 0.5em;"><span>
+                <span x-show="unread_notification_count > 0" x-text="unread_notification_count" class="absolute top-0 right-0 px-1 text-white bg-red-500 rounded-full" style="font-size: 0.5em;"><span>
               </button>
 
               <div class="absolute right-0 w-48 mt-2 shadow-lg origin-top-right rounded-md" x-show.transition="show_notification_list && notifications.length > 0" @click.away="show_notification_list = false">
@@ -148,10 +148,17 @@ function notificationData() {
   return {
     notifications: [],
     show_notification_list: false,
+    unread_notification_count: 0,
     loadNotification() {
       get('/notifications').then(data => {
         this.notifications = data
+        this.unread_notification_count = data.filter(n => n.read_at == null).length
       })
+    },
+    showNotifications() {
+      if (this.notifications.length == 0) return
+      this.show_notification_list = true
+      post('/notifications/mark_read')
     },
     notificationUrl(notification) {
       return `/tweets/${notification.notifiable_id}`

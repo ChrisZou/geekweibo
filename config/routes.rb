@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post "notifications/mark_read"
   resources :notifications, only: :index
   resources :comments
   resources :tags, only: :show
