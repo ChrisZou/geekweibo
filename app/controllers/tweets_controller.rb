@@ -1,5 +1,5 @@
 class TweetsController < ApplicationController
-  before_action :set_tweet, only: [:show, :edit, :update, :destroy]
+  before_action :set_tweet, only: [:edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
 
   # GET /tweets
@@ -17,6 +17,8 @@ class TweetsController < ApplicationController
   # GET /tweets/1
   # GET /tweets/1.json
   def show
+    @tweet = Tweet.includes({user: {avatar_attachment: [:blob]}}, :likes, {comments: {user: {avatar_attachment: [:blob]}}}).find(params[:id])
+    @tweet_json = TweetBlueprint.render(@tweet)
   end
 
   # GET /tweets/new

@@ -1,14 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Body:</strong>
-  <%= @tweet.body %>
-</p>
+<div class="flex flex-row">
+<h1 class="mt-2">微博</h1>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @tweet.user_id %>
-</p>
+<div id="app" class="mt-8">
+  <tweet :origin_tweet="<%= @tweet_json %>"></tweet>
+</div>
+<%= javascript_pack_tag 'tweets/show.js' %>
+
 
 <%= link_to 'Edit', edit_tweet_path(@tweet) %> |
 <%= link_to 'Back', tweets_path %>

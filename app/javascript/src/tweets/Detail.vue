@@ -1,10 +1,6 @@
-<template>
+  <template>
   <div>
-    <div
-      class="flex flex-row mb-4 bg-white shadow sm:rounded-lg"
-      v-for="(tweet, index) in items"
-      :key="tweet.id"
-    >
+    <div class="flex flex-row mb-4 bg-white shadow sm:rounded-lg">
       <img
         :src="tweet.user.avatar"
         class="inline-block object-cover w-12 h-12 mt-4 ml-4 rounded-full"
@@ -50,7 +46,7 @@
             tweet.like_count
           }}</span>
         </div>
-        <div v-if="tweet.show_comment" class="mt-2 rounded">
+        <div class="mt-2 rounded">
           <div class="flex flex-col p-2 bg-gray-100 rounded">
             <div class="flex flex-row">
               <img
@@ -60,14 +56,14 @@
               />
               <div
                 contenteditable="true"
-                v-bind:ref="'tweet_comment_inbox_' + index"
+                ref="tweet_comment_inbox"
                 v-html="tweet.new_comment"
                 @input="e => updateNewCommentOf(e, tweet)"
                 class="w-full p-2 ml-2 bg-white border-indigo-100 border-solid rounded outline-none"
               ></div>
             </div>
             <button
-              @click="e => postComment(e, tweet, index)"
+              @click="e => postComment(e, tweet)"
               class="self-end px-3 py-2 mt-2 text-xs text-white bg-indigo-500 rounded outline-none focus:outline-none active:bg-indigo-600"
             >
               评论
@@ -97,7 +93,6 @@
     </div>
   </div>
 </template>
-
 <script>
 const marked = require("marked");
 marked.setOptions({
@@ -110,72 +105,19 @@ marked.setOptions({
 });
 
 export default {
-  props: ["tweets", "dialogShower"],
+  props: ["origin_tweet"],
   data() {
     return {
-      items: this.tweets,
+      tweet: this.origin_tweet,
+      show_comment: true,
       currentUser: window.currentUser()
     };
   },
   methods: {
-    toggleLike(tweet) {
-      if (!sessionStorage.getItem("loggedIn")) {
-        this.dialogShower();
-        return;
-      }
-
-      const action = tweet.liked ? window.delete : window.post;
-      action("/likes", {
-        likable_id: tweet.id,
-        likable_type: "Tweet"
-      }).then(res => console.log("like/unlike succeed"));
-
-      tweet.liked = !tweet.liked;
-      tweet.like_count += tweet.liked ? 1 : -1;
-    },
-    showTweetComment(tweet) {
-      if (!sessionStorage.getItem("loggedIn")) {
-        this.showLoginDialog();
-        return;
-      }
-
-      // show comment modal
-      this.items = this.items.map(t => {
-        if (t.id == tweet.id) {
-          t.show_comment = true;
-        }
-        return t;
-      });
-      tweet.show_comment = true;
-    },
-    updateNewCommentOf(e, tweet) {
-      tweet.new_comment = e.target.innerText;
-    },
-    postComment(e, tweet, index) {
-      if (!tweet.new_comment) return;
-
-      post("/comments", {
-        tweet_id: tweet.id,
-        body: tweet.new_comment
-      }).then(data => {
-        tweet.comments.unshift({
-          user: this.currentUser,
-          body: data.body
-        });
-        tweet.new_comment = "";
-        this.$refs["tweet_comment_inbox_" + index][0].innerText = "";
-      });
-    },
-    markdown(body) {
-      return marked(body);
+    likeTweet() {},
+    markdown(text) {
+      return marked(text);
     }
   }
 };
 </script>
-
-<style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
-</style>
