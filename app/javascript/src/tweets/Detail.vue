@@ -104,6 +104,7 @@ marked.setOptions({
   smartypants: false
 });
 
+import LoginDialog from "../common/LoginDialog.vue";
 export default {
   props: ["origin_tweet"],
   data() {
@@ -114,7 +115,20 @@ export default {
     };
   },
   methods: {
-    likeTweet() {},
+    toggleLike() {
+      if (!this.currentUser) {
+        this.$modal.show(LoginDialog, {}, { height: "auto", width: 400 });
+        return;
+      }
+      const action = this.tweet.liked ? window.delete : window.post;
+      action("/likes", {
+        likable_id: this.tweet.id,
+        likable_type: "Tweet"
+      }).then(res => console.log("like/unlike succeed"));
+
+      this.tweet.liked = !this.tweet.liked;
+      this.tweet.like_count += this.tweet.liked ? 1 : -1;
+    },
     markdown(text) {
       return marked(text);
     }
