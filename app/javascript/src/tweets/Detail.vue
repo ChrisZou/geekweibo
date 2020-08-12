@@ -58,6 +58,7 @@
                 contenteditable="true"
                 ref="tweet_comment_inbox"
                 @input="updateNewComment"
+                @focus="confirmLogin"
                 class="w-full p-2 ml-2 bg-white border-indigo-100 border-solid rounded outline-none"
               ></div>
             </div>
@@ -116,7 +117,7 @@ export default {
   methods: {
     toggleLike() {
       if (!this.currentUser) {
-        this.$modal.show(LoginDialog, {}, { height: "auto", width: 400 });
+        this.showLoginDialog();
         return;
       }
       const action = this.tweet.liked ? window.delete : window.post;
@@ -127,6 +128,12 @@ export default {
 
       this.tweet.liked = !this.tweet.liked;
       this.tweet.like_count += this.tweet.liked ? 1 : -1;
+    },
+    confirmLogin() {
+      if (!this.currentUser) this.showLoginDialog();
+    },
+    showLoginDialog() {
+      this.$modal.show(LoginDialog, {}, { height: "auto", width: 400 });
     },
     updateNewComment(e) {
       this.new_comment = e.target.innerText;
