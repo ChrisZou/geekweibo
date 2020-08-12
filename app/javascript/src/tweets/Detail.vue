@@ -57,13 +57,12 @@
               <div
                 contenteditable="true"
                 ref="tweet_comment_inbox"
-                v-html="tweet.new_comment"
-                @input="e => updateNewCommentOf(e, tweet)"
+                @input="updateNewComment"
                 class="w-full p-2 ml-2 bg-white border-indigo-100 border-solid rounded outline-none"
               ></div>
             </div>
             <button
-              @click="e => postComment(e, tweet)"
+              @click="postComment"
               class="self-end px-3 py-2 mt-2 text-xs text-white bg-indigo-500 rounded outline-none focus:outline-none active:bg-indigo-600"
             >
               评论
@@ -128,6 +127,24 @@ export default {
 
       this.tweet.liked = !this.tweet.liked;
       this.tweet.like_count += this.tweet.liked ? 1 : -1;
+    },
+    updateNewComment(e) {
+      this.new_comment = e.target.innerText;
+    },
+    postComment() {
+      if (!this.new_comment) return;
+
+      post("/comments", {
+        tweet_id: this.tweet.id,
+        body: this.new_comment
+      }).then(data => {
+        this.tweet.comments.unshift({
+          user: this.currentUser,
+          body: data.body
+        });
+        this.new_comment = "";
+        this.$refs.tweet_comment_inbox.innerText = "";
+      });
     },
     markdown(text) {
       return marked(text);
