@@ -1,6 +1,7 @@
 class TweetsController < ApplicationController
-  before_action :set_tweet, only: [:edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_tweet, only: [:edit, :update, :destroy]
+  before_action :authorize!, only: [:edit, :update, :destroy]
 
   # GET /tweets
   # GET /tweets.json
@@ -81,5 +82,11 @@ class TweetsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def tweet_params
       params.require(:tweet).permit(:body, :user_id)
+    end
+
+    def authorize!
+      if @tweet.user.id != current_user.id
+        render plain: "forbidden", status: 401
+      end
     end
 end
