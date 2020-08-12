@@ -9,7 +9,7 @@
         :src="tweet.user.avatar"
         class="inline-block object-cover w-12 h-12 mt-4 ml-4 rounded-full"
       />
-      <div class="w-full p-4">
+      <div class="relative w-full p-4">
         <h3 class="text-lg font-medium text-gray-900 leading-6">
           {{ tweet.user.nickname }}
         </h3>
@@ -17,6 +17,21 @@
           class="mt-1 text-sm text-gray-500 leading-5 markdown"
           v-html="markdown(tweet.body)"
         ></div>
+        <svg
+          fill="none"
+          viewBox="0 0 24 24"
+          class="absolute w-4 h-4 right-2 top-2"
+          stroke="currentColor"
+          v-if="isAuthor(tweet)"
+          @click="deleteTweet(tweet)"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+          />
+        </svg>
         <div class="flex items-center justify-end mt-4">
           <svg
             fill="none"
@@ -165,6 +180,12 @@ export default {
         tweet.new_comment = "";
         this.$refs["tweet_comment_inbox_" + index][0].innerText = "";
       });
+    },
+    deleteTweet(tweet) {
+      window.delete(`/tweets/${tweet.id}`);
+    },
+    isAuthor(tweet) {
+      return this.currentUser.id == tweet.user.id;
     },
     markdown(body) {
       return marked(body);
