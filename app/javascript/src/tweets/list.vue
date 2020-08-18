@@ -4,25 +4,22 @@
       class="flex flex-row mb-4 bg-white shadow sm:rounded-lg"
       v-for="(tweet, index) in items"
       :key="tweet.id"
+      @mouseenter="showDelete(tweet)"
+      @mouseleave="hideDelete(tweet)"
     >
       <img
         :src="tweet.user.avatar"
         class="inline-block object-cover w-12 h-12 mt-4 ml-4 rounded-full"
       />
       <div class="relative w-full p-4">
-        <h3 class="text-lg font-medium text-gray-900 leading-6">
-          {{ tweet.user.nickname }}
-        </h3>
-        <div
-          class="mt-1 text-sm text-gray-500 leading-5 markdown"
-          v-html="markdown(tweet.body)"
-        ></div>
+        <h3 class="text-lg font-medium text-gray-900 leading-6">{{ tweet.user.nickname }}</h3>
+        <div class="mt-1 text-sm text-gray-500 leading-5 markdown" v-html="markdown(tweet.body)"></div>
         <svg
           fill="none"
           viewBox="0 0 24 24"
           class="absolute w-4 h-4 right-2 top-2"
           stroke="currentColor"
-          v-if="isAuthor(tweet)"
+          v-if="isAuthor(tweet) && tweet.showDelete"
           @click="deleteTweet(tweet)"
         >
           <path
@@ -43,13 +40,12 @@
           >
             <path
               d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-            ></path>
+            />
           </svg>
           <span
             class="inline-block ml-1 text-xs"
             v-if="tweet.comments.length"
-            >{{ tweet.comments.length }}</span
-          >
+          >{{ tweet.comments.length }}</span>
           <svg
             viewBox="0 0 24 24"
             class="w-4 h-4 ml-4 fill-current"
@@ -61,9 +57,11 @@
               d="M12.76 3.76a6 6 0 018.48 8.48l-8.53 8.54a1 1 0 01-1.42 0l-8.53-8.54a6 6 0 018.48-8.48l.76.75.76-.75zm7.07 7.07a4 4 0 10-5.66-5.66l-1.46 1.47a1 1 0 01-1.42 0L9.83 5.17a4 4 0 10-5.66 5.66L12 18.66l7.83-7.83z"
             />
           </svg>
-          <span v-if="tweet.like_count" class="inline-block ml-1 text-xs">{{
+          <span v-if="tweet.like_count" class="inline-block ml-1 text-xs">
+            {{
             tweet.like_count
-          }}</span>
+            }}
+          </span>
         </div>
         <div v-if="tweet.show_comment" class="mt-2 rounded">
           <div class="flex flex-col p-2 bg-gray-100 rounded">
@@ -84,27 +82,13 @@
             <button
               @click="e => postComment(e, tweet, index)"
               class="self-end px-3 py-2 mt-2 text-xs text-white bg-indigo-500 rounded outline-none focus:outline-none active:bg-indigo-600"
-            >
-              评论
-            </button>
+            >评论</button>
           </div>
-          <div
-            v-for="comment in tweet.comments"
-            class="flex flex-row mt-3"
-            v-bind:key="comment.id"
-          >
-            <img
-              :src="comment.user.avatar"
-              class="object-cover w-8 h-8 rounded-full"
-            />
+          <div v-for="comment in tweet.comments" class="flex flex-row mt-3" v-bind:key="comment.id">
+            <img :src="comment.user.avatar" class="object-cover w-8 h-8 rounded-full" />
             <div class="w-full ml-2">
-              <div class="text-xs font-medium text-gray-900">
-                {{ comment.user.nickname }}
-              </div>
-              <div
-                class="text-sm text-gray-500 markdown"
-                v-html="markdown(comment.body)"
-              ></div>
+              <div class="text-xs font-medium text-gray-900">{{ comment.user.nickname }}</div>
+              <div class="text-sm text-gray-500 markdown" v-html="markdown(comment.body)"></div>
             </div>
           </div>
         </div>
@@ -127,6 +111,9 @@ marked.setOptions({
 export default {
   props: ["tweets", "dialogShower"],
   data() {
+    this.tweets.forEach(t => {
+      t.showDelete = false;
+    });
     return {
       items: this.tweets,
       currentUser: window.currentUser()
@@ -185,7 +172,13 @@ export default {
       window.delete(`/tweets/${tweet.id}`);
     },
     isAuthor(tweet) {
-      return this.currentUser.id == tweet.user.id;
+      return this.currentUser && this.currentUser.id == tweet.user.id;
+    },
+    showDelete(tweet) {
+      tweet.showDelete = true;
+    },
+    hideDelete(tweet) {
+      tweet.showDelete = false;
     },
     markdown(body) {
       return marked(body);
