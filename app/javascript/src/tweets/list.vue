@@ -4,8 +4,6 @@
       class="flex flex-row mb-4 bg-white shadow sm:rounded-lg"
       v-for="(tweet, index) in items"
       :key="tweet.id"
-      @mouseenter="showDelete(tweet)"
-      @mouseleave="hideDelete(tweet)"
     >
       <img
         :src="tweet.user.avatar"
@@ -13,21 +11,18 @@
       />
       <div class="relative w-full p-4">
         <h3 class="text-lg font-medium text-gray-900 leading-6">{{ tweet.user.nickname }}</h3>
-        <div class="mt-1 text-sm text-gray-500 leading-5 markdown" v-html="markdown(tweet.body)"></div>
-        <svg
-          fill="none"
-          viewBox="0 0 24 24"
-          class="absolute w-4 h-4 right-2 top-2"
+        <div
           stroke="currentColor"
-          v-if="isAuthor(tweet) && tweet.showDelete"
-          @click="deleteTweet(tweet)"
+          class="mt-1 text-sm text-gray-500 leading-5 markdown"
+          v-html="markdown(tweet.body)"
+        ></div>
+        <svg
+          v-if="isAuthor(tweet)"
+          class="absolute w-6 h-6 p-1 rounded-full hover:bg-gray-200 right-2 top-2"
+          viewBox="0 0 20 20"
+          @click="showMenuForTweetItem(tweet)"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-          />
+          <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
         </svg>
         <div class="flex items-center justify-end mt-4">
           <svg
@@ -111,15 +106,13 @@ marked.setOptions({
 export default {
   props: ["tweets", "dialogShower"],
   data() {
-    this.tweets.forEach(t => {
-      t.showDelete = false;
-    });
     return {
       items: this.tweets,
       currentUser: window.currentUser()
     };
   },
   methods: {
+    showMenuForTweetItem(tweet) {},
     toggleLike(tweet) {
       if (!sessionStorage.getItem("loggedIn")) {
         this.dialogShower();
@@ -173,12 +166,6 @@ export default {
     },
     isAuthor(tweet) {
       return this.currentUser && this.currentUser.id == tweet.user.id;
-    },
-    showDelete(tweet) {
-      tweet.showDelete = true;
-    },
-    hideDelete(tweet) {
-      tweet.showDelete = false;
     },
     markdown(body) {
       return marked(body);
