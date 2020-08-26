@@ -18,28 +18,29 @@
           class="mt-1 text-sm text-gray-500 leading-5 markdown"
           v-html="markdown(tweet.body)"
         ></div>
-        <svg
-          v-if="isAuthor(tweet)"
-          class="absolute w-6 h-6 p-1 rounded-full hover:bg-gray-200 right-2 top-2"
-          viewBox="0 0 20 20"
-          @click="showMenuForTweetItem(tweet)"
-        >
-          <path
-            d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-          />
-        </svg>
-        <div
-          class="absolute right-0 flex flex-col items-center top-8"
-          v-show="tweet.showMenu"
-        >
-          <div class="angle"></div>
-          <div class="flex items-center py-2 bg-gray-100 rounded-sm">
-            <span
-              class="px-8 py-2 text-sm tracking-wider hover:bg-gray-200"
-              @click="deleteTweet(tweet)"
-              >删除</span
+        <div class="absolute top-1 right-1">
+          <v-popover>
+            <svg
+              v-if="isAuthor(tweet)"
+              class="w-6 h-6 p-1 rounded-full hover:bg-gray-200 right-2 top-2"
+              viewBox="0 0 20 20"
             >
-          </div>
+              <path
+                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+              />
+            </svg>
+            <template slot="popover">
+              <div
+                class="flex items-center py-1 bg-white border border-gray-100 border-solid rounded-sm focus:outline-none"
+              >
+                <span
+                  class="px-8 py-2 text-sm tracking-wider cursor-pointer hover:bg-gray-200"
+                  @click="confirmDeleteTweet(tweet)"
+                  >删除</span
+                >
+              </div>
+            </template>
+          </v-popover>
         </div>
         <div class="flex items-center justify-end mt-4">
           <svg
@@ -119,10 +120,14 @@
         </div>
       </div>
     </div>
+    <v-dialog />
   </div>
 </template>
 
 <script>
+import DropdownMenu from "@innologica/vue-dropdown-menu";
+import { VTooltip, VPopover, VClosePopover } from "v-tooltip";
+
 const marked = require("marked");
 marked.setOptions({
   renderer: new marked.Renderer(),
@@ -134,6 +139,7 @@ marked.setOptions({
 });
 
 export default {
+  components: { "dropdown-menu": DropdownMenu, "v-popover": VPopover },
   props: ["tweets", "dialogShower"],
   data() {
     this.tweets.forEach(t => {
@@ -196,8 +202,33 @@ export default {
         this.$refs["tweet_comment_inbox_" + index][0].innerText = "";
       });
     },
-    deleteTweet(tweet) {
-      window.delete(`/tweets/${tweet.id}`);
+    confirmDeleteTweet(tweet) {
+      console.log("showing dialog");
+
+      this.$modal.show("dialog", {
+        title: "确定删除这条推文？",
+        text: "推文一旦删除，将无法恢复",
+        buttons: [
+          {
+            title: "取消",
+            class: "focus:outline-none py-3 hover:bg-gray-100 ",
+            handler: () => {
+              this.$modal.hide("dialog");
+            }
+          },
+          {
+            title: "确定",
+            default: true,
+            class: "focus:outline-none py-3 hover:bg-gray-100",
+            handler: () => {
+              this.$modal.hide("dialog");
+              window.delete(`/tweets/${tweet.id}`).then(res => {
+                this.items = this.items.filter(t => t.id != tweet.id);
+              });
+            }
+          }
+        ]
+      });
     },
     isAuthor(tweet) {
       return this.currentUser && this.currentUser.id == tweet.user.id;
