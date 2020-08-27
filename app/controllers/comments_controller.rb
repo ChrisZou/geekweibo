@@ -6,9 +6,11 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = current_user.comments.new(comment_params)
+    cp = comment_params
+    @comment = current_user.comments.new(cp)
 
     if @comment.save
+      create_comment_notification(cp)
       render :show, status: :created, location: @comment
     else
       render json: @comment.errors, status: :unprocessable_entity
@@ -36,6 +38,11 @@ class CommentsController < ApplicationController
       if @comment.user.id != current_user.id
         render plain: "forbidden", status: 401
       end
+    end
+
+    def create_comment_notification(comment_params)
+      tweet = Tweet.find(comment_params[:tweet_id])
+      Notification.create(recipient: tweet.user, actor: current_user, action: 'comment', notifiable: tweet)
     end
 
 end
