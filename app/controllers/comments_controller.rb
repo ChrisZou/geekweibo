@@ -1,11 +1,7 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: [:show, :update, :destroy]
-  before_action :authenticate_user!, except: [:show]
-
-  # GET /comments/1
-  # GET /comments/1.json
-  def show
-  end
+  before_action :authenticate_user!
+  before_action :set_comment, only: [:destroy]
+  before_action :authorize!, only: [:destroy]
 
   # POST /comments
   # POST /comments.json
@@ -14,16 +10,6 @@ class CommentsController < ApplicationController
 
     if @comment.save
       render :show, status: :created, location: @comment
-    else
-      render json: @comment.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /comments/1
-  # PATCH/PUT /comments/1.json
-  def update
-    if @comment.update(comment_params)
-      render :show, status: :ok, location: @comment
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
@@ -45,4 +31,11 @@ class CommentsController < ApplicationController
     def comment_params
       params.require(:comment).permit(:tweet_id, :body)
     end
+
+    def authorize!
+      if @comment.user.id != current_user.id
+        render plain: "forbidden", status: 401
+      end
+    end
+
 end

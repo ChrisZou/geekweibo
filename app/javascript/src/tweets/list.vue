@@ -74,7 +74,7 @@
           </span>
         </div>
         <div v-if="tweet.show_comment" class="mt-2 rounded">
-          <div class="flex flex-col p-2 bg-gray-100 rounded">
+          <div class="flex flex-col p-3 bg-gray-100 rounded">
             <div class="flex flex-row">
               <img
                 v-if="currentUser"
@@ -129,12 +129,13 @@
               ></div>
             </div>
           </div>
-          <div
+          <a
             v-if="tweet.has_more_comment"
-            class="pt-3 mt-3 text-sm text-center border-t border-gray-200"
+            :href="`/tweets/${tweet.id}`"
+            class="inline-block w-full pt-3 mt-3 text-sm text-center border-t border-gray-200"
           >
-            查看更多
-          </div>
+            查看更多&nbsp;&gt;
+          </a>
         </div>
       </div>
     </div>
