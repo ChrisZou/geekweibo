@@ -40,7 +40,7 @@
         <div class="flex items-center justify-end mt-4">
           <svg
             fill="none"
-            class="w-4 h-4"
+            class="w-4 h-4 cursor-pointer"
             stroke-width="2"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -51,13 +51,11 @@
             />
           </svg>
           <span class="inline-block ml-1 text-xs" v-if="tweet.comment_count">
-            {{
-            tweet.comment_count
-            }}
+            {{ tweet.comment_count }}
           </span>
           <svg
             viewBox="0 0 24 24"
-            class="w-4 h-4 ml-4 fill-current"
+            class="w-4 h-4 ml-4 cursor-pointer fill-current"
             :class="tweet.liked ? 'text-red-500' : 'text-black'"
             @click.stop="toggleLike(tweet)"
           >
@@ -66,7 +64,13 @@
               d="M12.76 3.76a6 6 0 018.48 8.48l-8.53 8.54a1 1 0 01-1.42 0l-8.53-8.54a6 6 0 018.48-8.48l.76.75.76-.75zm7.07 7.07a4 4 0 10-5.66-5.66l-1.46 1.47a1 1 0 01-1.42 0L9.83 5.17a4 4 0 10-5.66 5.66L12 18.66l7.83-7.83z"
             />
           </svg>
-          <span v-if="tweet.like_count" class="inline-block ml-1 text-xs">{{ tweet.like_count }}</span>
+          <span
+            :class="tweet.liked ? 'text-red-500' : 'text-black'"
+            v-if="tweet.like_count"
+            class="inline-block ml-1 text-xs"
+          >
+            {{ tweet.like_count }}
+          </span>
         </div>
         <div v-if="tweet.show_comment" class="mt-2 rounded">
           <div class="flex flex-col p-3 bg-gray-100 rounded">
