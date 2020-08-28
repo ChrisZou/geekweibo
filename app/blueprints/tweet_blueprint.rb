@@ -4,6 +4,6 @@ class TweetBlueprint < Blueprinter::Base
 
   association :user, blueprint: UserBlueprint
   association :comments, blueprint: CommentBlueprint do |tweet|
-    tweet.comments.order(created_at: :desc)
+    tweet.comments
   end
 end

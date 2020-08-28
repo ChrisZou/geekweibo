@@ -11,7 +11,7 @@ class Tweet < ApplicationRecord
 
   belongs_to :user
   has_many :likes, as: :likable
-  has_many :comments, dependent: :destroy
+  has_many :comments,  -> { order(:created_at => :desc) }, dependent: :destroy
 
   scope :with_tag, -> (tag) { where("body ilike ?", "%##{tag}%") }
 
