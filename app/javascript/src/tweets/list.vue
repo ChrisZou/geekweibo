@@ -10,7 +10,9 @@
         class="inline-block object-cover w-12 h-12 mt-4 ml-4 rounded-full"
       />
       <div class="relative w-full p-4">
-        <h3 class="text-lg font-medium text-gray-900 leading-6">{{ tweet.user.nickname }}</h3>
+        <h3 class="text-lg font-medium text-gray-900 leading-6">
+          {{ tweet.user.nickname }}
+        </h3>
         <div
           stroke="currentColor"
           class="mt-1 text-sm text-gray-500 leading-5 markdown"
@@ -23,7 +25,9 @@
               class="w-6 h-6 p-1 rounded-full hover:bg-gray-200 right-2 top-2 transition duration-300"
               viewBox="0 0 20 20"
             >
-              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+              <path
+                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+              />
             </svg>
             <template slot="popover">
               <div
@@ -32,7 +36,8 @@
                 <span
                   class="px-8 py-2 text-sm tracking-wider cursor-pointer hover:bg-gray-200 transition duration-300"
                   @click="confirmDeleteTweet(tweet)"
-                >删除</span>
+                  >删除</span
+                >
               </div>
             </template>
           </v-popover>
@@ -86,18 +91,30 @@
                 v-html="tweet.new_comment"
                 @input="e => updateNewCommentOf(e, tweet)"
                 class="w-full p-2 ml-2 bg-white border-indigo-100 border-solid rounded outline-none"
+                v-on:keydown.meta.enter="postComment(tweet, index)"
               ></div>
             </div>
             <button
-              @click="e => postComment(e, tweet, index)"
+              @click="postComment(tweet, index)"
               class="self-end px-3 py-2 mt-2 text-xs text-white bg-indigo-500 rounded outline-none focus:outline-none active:bg-indigo-600"
-            >评论</button>
+            >
+              评论
+            </button>
           </div>
-          <div v-for="comment in tweet.comments" class="flex flex-row mt-3" v-bind:key="comment.id">
-            <img :src="comment.user.avatar" class="object-cover w-8 h-8 rounded-full" />
+          <div
+            v-for="comment in tweet.comments"
+            class="flex flex-row mt-3"
+            v-bind:key="comment.id"
+          >
+            <img
+              :src="comment.user.avatar"
+              class="object-cover w-8 h-8 rounded-full"
+            />
             <div class="w-full ml-2">
               <div class="flex items-center justify-between">
-                <div class="text-xs font-medium text-gray-900">{{ comment.user.nickname }}</div>
+                <div class="text-xs font-medium text-gray-900">
+                  {{ comment.user.nickname }}
+                </div>
                 <svg
                   class="w-5 h-5 p-1 text-gray-400 rounded-full hover:bg-gray-200 transition duration-300"
                   viewBox="0 0 20 20"
@@ -111,14 +128,18 @@
                   />
                 </svg>
               </div>
-              <div class="text-sm text-gray-500 markdown" v-html="markdown(comment.body)"></div>
+              <div
+                class="text-sm text-gray-500 markdown"
+                v-html="markdown(comment.body)"
+              ></div>
             </div>
           </div>
           <a
             v-if="tweet.has_more_comment"
             :href="`/tweets/${tweet.id}`"
             class="inline-block w-full pt-3 mt-3 text-sm text-center border-t border-gray-200"
-          >查看更多&nbsp;&gt;</a>
+            >查看更多&nbsp;&gt;</a
+          >
         </div>
       </div>
     </div>
@@ -191,7 +212,7 @@ export default {
     updateNewCommentOf(e, tweet) {
       tweet.new_comment = e.target.innerText;
     },
-    postComment(e, tweet, index) {
+    postComment(tweet, index) {
       if (!tweet.new_comment) return;
 
       post("/comments", {
