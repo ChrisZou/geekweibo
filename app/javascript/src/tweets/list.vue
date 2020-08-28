@@ -45,23 +45,25 @@
         <div class="flex items-center justify-end mt-4">
           <svg
             fill="none"
-            class="w-4 h-4 cursor-pointer"
+            class="p-1.5 rounded-full cursor-pointer w-7 h-7 hover:bg-gray-200 transition duration-300"
             stroke-width="2"
             viewBox="0 0 24 24"
             stroke="currentColor"
+            aria-label="comment icon"
             @click.stop="showTweetComment(tweet)"
           >
             <path
               d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
             />
           </svg>
-          <span class="inline-block ml-1 text-xs" v-if="tweet.comment_count">
+          <span class="inline-block ml-0.5 text-xs" v-if="tweet.comment_count">
             {{ tweet.comment_count }}
           </span>
           <svg
             viewBox="0 0 24 24"
-            class="w-4 h-4 ml-4 cursor-pointer fill-current"
+            class="w-7 h-7 p-1.5 hover:bg-gray-200 transition duration-300 rounded-full ml-4 cursor-pointer fill-current"
             :class="tweet.liked ? 'text-red-500' : 'text-black'"
+            aria-label="like icon"
             @click.stop="toggleLike(tweet)"
           >
             <path
@@ -72,7 +74,7 @@
           <span
             :class="tweet.liked ? 'text-red-500' : 'text-black'"
             v-if="tweet.like_count"
-            class="inline-block ml-1 text-xs"
+            class="inline-block ml-0.5 text-xs"
           >
             {{ tweet.like_count }}
           </span>
@@ -117,6 +119,7 @@
                 </div>
                 <svg
                   class="w-5 h-5 p-1 text-gray-400 rounded-full hover:bg-gray-200 transition duration-300"
+                  aria-label="delete comment"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   @click="confirmDeleteComment(tweet, comment)"
