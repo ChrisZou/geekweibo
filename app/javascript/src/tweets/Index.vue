@@ -10,24 +10,18 @@
             v-on:keydown.meta.enter="addTweet()"
             v-on:keyup="saveTweetLocally"
             placeholder="学到什么了呢？跟大家分享一下"
-          >
-          </textarea>
+          ></textarea>
         </div>
         <button
           class="px-4 py-2 mt-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue focus:bg-indigo-500 active:bg-indigo-600 transition duration-150 ease-in-out"
           @click.stop="addTweet"
-        >
-          发布
-        </button>
+        >发布</button>
       </div>
     </div>
 
     <h1 class="mt-4 mb-8 text-4xl">最新动态</h1>
     <div id="app" class="mt-8">
-      <TweetList
-        v-bind:tweets="tweets"
-        v-bind:dialogShower="showLogin"
-      ></TweetList>
+      <TweetList v-bind:tweets="tweets"></TweetList>
     </div>
     <LoginDialog v-show="show_login" v-bind:dialogHider="hideLogin" />
   </div>

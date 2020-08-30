@@ -131,6 +131,7 @@
 
 <script>
 import { VTooltip, VPopover, VClosePopover } from "v-tooltip";
+import LoginDialog from "../common/LoginDialog.vue";
 
 const marked = require("marked");
 marked.setOptions({
@@ -144,7 +145,7 @@ marked.setOptions({
 
 export default {
   components: { "v-popover": VPopover },
-  props: ["tweets", "dialogShower"],
+  props: ["tweets"],
   data() {
     this.tweets.forEach(t => {
       t.showMenu = false;
@@ -163,7 +164,7 @@ export default {
     },
     toggleLike(tweet) {
       if (!sessionStorage.getItem("loggedIn")) {
-        this.dialogShower();
+        this.showLoginDialog();
         return;
       }
 
@@ -175,6 +176,9 @@ export default {
 
       tweet.liked = !tweet.liked;
       tweet.like_count += tweet.liked ? 1 : -1;
+    },
+    showLoginDialog() {
+      this.$modal.show(LoginDialog, {}, { height: "auto", width: 400 });
     },
     showTweetComment(tweet) {
       if (!sessionStorage.getItem("loggedIn")) {
