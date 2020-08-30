@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   post "notifications/mark_read"
   resources :notifications, only: :index
-  resources :comments
+  resources :comments, only: [:create, :destroy]
   resources :tags, only: :show
   resources :likes, only: :create
   delete "/likes", to: 'likes#destroy'
