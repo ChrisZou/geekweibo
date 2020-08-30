@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update]
 
+  before_action :authorize!, only: [:edit, :update]
+
+
+
   # GET /users/1
   # GET /users/1.json
   def show
@@ -33,6 +37,13 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:nickname, :phone, :password_digest, :bio, :avatar)
+    params.require(:user).permit(:nickname, :bio, :avatar)
   end
+
+  def authorize!
+    if @user.id != current_user.id
+      render plain: "forbidden", status: 401
+    end
+  end
+
 end
