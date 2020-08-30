@@ -11,9 +11,11 @@
 
 * postgresql
 
+* ElasticSearch
 ## 运行起来：
   * git clone this_repo
   * bundle install
   * yarn install
   * rails db:create db:migrate
   * rails s
+
