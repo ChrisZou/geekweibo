@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update]
+  before_action :set_user, only: %i[show edit update tweets]
 
   before_action :authorize!, only: [:edit, :update]
 
@@ -14,6 +14,12 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+  end
+
+  # GET /users/1/tweets
+  def tweets
+    @pagy, tweets = pagy @user.tweets.includes({user: {avatar_attachment: [:blob]}}, :likes, {comments: {user: {avatar_attachment: [:blob]}}}).order(created_at: :desc)
+    render json: {has_more: @pagy.page < @pagy.pages, data: TweetBlueprint.render_as_hash(tweets) }
   end
 
   # PATCH/PUT /users/1

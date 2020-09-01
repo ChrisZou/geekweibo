@@ -84,4 +84,4 @@ gem 'skylight'
 gem 'blueprinter'
 gem 'oj'
 
-gem "kaminari", "~> 1.2"
+gem 'pagy'
