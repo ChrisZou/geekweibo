@@ -21,7 +21,7 @@
 
     <h1 class="mt-4 mb-8 text-4xl">最新动态</h1>
     <div id="app" class="mt-8">
-      <TweetList v-bind:tweets="tweets"></TweetList>
+      <TweetList v-bind:tweets_url="tweets_url"></TweetList>
     </div>
     <LoginDialog v-show="show_login" v-bind:dialogHider="hideLogin" />
   </div>
@@ -33,17 +33,21 @@ import LoginDialog from "../common/login.vue";
 
 export default {
   components: { TweetList, LoginDialog },
-  props: ["tweets"],
+  props: ["tweets", "tweets_url"],
   mounted() {
     autosize(document.querySelector("textarea"));
   },
   data() {
     return {
       new_tweet: "",
-      show_login: false
+      show_login: false,
+      loadMore: true
     };
   },
   methods: {
+    loadMoreTweet() {
+      console.log("loading more");
+    },
     addTweet() {
       if (sessionStorage.getItem("loggedIn")) {
         if (this.new_tweet.trim() === "") return;

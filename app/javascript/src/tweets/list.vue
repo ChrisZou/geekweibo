@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="tweet-list">
     <div
       class="flex flex-row mb-4 bg-white shadow sm:rounded-lg"
       v-for="(tweet, index) in items"
@@ -125,6 +125,7 @@
         </div>
       </div>
     </div>
+    <div v-show="loading_more">Loading more</div>
     <v-dialog />
   </div>
 </template>
@@ -145,20 +146,35 @@ marked.setOptions({
 
 export default {
   components: { "v-popover": VPopover },
-  props: ["tweets"],
+  props: ["tweets", "tweets_url"],
   data() {
-    this.tweets.forEach(t => {
-      t.showMenu = false;
-      t.comment_count = t.comments.length;
-      t.has_more_comment = t.comments.length > 5;
-      t.comments = t.comments.slice(0, 5);
-    });
+    /* this.tweets.forEach(t => { */
+    /*   t.showMenu = false; */
+    /*   t.comment_count = t.comments.length; */
+    /*   t.has_more_comment = t.comments.length > 5; */
+    /*   t.comments = t.comments.slice(0, 5); */
+    /* }); */
     return {
-      items: this.tweets,
-      currentUser: window.currentUser()
+      items: [],
+      page: 0,
+      currentUser: window.currentUser(),
+      loading_more: false
     };
   },
   methods: {
+    loadMoreTweet() {
+      this.loading_more = true;
+      console.log("loading more");
+      const url = this.tweets_url + "?page=" + this.page;
+      get(url).then(tweets => {
+        this.loading_more = false;
+        if (this.page > 0) {
+          this.items.concat(tweets);
+        } else {
+          this.items = tweets;
+        }
+      });
+    },
     showMenuForTweetItem(tweet) {
       tweet.showMenu = !tweet.showMenu;
     },
@@ -273,6 +289,20 @@ export default {
     markdown(body) {
       return marked(body);
     }
+  },
+  mounted() {
+    // Detect when scrolled to bottom.
+    const listElm = document.querySelector("#tweet-list");
+    console.log(listElm);
+    window.addEventListener("scroll", e => {
+      /* console.log("scrolling"); */
+      /* if (listElm.scrollTop + listElm.clientHeight >= listElm.scrollHeight) { */
+      /*   this.loadMoreTweet(); */
+      /* } */
+    });
+
+    // Initially load some items.
+    this.loadMoreTweet();
   }
 };
 </script>

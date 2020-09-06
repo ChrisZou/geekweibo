@@ -12,7 +12,11 @@ class TweetsController < ApplicationController
     else
       tweets = Tweet.includes({user: {avatar_attachment: [:blob]}}, :likes, {comments: {user: {avatar_attachment: [:blob]}}}).order(created_at: :desc)
     end
-    @tweets_json = TweetBlueprint.render(tweets)
+
+    respond_to do |format|
+      format.html { @tweets_url = "/tweets.json" }
+      format.json { render json: TweetBlueprint.render_as_hash(tweets) }
+    end
   end
 
   # GET /tweets/1
