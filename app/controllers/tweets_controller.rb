@@ -6,16 +6,18 @@ class TweetsController < ApplicationController
   # GET /tweets
   # GET /tweets.json
   def index
-    query = params[:q]
-    if query
-      tweets = Tweet.search(query, includes: [{user: {avatar_attachment: [:blob]}}, :likes, {comments: {user: {avatar_attachment: [:blob]}}}]).results
-    else
-      tweets = Tweet.includes({user: {avatar_attachment: [:blob]}}, :likes, {comments: {user: {avatar_attachment: [:blob]}}}).order(created_at: :desc)
-    end
 
     respond_to do |format|
       format.html { @tweets_url = "/tweets.json" }
-      format.json { render json: TweetBlueprint.render_as_hash(tweets) }
+      format.json { 
+        query = params[:q]
+        if query
+          @pagy, tweets = pagy Tweet.search(query, includes: [{user: {avatar_attachment: [:blob]}}, :likes, {comments: {user: {avatar_attachment: [:blob]}}}]).results
+        else
+          @pagy, tweets = pagy Tweet.includes({user: {avatar_attachment: [:blob]}}, :likes, {comments: {user: {avatar_attachment: [:blob]}}}).order(created_at: :desc)
+        end
+        render json: {has_more: @pagy.page < @pagy.pages, data: TweetBlueprint.render_as_hash(tweets) }
+      }
     end
   end
 
