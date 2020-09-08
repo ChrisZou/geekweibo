@@ -14,6 +14,6 @@
 
 <h1 class="mt-8 mb-4 text-4xl">最新动态</h1>
 <div id="app" class="mt-8">
-  <tweet-list :tweets="<%= @tweets_json %>"></tweet-list>
+  <tweet-list tweets_url="<%= @tweets_url %>"></tweet-list>
 </div>
 <%= javascript_pack_tag 'tweets/list.js' %>

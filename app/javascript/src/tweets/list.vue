@@ -162,6 +162,9 @@
 <script>
 import { VTooltip, VPopover, VClosePopover } from "v-tooltip";
 import LoginDialog from "../common/LoginDialog.vue";
+import Vue from "vue/dist/vue.esm";
+import VModal from "vue-js-modal";
+Vue.use(VModal, { dialog: true });
 
 const marked = require("marked");
 marked.setOptions({
@@ -265,8 +268,6 @@ export default {
       });
     },
     confirmDeleteTweet(tweet) {
-      console.log("showing dialog");
-
       this.$modal.show("dialog", {
         title: "确定删除这条推文？",
         text: "推文一旦删除，将无法恢复",
