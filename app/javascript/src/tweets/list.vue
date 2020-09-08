@@ -195,13 +195,20 @@ export default {
     };
   },
   methods: {
+    urlWithPage() {
+      return (
+        this.tweets_url +
+        (this.tweets_url.includes("?") ? "&" : "?") +
+        "page=" +
+        this.page
+      );
+    },
     loadMoreTweet() {
       if (this.loading_more) return;
       if (!this.has_more) return;
 
       this.loading_more = true;
-      console.log("loading more");
-      const url = this.tweets_url + "?page=" + this.page;
+      const url = this.urlWithPage();
       get(url).then(tweets => {
         this.loading_more = false;
         if (this.page > 1) {
@@ -329,13 +336,9 @@ export default {
   mounted() {
     // Detect when scrolled to bottom.
     window.addEventListener("scroll", e => {
-      console.log("scrollTop" + document.documentElement.scrollTop);
-      console.log("innerHeight" + window.innerHeight);
-      console.log("offsetHeight" + document.documentElement.offsetHeight);
       const bottom =
         document.documentElement.scrollTop + window.innerHeight >
         document.documentElement.offsetHeight - 50;
-      console.log(bottom);
       if (bottom) {
         this.loadMoreTweet();
       }
