@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'about/index'
+  get 'welcome/agreement'
   post "notifications/mark_read"
   resources :notifications, only: :index
   resources :comments, only: [:create, :destroy]

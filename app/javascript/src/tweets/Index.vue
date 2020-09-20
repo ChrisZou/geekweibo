@@ -23,13 +23,15 @@
     <div id="app" class="mt-8">
       <TweetList v-bind:tweets_url="tweets_url"></TweetList>
     </div>
-    <LoginDialog v-show="show_login" v-bind:dialogHider="hideLogin" />
   </div>
 </template>
 
 <script>
 import TweetList from "./list.vue";
-import LoginDialog from "../common/login.vue";
+import LoginDialog from "../common/LoginDialog.vue";
+import Vue from "vue/dist/vue.esm";
+import VModal from "vue-js-modal";
+Vue.use(VModal, { dialog: true });
 
 export default {
   components: { TweetList, LoginDialog },
@@ -40,7 +42,6 @@ export default {
   data() {
     return {
       new_tweet: "",
-      show_login: false,
       loadMore: true
     };
   },
@@ -57,14 +58,8 @@ export default {
           location.reload();
         });
       } else {
-        this.show_login = true;
+        this.$modal.show(LoginDialog, {}, { height: "auto", width: 400 });
       }
-    },
-    showLogin() {
-      this.show_login = true;
-    },
-    hideLogin() {
-      this.show_login = false;
     },
     saveTweetLocally() {
       localStorage.setItem("new_tweet_backup", this.new_tweet);
