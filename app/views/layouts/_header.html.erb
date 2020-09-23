@@ -56,11 +56,15 @@
           <div class="relative flex-shrink-0 ml-4" x-data="{open: false}">
             <div>
               <button @click="open = !open" class="flex overflow-hidden text-sm text-white rounded-full focus:outline-none focus:shadow-solid transition duration-150 ease-in-out" id="user-menu" aria-label="User menu" aria-haspopup="true">
-                <span class="inline-block w-8 h-8 overflow-hidden bg-gray-700 rounded-full">
-                  <svg class="w-full h-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                </span>
+                <% if user_signed_in? %>
+                  <%= image_tag user_avatar(current_user), class: "w-8 h-8 object-cover" %>
+                <% else %>
+                  <span class="inline-block w-8 h-8 overflow-hidden bg-gray-700 rounded-full">
+                    <svg class="w-full h-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                  </span>
+                <% end %>
               </button>
             </div>
             <!-- Profile dropdown panel, show/hide based on dropdown state.  -->
