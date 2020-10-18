@@ -1,7 +1,8 @@
 module ApplicationHelper
   def user_avatar(user, size = 100)
     if user && user.avatar.attached?
-      user.avatar.variant(resize: "#{size}x#{size}")
+      # user.avatar.variant(resize: "#{size}x#{size}")
+      "#{user.avatar_url}?x-oss-process=image/resize,m_fill,h_#{size},w_#{size}"
     else
       "avatar-not-logged-in.png"
     end
