@@ -6,7 +6,12 @@
       :key="tweet.id"
     >
       <img
-        :src="tweet.user.avatar"
+        v-if="tweet.user.avatar"
+        :src="scaledAvatar(tweet.user.avatar)"
+        class="inline-block object-cover w-12 h-12 mt-4 ml-4 bg-gray-500 rounded-full"
+      />
+      <div
+        v-if="!tweet.user.avatar"
         class="inline-block object-cover w-12 h-12 mt-4 ml-4 bg-gray-500 rounded-full"
       />
       <div class="relative w-full p-4 overflow-x-auto">
@@ -306,6 +311,9 @@ export default {
     },
     isAuthor(tweet) {
       return this.currentUser && this.currentUser.id == tweet.user.id;
+    },
+    scaledAvatar(avatar, width, height) {
+      return `${avatar}?x-oss-process=image/resize,m_fill,h_100,w_100`;
     },
     markdown(body) {
       return marked(body);
