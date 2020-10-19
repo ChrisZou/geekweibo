@@ -15,7 +15,7 @@
 
 * postgresql
 
-* ElasticSearch
+* ElasticSearch（有点后悔，可能会迁移到PostgreSQL FTS）
 
 ## 运行起来：
   * git clone this_repo
