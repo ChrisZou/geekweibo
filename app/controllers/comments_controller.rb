@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
 
     if @comment.save
       create_comment_notification(cp)
-      render :show, status: :created, location: @comment
+      render json: CommentBlueprint.render(@comment), status: :created, location: @comment
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
