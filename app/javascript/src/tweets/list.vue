@@ -26,7 +26,7 @@
         <div class="absolute top-1 right-1">
           <v-popover>
             <svg
-              v-if="isAuthor(tweet)"
+              v-if="isMyTweet(tweet)"
               class="w-6 h-6 p-1 rounded-full hover:bg-gray-200 right-2 top-2 transition duration-300"
               viewBox="0 0 20 20"
             >
@@ -126,6 +126,7 @@
                 <svg
                   class="w-5 h-5 p-1 text-gray-400 rounded-full hover:bg-gray-200 transition duration-300"
                   aria-label="delete comment"
+                  v-if="isMyComment(comment)"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   @click="confirmDeleteComment(tweet, comment)"
@@ -332,8 +333,11 @@ export default {
         ]
       });
     },
-    isAuthor(tweet) {
+    isMyTweet(tweet) {
       return this.currentUser && this.currentUser.id == tweet.user.id;
+    },
+    isMyComment(comment) {
+      return this.currentUser && this.currentUser.id == comment.user.id;
     },
     scaledAvatar(avatar, width, height) {
       return `${avatar}?x-oss-process=image/resize,m_fill,h_100,w_100`;
