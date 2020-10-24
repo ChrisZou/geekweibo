@@ -23,7 +23,7 @@ class Tweet < ApplicationRecord
   end
 
   def like_count
-    likes.count
+    likes.size
   end
 
 end
