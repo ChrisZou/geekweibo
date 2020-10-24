@@ -50,7 +50,8 @@ class User < ApplicationRecord
   end
 
   def avatar_url
-    avatar.attached? && avatar.service_url
+    return "" unless avatar.attached?
+    avatar.service_url
   end
 
   def nickname
