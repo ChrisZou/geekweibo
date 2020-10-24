@@ -24,8 +24,11 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    up = user_params
+    up[:nickname] = sanitize(up[:nickname])
+    up[:bio] = sanitize(up[:bio])
     respond_to do |format|
-      if @user.update(user_params)
+      if @user.update(up)
         format.html { redirect_to @user, notice: "User was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else

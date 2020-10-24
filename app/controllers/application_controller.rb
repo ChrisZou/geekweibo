@@ -11,4 +11,8 @@ class ApplicationController < ActionController::Base
     UserBlueprint.render(current_user)
   end
   helper_method :current_user_json
+
+  def sanitize(text) 
+    Loofah.fragment(text).to_text
+  end
 end

@@ -49,12 +49,13 @@ class TweetsController < ApplicationController
   def create
     p = tweet_params
     p[:user_id] = current_user&.id
+    p[:body] = sanitize p[:body]
     @tweet = Tweet.new(p)
 
     respond_to do |format|
       if @tweet.save
-        format.html { redirect_to @tweet, notice: 'Tweet was successfully created.' }
-        format.json { render :show, status: :created, location: @tweet }
+        format.html { redirect_to @tweet, notice: '' }
+        format.json { render json: TweetBlueprint.render(@tweet), status: :created }
       else
         format.html { render :new }
         format.json { render json: @tweet.errors, status: :unprocessable_entity }
@@ -64,17 +65,19 @@ class TweetsController < ApplicationController
 
   # PATCH/PUT /tweets/1
   # PATCH/PUT /tweets/1.json
-  def update
-    respond_to do |format|
-      if @tweet.update(tweet_params)
-        format.html { redirect_to @tweet, notice: 'Tweet was successfully updated.' }
-        format.json { render :show, status: :ok, location: @tweet }
-      else
-        format.html { render :edit }
-        format.json { render json: @tweet.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # def update
+  #   tp = tweet_params
+  #   tp[:body] = sanitize tp[:body]
+  #   respond_to do |format|
+  #     if @tweet.update(tp)
+  #       format.html { redirect_to @tweet, notice: 'Tweet was successfully updated.' }
+  #       format.json { render :show, status: :ok, location: @tweet }
+  #     else
+  #       format.html { render :edit }
+  #       format.json { render json: @tweet.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # DELETE /tweets/1
   # DELETE /tweets/1.json
