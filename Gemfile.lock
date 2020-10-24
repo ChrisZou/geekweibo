@@ -96,6 +96,7 @@ GEM
     blueprinter (0.25.1)
     bootsnap (1.4.8)
       msgpack (~> 1.0)
+    brakeman (4.10.0)
     builder (3.2.4)
     bullet (6.1.0)
       activesupport (>= 3.0.0)
@@ -362,6 +363,7 @@ DEPENDENCIES
   binding_of_caller
   blueprinter
   bootsnap (>= 1.4.2)
+  brakeman
   bullet
   byebug
   capistrano

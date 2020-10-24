@@ -64,6 +64,7 @@ group :development do
   gem 'annotate', require: false
   gem 'bullet'
   gem 'amazing_print'
+  gem 'brakeman'
 end
 
 gem "mini_magick"
