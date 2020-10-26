@@ -108,7 +108,7 @@
           <div v-for="comment in tweet.comments" class="flex flex-row mt-3" v-bind:key="comment.id">
             <svg
               v-if="!comment.user.avatar"
-              class="w-8 h-8 text-gray-300"
+              class="w-8 h-8 text-gray-300 rounded-full"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
