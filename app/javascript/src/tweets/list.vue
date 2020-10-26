@@ -106,7 +106,21 @@
             >评论</button>
           </div>
           <div v-for="comment in tweet.comments" class="flex flex-row mt-3" v-bind:key="comment.id">
-            <img :src="comment.user.avatar" class="object-cover w-8 h-8 rounded-full" />
+            <svg
+              v-if="!comment.user.avatar"
+              class="w-full h-full text-gray-300"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"
+              />
+            </svg>
+            <img
+              v-if="comment.user.avatar"
+              :src="comment.user.avatar"
+              class="object-cover w-8 h-8 rounded-full"
+            />
             <div class="w-full ml-2">
               <div class="flex items-center justify-between">
                 <div class="text-xs font-medium text-gray-900">{{ comment.user.nickname }}</div>
