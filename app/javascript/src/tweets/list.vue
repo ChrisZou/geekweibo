@@ -3,11 +3,9 @@
     <div class="flex flex-row mb-4 bg-white shadow sm:rounded-lg" v-for="(tweet, index) in items" :key="tweet.id">
       <a :href="`/users/${tweet.user.id}`">
         <img
-          v-if="tweet.user.avatar"
           :src="scaledAvatar(tweet.user.avatar, tweet.user.nickname)"
           class="inline-block object-cover w-12 h-12 mt-4 ml-4 bg-gray-500 rounded-full"
         />
-        <div v-if="!tweet.user.avatar" class="inline-block object-cover w-12 h-12 mt-4 ml-4 bg-gray-500 rounded-full" />
       </a>
       <div class="relative w-full p-4 overflow-x-auto">
         <h3 class="text-lg font-medium text-gray-900 leading-6">{{ tweet.user.nickname }}</h3>
