@@ -64,23 +64,32 @@
           <div class="flex flex-col p-3 bg-gray-100 rounded">
             <div class="flex flex-row">
               <img v-if="currentUser" :src="currentUser.avatar" class="object-cover w-8 h-8 rounded-full" />
-              <div
-                contenteditable="true"
-                v-bind:ref="'tweet_comment_inbox_' + index"
-                v-html="tweet.new_comment"
-                @input="e => updateNewCommentOf(e, tweet)"
-                class="w-full p-2 ml-2 bg-white border-indigo-100 border-solid rounded outline-none"
-                v-on:keydown.meta.enter="postComment(tweet, index)"
-              ></div>
+              <div class="flex flex-col w-full ml-3">
+                <div
+                  contenteditable="true"
+                  v-bind:ref="'tweet_comment_inbox_' + index"
+                  v-html="tweet.new_comment"
+                  @input="e => updateNewCommentOf(e, tweet)"
+                  class="w-full p-2 bg-white border-indigo-100 border-solid rounded outline-none"
+                  v-on:keydown.meta.enter="postComment(tweet, index)"
+                ></div>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center">
+                    <span v-if="tweet.replying_comment" class="text-sm text-gray-600">
+                      回复 @{{ tweet.replying_comment.user.nickname }}: {{ tweet.replying_comment.body }}
+                    </span>
+                  </div>
+                  <button
+                    @click="postComment(tweet, index)"
+                    class="self-end px-3 py-2 mt-2 text-xs text-white bg-indigo-500 rounded outline-none focus:outline-none active:bg-indigo-600"
+                  >
+                    评论
+                  </button>
+                </div>
+              </div>
             </div>
-            <button
-              @click="postComment(tweet, index)"
-              class="self-end px-3 py-2 mt-2 text-xs text-white bg-indigo-500 rounded outline-none focus:outline-none active:bg-indigo-600"
-            >
-              评论
-            </button>
           </div>
-          <div v-for="comment in tweet.comments" class="flex flex-row mt-3" v-bind:key="comment.id">
+          <div v-for="comment in tweet.comments" class="flex flex-row mt-3 ml-3" v-bind:key="comment.id">
             <img :src="scaledAvatar(comment.user.avatar, comment.user.nickname)" class="object-cover w-8 h-8 rounded-full" />
             <div class="w-full ml-2">
               <div class="flex items-center justify-between">
@@ -100,7 +109,11 @@
                   />
                 </svg>
               </div>
-              <div class="text-sm text-gray-500 cursor-pointer markdown" v-html="markdown(comment.body)"></div>
+              <div
+                class="text-sm text-gray-500 cursor-pointer markdown"
+                @click="tweet.replying_comment = tweet.replying_comment ? null : comment"
+                v-html="markdown(comment.body)"
+              ></div>
             </div>
           </div>
           <a
@@ -171,12 +184,12 @@ export default {
       const url = this.urlWithPage()
       get(url).then(tweets => {
         this.loading_more = false
+        tweets.data.forEach(t => (t.replying_comment = null))
         if (this.page > 1) {
           this.items = this.items.concat(tweets.data)
         } else {
           this.items = tweets.data
         }
-        this.comment_count = this.items.length
         this.has_more = tweets.has_more
         this.page = this.page + 1
       })
