@@ -34,51 +34,54 @@
             </svg>
             <template slot="popover">
               <div
-                class="flex items-center py-1 bg-white border border-gray-100 border-solid rounded-sm focus:outline-none"
+                class="flex items-center py-1 bg-white border border-gray-100 border-solid rounded-sm focus:outline-none active:outline-none"
               >
                 <span
-                  class="px-8 py-2 text-sm tracking-wider cursor-pointer hover:bg-gray-200 transition duration-300"
+                  class="px-8 py-2 text-sm tracking-wider cursor-pointer hover:bg-gray-200 transition duration-300 active:outline-none"
                   @click="confirmDeleteTweet(tweet)"
                 >删除</span>
               </div>
             </template>
           </v-popover>
         </div>
-        <div class="flex items-center justify-end mt-4">
-          <svg
-            fill="none"
-            class="p-1.5 rounded-full cursor-pointer w-7 h-7 hover:bg-gray-200 transition duration-300"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-label="comment icon"
-            @click.stop="showTweetComment(tweet)"
-          >
-            <path
-              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-            />
-          </svg>
-          <span
-            class="inline-block ml-0.5 text-xs"
-            v-if="tweet.comments.length"
-          >{{ tweet.comments.length }}</span>
-          <svg
-            viewBox="0 0 24 24"
-            class="w-7 h-7 p-1.5 hover:bg-gray-200 transition duration-300 rounded-full ml-4 cursor-pointer fill-current"
-            :class="tweet.liked ? 'text-red-500' : 'text-black'"
-            aria-label="like icon"
-            @click.stop="toggleLike(tweet)"
-          >
-            <path
-              class="heroicon-ui"
-              d="M12.76 3.76a6 6 0 018.48 8.48l-8.53 8.54a1 1 0 01-1.42 0l-8.53-8.54a6 6 0 018.48-8.48l.76.75.76-.75zm7.07 7.07a4 4 0 10-5.66-5.66l-1.46 1.47a1 1 0 01-1.42 0L9.83 5.17a4 4 0 10-5.66 5.66L12 18.66l7.83-7.83z"
-            />
-          </svg>
-          <span
-            :class="tweet.liked ? 'text-red-500' : 'text-black'"
-            v-if="tweet.like_count"
-            class="inline-block ml-0.5 text-xs"
-          >{{ tweet.like_count }}</span>
+        <div class="flex items-center justify-between mt-4">
+          <span class="text-xs text-gray-500">{{tweet.created_at}}</span>
+          <div class="flex items-center">
+            <svg
+              fill="none"
+              class="p-1.5 rounded-full cursor-pointer w-7 h-7 hover:bg-gray-200 transition duration-300"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-label="comment icon"
+              @click.stop="showTweetComment(tweet)"
+            >
+              <path
+                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+              />
+            </svg>
+            <span
+              class="inline-block ml-0.5 text-xs"
+              v-if="tweet.comments.length"
+            >{{ tweet.comments.length }}</span>
+            <svg
+              viewBox="0 0 24 24"
+              class="w-7 h-7 p-1.5 hover:bg-gray-200 transition duration-300 rounded-full ml-4 cursor-pointer fill-current"
+              :class="tweet.liked ? 'text-red-500' : 'text-black'"
+              aria-label="like icon"
+              @click.stop="toggleLike(tweet)"
+            >
+              <path
+                class="heroicon-ui"
+                d="M12.76 3.76a6 6 0 018.48 8.48l-8.53 8.54a1 1 0 01-1.42 0l-8.53-8.54a6 6 0 018.48-8.48l.76.75.76-.75zm7.07 7.07a4 4 0 10-5.66-5.66l-1.46 1.47a1 1 0 01-1.42 0L9.83 5.17a4 4 0 10-5.66 5.66L12 18.66l7.83-7.83z"
+              />
+            </svg>
+            <span
+              :class="tweet.liked ? 'text-red-500' : 'text-black'"
+              v-if="tweet.like_count"
+              class="inline-block ml-0.5 text-xs"
+            >{{ tweet.like_count }}</span>
+          </div>
         </div>
         <div v-if="tweet.show_comment" class="mt-2 rounded">
           <div class="flex flex-col p-3 bg-gray-100 rounded">
@@ -122,7 +125,10 @@
                   />
                 </svg>
               </div>
-              <div class="text-sm text-gray-500 markdown" v-html="markdown(comment.body)"></div>
+              <div
+                class="text-sm text-gray-500 cursor-pointer markdown"
+                v-html="markdown(comment.body)"
+              ></div>
             </div>
           </div>
           <a
@@ -146,25 +152,25 @@
 </template>
 
 <script>
-import { VTooltip, VPopover, VClosePopover } from "v-tooltip";
-import LoginDialog from "../common/LoginDialog.vue";
-import Vue from "vue/dist/vue.esm";
-import VModal from "vue-js-modal";
-Vue.use(VModal, { dialog: true });
+import { VTooltip, VPopover, VClosePopover } from 'v-tooltip'
+import LoginDialog from '../common/LoginDialog.vue'
+import Vue from 'vue/dist/vue.esm'
+import VModal from 'vue-js-modal'
+Vue.use(VModal, { dialog: true })
 
-const marked = require("marked");
+const marked = require('marked')
 marked.setOptions({
   renderer: new marked.Renderer(),
   gfm: true,
   breaks: true,
   pedantic: false,
   smartLists: true,
-  smartypants: false
-});
+  smartypants: false,
+})
 
 export default {
-  components: { "v-popover": VPopover },
-  props: ["tweets", "tweets_url"],
+  components: { 'v-popover': VPopover },
+  props: ['tweets', 'tweets_url'],
   data() {
     /* this.tweets.forEach(t => { */
     /*   t.showMenu = false; */
@@ -177,170 +183,163 @@ export default {
       page: 1,
       currentUser: window.currentUser(),
       loading_more: false,
-      has_more: true
-    };
+      has_more: true,
+    }
   },
   methods: {
     urlWithPage() {
-      return (
-        this.tweets_url +
-        (this.tweets_url.includes("?") ? "&" : "?") +
-        "page=" +
-        this.page
-      );
+      return this.tweets_url + (this.tweets_url.includes('?') ? '&' : '?') + 'page=' + this.page
     },
     loadMoreTweet() {
-      if (this.loading_more) return;
-      if (!this.has_more) return;
+      if (this.loading_more) return
+      if (!this.has_more) return
 
-      this.loading_more = true;
-      const url = this.urlWithPage();
+      this.loading_more = true
+      const url = this.urlWithPage()
       get(url).then(tweets => {
-        this.loading_more = false;
+        this.loading_more = false
         if (this.page > 1) {
-          this.items = this.items.concat(tweets.data);
+          this.items = this.items.concat(tweets.data)
         } else {
-          this.items = tweets.data;
+          this.items = tweets.data
         }
-        this.comment_count = this.items.length;
-        this.has_more = tweets.has_more;
-        this.page = this.page + 1;
-      });
+        this.comment_count = this.items.length
+        this.has_more = tweets.has_more
+        this.page = this.page + 1
+      })
     },
     showMenuForTweetItem(tweet) {
-      tweet.showMenu = !tweet.showMenu;
+      tweet.showMenu = !tweet.showMenu
     },
     toggleLike(tweet) {
-      if (!sessionStorage.getItem("loggedIn")) {
-        this.showLoginDialog();
-        return;
+      if (!sessionStorage.getItem('loggedIn')) {
+        this.showLoginDialog()
+        return
       }
 
-      const action = tweet.liked ? window.delete : window.post;
-      action("/likes", {
+      const action = tweet.liked ? window.delete : window.post
+      action('/likes', {
         likable_id: tweet.id,
-        likable_type: "Tweet"
-      }).then(res => console.log("like/unlike succeed"));
+        likable_type: 'Tweet',
+      }).then(res => console.log('like/unlike succeed'))
 
-      tweet.liked = !tweet.liked;
-      tweet.like_count += tweet.liked ? 1 : -1;
+      tweet.liked = !tweet.liked
+      tweet.like_count += tweet.liked ? 1 : -1
     },
     showLoginDialog() {
-      this.$modal.show(LoginDialog, {}, { height: "auto", width: 400 });
+      this.$modal.show(LoginDialog, {}, { height: 'auto', width: 400 })
     },
     showTweetComment(tweet) {
-      if (!sessionStorage.getItem("loggedIn")) {
-        this.showLoginDialog();
-        return;
+      if (!sessionStorage.getItem('loggedIn')) {
+        this.showLoginDialog()
+        return
       }
 
       // show comment modal
       this.items = this.items.map(t => {
         if (t.id == tweet.id) {
-          t.show_comment = true;
+          t.show_comment = true
         }
-        return t;
-      });
-      tweet.show_comment = true;
+        return t
+      })
+      tweet.show_comment = true
     },
     updateNewCommentOf(e, tweet) {
-      tweet.new_comment = e.target.innerText;
+      tweet.new_comment = e.target.innerText
     },
     postComment(tweet, index) {
-      if (!tweet.new_comment) return;
+      if (!tweet.new_comment) return
 
-      post("/comments", {
+      post('/comments', {
         tweet_id: tweet.id,
-        body: tweet.new_comment
+        body: tweet.new_comment,
       }).then(data => {
         tweet.comments.unshift({
           user: this.currentUser,
-          body: data.body
-        });
-        tweet.new_comment = "";
-        this.$refs["tweet_comment_inbox_" + index][0].innerText = "";
-      });
+          body: data.body,
+        })
+        tweet.new_comment = ''
+        this.$refs['tweet_comment_inbox_' + index][0].innerText = ''
+      })
     },
     confirmDeleteTweet(tweet) {
-      this.$modal.show("dialog", {
-        title: "确定删除这条推文？",
-        text: "推文一旦删除，将无法恢复",
+      this.$modal.show('dialog', {
+        title: '确定删除这条推文？',
+        text: '推文一旦删除，将无法恢复',
         buttons: [
           {
-            title: "取消",
-            class: "focus:outline-none py-3 hover:bg-gray-100 ",
+            title: '取消',
+            class: 'focus:outline-none py-3 hover:bg-gray-100 ',
             handler: () => {
-              this.$modal.hide("dialog");
-            }
+              this.$modal.hide('dialog')
+            },
           },
           {
-            title: "确定",
+            title: '确定',
             default: true,
-            class: "focus:outline-none py-3 hover:bg-gray-100",
+            class: 'focus:outline-none py-3 hover:bg-gray-100',
             handler: () => {
-              this.$modal.hide("dialog");
+              this.$modal.hide('dialog')
               window.delete(`/tweets/${tweet.id}`).then(res => {
-                this.items = this.items.filter(t => t.id != tweet.id);
-              });
-            }
-          }
-        ]
-      });
+                this.items = this.items.filter(t => t.id != tweet.id)
+              })
+            },
+          },
+        ],
+      })
     },
     confirmDeleteComment(tweet, comment) {
-      this.$modal.show("dialog", {
-        title: "确定删除这条评论？",
-        text: "此操作无法撤销",
+      this.$modal.show('dialog', {
+        title: '确定删除这条评论？',
+        text: '此操作无法撤销',
         buttons: [
           {
-            title: "取消",
-            class: "focus:outline-none py-3 hover:bg-gray-100 ",
+            title: '取消',
+            class: 'focus:outline-none py-3 hover:bg-gray-100 ',
             handler: () => {
-              this.$modal.hide("dialog");
-            }
+              this.$modal.hide('dialog')
+            },
           },
           {
-            title: "确定",
+            title: '确定',
             default: true,
-            class: "focus:outline-none py-3 hover:bg-gray-100",
+            class: 'focus:outline-none py-3 hover:bg-gray-100',
             handler: () => {
-              this.$modal.hide("dialog");
+              this.$modal.hide('dialog')
               window.delete(`/comments/${comment.id}`).then(res => {
-                tweet.comments = tweet.comments.filter(c => c.id != comment.id);
-              });
-            }
-          }
-        ]
-      });
+                tweet.comments = tweet.comments.filter(c => c.id != comment.id)
+              })
+            },
+          },
+        ],
+      })
     },
     isMyTweet(tweet) {
-      return this.currentUser && this.currentUser.id == tweet.user.id;
+      return this.currentUser && this.currentUser.id == tweet.user.id
     },
     isMyComment(comment) {
-      return this.currentUser && this.currentUser.id == comment.user.id;
+      return this.currentUser && this.currentUser.id == comment.user.id
     },
     scaledAvatar(avatar, width, height) {
-      return `${avatar}?x-oss-process=image/resize,m_fill,h_100,w_100`;
+      return `${avatar}?x-oss-process=image/resize,m_fill,h_100,w_100`
     },
     markdown(body) {
-      return marked(body);
-    }
+      return marked(body)
+    },
   },
   mounted() {
     // Detect when scrolled to bottom.
-    window.addEventListener("scroll", e => {
-      const bottom =
-        document.documentElement.scrollTop + window.innerHeight >
-        document.documentElement.offsetHeight - 50;
+    window.addEventListener('scroll', e => {
+      const bottom = document.documentElement.scrollTop + window.innerHeight > document.documentElement.offsetHeight - 50
       if (bottom) {
-        this.loadMoreTweet();
+        this.loadMoreTweet()
       }
-    });
+    })
 
     // Initially load some items.
-    this.loadMoreTweet();
-  }
-};
+    this.loadMoreTweet()
+  },
+}
 </script>
 
 <style scoped>
