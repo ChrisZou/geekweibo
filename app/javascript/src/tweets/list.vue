@@ -125,7 +125,7 @@
 </template>
 
 <script>
-import { VTooltip, VPopover, VClosePopover } from 'v-tooltip'
+import { VPopover } from 'v-tooltip'
 import LoginDialog from '../common/LoginDialog.vue'
 import Vue from 'vue/dist/vue.esm'
 import VModal from 'vue-js-modal'
