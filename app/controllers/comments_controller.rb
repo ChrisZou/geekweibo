@@ -32,7 +32,7 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:tweet_id, :body)
+      params.require(:comment).permit(:tweet_id, :body, :parent_comment_id)
     end
 
     def authorize!
@@ -44,6 +44,10 @@ class CommentsController < ApplicationController
     def create_comment_notification(comment_params)
       tweet = Tweet.find(comment_params[:tweet_id])
       Notification.create(recipient: tweet.user, actor: current_user, action: 'comment', notifiable: tweet)
+      if comment_params[:parent_comment_id]
+        parent_comment = Comment.find(comment_params[:parent_comment_id])
+        Notification.create(recipient: parent_comment.user, actor: current_user, action: 'comment', notifiable: parent_comment)
+      end
     end
 
 end

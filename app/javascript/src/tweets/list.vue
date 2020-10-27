@@ -112,7 +112,7 @@
               <div
                 class="text-sm text-gray-500 cursor-pointer markdown"
                 @click="tweet.replying_comment = tweet.replying_comment ? null : comment"
-                v-html="markdown(comment.body)"
+                v-html="commentContent(comment)"
               ></div>
             </div>
           </div>
@@ -239,11 +239,14 @@ export default {
       post('/comments', {
         tweet_id: tweet.id,
         body: tweet.new_comment,
+        parent_comment_id: tweet.replying_comment ? tweet.replying_comment.id : null,
       }).then(data => {
         tweet.comments.unshift({
           user: this.currentUser,
           body: data.body,
+          parent_comment: tweet.replying_comment,
         })
+        tweet.replying_comment = null
         tweet.new_comment = ''
         this.$refs['tweet_comment_inbox_' + index][0].innerText = ''
       })
@@ -310,6 +313,13 @@ export default {
       return avatar
         ? `${avatar}?x-oss-process=image/resize,m_fill,h_100,w_100`
         : `https://ui-avatars.com/api/?background=444444&name=${nickname}&length=1&color=eeeeee`
+    },
+    commentContent(comment) {
+      if (comment.parent_comment) {
+        return `@${comment.parent_comment.user.nickname} ${comment.body}`
+      } else {
+        return comment.body
+      }
     },
     markdown(body) {
       return marked(body)

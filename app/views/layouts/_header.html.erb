@@ -118,11 +118,23 @@ function notificationData() {
       return `/tweets/${notification.notifiable_id}`
     },
     notificationTitle(notification) {
-      return `${notification.actor.nickname} ${this.actionTitle(notification.action)}了你的微博`
+      const target_name = notification.notifiable_type == 'Tweet' ? '微博' : '评论'
+      return `@${notification.actor.nickname} ${this.actionTitle(notification.action, notification.notifiable_type)}了你的${this.targetType(notification.notifiable_type)}`
     },
-    actionTitle(action) {
+    targetType(target) {
+      switch (target.toLowerCase()) {
+        case 'tweet':
+          return '微博'
+        case 'comment':
+          return '评论'
+      }
+      return '微博'
+    },
+    actionTitle(action, target) {
       if (action == "like") return "赞"
-      if (action == "comment") return "评论"
+      if (action == "comment") {
+        return target == 'Comment' ? '回复' : "评论"
+      }
       return "djafklfjasdf"
     }
   }
