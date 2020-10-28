@@ -9,6 +9,7 @@
 </div>
 <%= javascript_pack_tag 'tweets/show.js' %>
 
-
-<%= link_to 'Edit', edit_tweet_path(@tweet) %> |
+<% if is_mine(@tweet.user_id) %>
+  <%= link_to 'Edit', edit_tweet_path(@tweet) %> |
+<% end %>
 <%= link_to 'Back', tweets_path %>
