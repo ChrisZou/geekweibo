@@ -159,6 +159,7 @@
             <a :href="`/users/${sharing_tweet.user.id}`">
               <img
                 :src="scaledAvatar(sharing_tweet.user.avatar, sharing_tweet.user.nickname, Math.random())"
+                crossorigin="https://geekweibo.com"
                 class="inline-block object-cover w-10 h-10 ml-4 bg-gray-500 rounded-full"
               />
             </a>
@@ -350,7 +351,7 @@ export default {
       return this.currentUser && this.currentUser.id == comment.user.id
     },
     scaledAvatar(avatar, nickname, timestamps) {
-      if (!timestamps) timestamps = 0
+      if (timestamps) timestamps = 0
       return avatar
         ? `${avatar}?x-oss-process=image/resize,m_fill,h_100,w_100&s=${timestamps}`
         : `https://ui-avatars.com/api/?background=444444&name=${nickname}&length=1&color=eeeeee`
