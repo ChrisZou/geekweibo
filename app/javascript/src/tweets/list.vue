@@ -152,20 +152,24 @@
       </div>
     </div>
     <v-dialog />
-    <modal name="share-tweet" width="300px">
-      <div v-if="sharing_tweet" class="flex flex-col bg-white">
-        <div class="flex flex-row items-center pb-4 mt-4 bg-white border-b border-gray-200">
-          <a :href="`/users/${sharing_tweet.user.id}`">
-            <img
-              :src="scaledAvatar(sharing_tweet.user.avatar, sharing_tweet.user.nickname)"
-              class="inline-block object-cover w-10 h-10 ml-4 bg-gray-500 rounded-full"
-            />
-          </a>
-          <div class="relative w-full p-4 overflow-x-auto">
-            <h3 class="text-lg text-gray-900 leading-6">{{ sharing_tweet.user.nickname }}</h3>
+    <modal name="share-tweet" width="300px" height="auto" background="none">
+      <div class="flex flex-col items-center">
+        <div v-if="sharing_tweet" id="sharing-image-root" class="flex flex-col bg-white">
+          <div class="flex flex-row items-center pb-4 mt-4 bg-white border-b border-gray-200">
+            <a :href="`/users/${sharing_tweet.user.id}`">
+              <img
+                :src="scaledAvatar(sharing_tweet.user.avatar, sharing_tweet.user.nickname, Math.random())"
+                class="inline-block object-cover w-10 h-10 ml-4 bg-gray-500 rounded-full"
+              />
+            </a>
+            <h3 class="ml-2 text-lg text-gray-900 leading-6">{{ sharing_tweet.user.nickname }}</h3>
           </div>
+          <div stroke="currentColor" class="p-4 pb-0 text-sm text-gray-500 leading-5 markdown" v-html="markdown(sharing_tweet.body)"></div>
+          <qrcode :value="`https://geekweibo.com/tweets/${sharing_tweet.id}`" class="self-center mb-4" :options="{ width: 150 }"></qrcode>
         </div>
-        <div stroke="currentColor" class="p-4 text-sm text-gray-500 leading-5 markdown" v-html="markdown(sharing_tweet.body)"></div>
+        <svg class="w-8 h-8 mb-4" @click="downloadSharingImage" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
       </div>
     </modal>
   </div>
@@ -175,7 +179,10 @@
 import { VPopover } from 'v-tooltip'
 import LoginDialog from '../common/LoginDialog.vue'
 import Vue from 'vue/dist/vue.esm'
+import VueQrcode from '@chenfengyuan/vue-qrcode'
 import VModal from 'vue-js-modal'
+import html2canvas from 'html2canvas'
+Vue.component(VueQrcode.name, VueQrcode)
 Vue.use(VModal, { dialog: true })
 
 const marked = require('marked')
@@ -342,9 +349,10 @@ export default {
     isMyComment(comment) {
       return this.currentUser && this.currentUser.id == comment.user.id
     },
-    scaledAvatar(avatar, nickname) {
+    scaledAvatar(avatar, nickname, timestamps) {
+      if (timestamps) timestamps = 0
       return avatar
-        ? `${avatar}?x-oss-process=image/resize,m_fill,h_100,w_100`
+        ? `${avatar}?x-oss-process=image/resize,m_fill,h_100,w_100&s=${timestamps}`
         : `https://ui-avatars.com/api/?background=444444&name=${nickname}&length=1&color=eeeeee`
     },
     commentContent(comment) {
@@ -356,6 +364,14 @@ export default {
     },
     markdown(body) {
       return marked(body)
+    },
+    downloadSharingImage() {
+      html2canvas(document.querySelector('#sharing-image-root'), { useCORS: true, imageTimeout: 2000 }).then(canvas => {
+        const img = document.createElement('a')
+        img.href = canvas.toDataURL('image/jpeg').replace('image/jpeg', 'image/octet-stream')
+        img.download = `${this.sharing_tweet.id}.jpg`
+        img.click()
+      })
     },
   },
   mounted() {

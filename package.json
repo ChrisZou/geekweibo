@@ -2,6 +2,7 @@
   "name": "geekweibo",
   "private": true,
   "dependencies": {
+    "@chenfengyuan/vue-qrcode": "^1.0.2",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
@@ -9,6 +10,7 @@
     "@tailwindcss/ui": "^0.3.0",
     "alpinejs": "^2.4.1",
     "autosize": "^4.0.2",
+    "html2canvas": "^1.0.0-rc.7",
     "marked": "^1.1.1",
     "tailwindcss": "^1.4.6",
     "turbolinks": "^5.2.0",
