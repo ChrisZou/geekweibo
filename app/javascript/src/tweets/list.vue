@@ -154,7 +154,7 @@
     <v-dialog />
     <modal name="share-tweet" width="300px" height="auto" background="none">
       <div class="flex flex-col items-center">
-        <div v-if="sharing_tweet" id="sharing-image-root" class="flex flex-col bg-white">
+        <div v-if="sharing_tweet" id="sharing-image-root" class="flex flex-col w-full bg-white">
           <div class="flex flex-row items-center pb-4 mt-4 bg-white border-b border-gray-200">
             <a :href="`/users/${sharing_tweet.user.id}`">
               <img
@@ -166,7 +166,8 @@
             <h3 class="ml-2 text-lg text-gray-900 leading-6">{{ sharing_tweet.user.nickname }}</h3>
           </div>
           <div stroke="currentColor" class="p-4 pb-0 text-sm text-gray-500 leading-5 markdown" v-html="markdown(sharing_tweet.body)"></div>
-          <qrcode :value="`https://geekweibo.com/tweets/${sharing_tweet.id}`" class="self-center mb-4" :options="{ width: 150 }"></qrcode>
+          <qrcode :value="`https://geekweibo.com/tweets/${sharing_tweet.id}`" class="self-center mb-0" :options="{ width: 150 }"></qrcode>
+          <span class="self-center mb-4 text-gray-600">geekweibo.com</span>
         </div>
         <svg class="w-8 h-8 mb-4" @click="downloadSharingImage" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
