@@ -31,7 +31,23 @@
           <div class="flex items-center">
             <svg
               fill="none"
-              class="p-1.5 rounded-full cursor-pointer w-7 h-7 hover:bg-gray-200 transition duration-300"
+              class="w-7 h-7 p-1.5 cursor-pointer hover:bg-gray-200 rounded-full transition duration-300"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-label="share icon"
+              @click="shareTweet(tweet)"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+              />
+            </svg>
+
+            <svg
+              fill="none"
+              class="p-1.5 rounded-full cursor-pointer w-7 h-7 hover:bg-gray-200 transition duration-300 ml-7"
               stroke-width="2"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -42,10 +58,12 @@
                 d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
               />
             </svg>
-            <span class="inline-block ml-0.5 text-xs" v-if="tweet.comments.length">{{ tweet.comments.length }}</span>
+            <div class="w-4">
+              <span class="inline-block ml-0.5 text-xs" v-show="tweet.comments.length">{{ tweet.comments.length }}</span>
+            </div>
             <svg
               viewBox="0 0 24 24"
-              class="w-7 h-7 p-1.5 hover:bg-gray-200 transition duration-300 rounded-full ml-4 cursor-pointer fill-current"
+              class="w-7 h-7 p-1.5 hover:bg-gray-200 transition duration-300 rounded-full ml-3 cursor-pointer fill-current"
               :class="tweet.liked ? 'text-red-500' : 'text-black'"
               aria-label="like icon"
               @click.stop="toggleLike(tweet)"
@@ -134,6 +152,22 @@
       </div>
     </div>
     <v-dialog />
+    <modal name="share-tweet" width="300px">
+      <div v-if="sharing_tweet" class="flex flex-col bg-white">
+        <div class="flex flex-row items-center pb-4 mt-4 bg-white border-b border-gray-200">
+          <a :href="`/users/${sharing_tweet.user.id}`">
+            <img
+              :src="scaledAvatar(sharing_tweet.user.avatar, sharing_tweet.user.nickname)"
+              class="inline-block object-cover w-10 h-10 ml-4 bg-gray-500 rounded-full"
+            />
+          </a>
+          <div class="relative w-full p-4 overflow-x-auto">
+            <h3 class="text-lg text-gray-900 leading-6">{{ sharing_tweet.user.nickname }}</h3>
+          </div>
+        </div>
+        <div stroke="currentColor" class="p-4 text-sm text-gray-500 leading-5 markdown" v-html="markdown(sharing_tweet.body)"></div>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -158,18 +192,13 @@ export default {
   components: { 'v-popover': VPopover },
   props: ['tweets', 'tweets_url'],
   data() {
-    /* this.tweets.forEach(t => { */
-    /*   t.showMenu = false; */
-    /*   t.comment_count = t.comments.length; */
-    /*   t.has_more_comment = t.comments.length > 5; */
-    /*   t.comments = t.comments.slice(0, 5); */
-    /* }); */
     return {
       items: [],
       page: 1,
       currentUser: window.currentUser(),
       loading_more: false,
       has_more: true,
+      sharing_tweet: null,
     }
   },
   methods: {
@@ -229,6 +258,10 @@ export default {
         return t
       })
       tweet.show_comment = true
+    },
+    shareTweet(tweet) {
+      this.sharing_tweet = tweet //
+      this.$modal.show('share-tweet', {}, { resizable: true, classes: 'w-10' })
     },
     updateNewCommentOf(e, tweet) {
       tweet.new_comment = e.target.innerText
