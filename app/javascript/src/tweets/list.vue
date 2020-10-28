@@ -268,8 +268,11 @@ export default {
       tweet.show_comment = true
     },
     shareTweet(tweet) {
-      this.sharing_tweet = tweet //
-      this.$modal.show('share-tweet', {}, { resizable: true, classes: 'w-10' })
+      window.scrollTo(0, 0)
+      setTimeout(() => {
+        this.sharing_tweet = tweet //
+        this.$modal.show('share-tweet', {}, { resizable: true, classes: 'w-10' })
+      }, 100)
     },
     updateNewCommentOf(e, tweet) {
       tweet.new_comment = e.target.innerText
