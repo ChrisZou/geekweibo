@@ -159,7 +159,7 @@
             <a :href="`/users/${sharing_tweet.user.id}`">
               <img
                 :src="scaledAvatar(sharing_tweet.user.avatar, sharing_tweet.user.nickname, Math.random())"
-                crossorigin="process.env"
+                crossorigin="geekweibo.com"
                 class="inline-block object-cover w-10 h-10 ml-4 bg-gray-500 rounded-full"
               />
             </a>
@@ -371,8 +371,6 @@ export default {
     },
     downloadSharingImage() {
       html2canvas(document.querySelector('#sharing-image-root'), { useCORS: true, imageTimeout: 2000 }).then(canvas => {
-        document.querySelector('#sharing-image-root').append(canvas)
-        return
         const img = document.createElement('a')
         img.href = canvas.toDataURL('image/jpeg').replace('image/jpeg', 'image/octet-stream')
         img.download = `${this.sharing_tweet.id}.jpg`
