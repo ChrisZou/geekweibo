@@ -350,7 +350,7 @@ export default {
       return this.currentUser && this.currentUser.id == comment.user.id
     },
     scaledAvatar(avatar, nickname, timestamps) {
-      if (timestamps) timestamps = 0
+      if (!timestamps) timestamps = 0
       return avatar
         ? `${avatar}?x-oss-process=image/resize,m_fill,h_100,w_100&s=${timestamps}`
         : `https://ui-avatars.com/api/?background=444444&name=${nickname}&length=1&color=eeeeee`
