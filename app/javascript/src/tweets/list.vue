@@ -26,8 +26,7 @@
             </template>
           </v-popover>
         </div>
-        <div class="flex items-center justify-between mt-4">
-          <span class="text-xs text-gray-500">{{ tweet.created_at }}</span>
+        <div class="flex items-center justify-end mt-4">
           <div class="flex items-center">
             <svg
               fill="none"
