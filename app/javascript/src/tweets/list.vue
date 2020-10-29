@@ -73,9 +73,11 @@
                 d="M12.76 3.76a6 6 0 018.48 8.48l-8.53 8.54a1 1 0 01-1.42 0l-8.53-8.54a6 6 0 018.48-8.48l.76.75.76-.75zm7.07 7.07a4 4 0 10-5.66-5.66l-1.46 1.47a1 1 0 01-1.42 0L9.83 5.17a4 4 0 10-5.66 5.66L12 18.66l7.83-7.83z"
               />
             </svg>
-            <span :class="tweet.liked ? 'text-red-500' : 'text-black'" v-if="tweet.like_count" class="inline-block ml-0.5 text-xs">{{
-              tweet.like_count
-            }}</span>
+            <div class="w-4">
+              <span :class="tweet.liked ? 'text-red-500' : 'text-black'" v-if="tweet.like_count" class="inline-block ml-0.5 text-xs">
+                {{ tweet.like_count }}
+              </span>
+            </div>
           </div>
         </div>
         <div v-if="tweet.show_comment" class="mt-2 rounded">
