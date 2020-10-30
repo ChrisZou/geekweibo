@@ -104,7 +104,11 @@
             </a>
             <h3 class="ml-2 text-lg text-gray-900 leading-6">{{ sharing_tweet.user.nickname }}</h3>
           </div>
-          <div stroke="currentColor" class="p-4 pb-0 text-sm text-gray-500 leading-5 markdown" v-html="markdown(sharing_tweet.body)"></div>
+          <div
+            stroke="currentColor"
+            class="p-4 pb-0 text-sm text-gray-500 leading-5 markdown sharing-image"
+            v-html="markdown(sharing_tweet.body)"
+          ></div>
           <qrcode :value="`https://geekweibo.com/tweets/${sharing_tweet.id}`" class="self-center mb-0" :options="{ width: 150 }"></qrcode>
           <span class="self-center mb-4 text-gray-600">geekweibo.com</span>
         </div>
