@@ -27,33 +27,7 @@
           </svg>
           <span v-if="tweet.like_count" class="inline-block ml-1 text-xs">{{ tweet.like_count }}</span>
         </div>
-        <div class="mt-2 rounded">
-          <div class="flex flex-col p-2 bg-gray-100 rounded">
-            <div class="flex flex-row">
-              <img v-if="currentUser" :src="currentUser.avatar" class="object-cover w-8 h-8 rounded-full" />
-              <div
-                contenteditable="true"
-                ref="tweet_comment_inbox"
-                @input="updateNewComment"
-                @focus="confirmLogin"
-                class="w-full p-2 ml-2 bg-white border-indigo-100 border-solid rounded outline-none"
-              ></div>
-            </div>
-            <button
-              @click="postComment"
-              class="self-end px-3 py-2 mt-2 text-xs text-white bg-indigo-500 rounded outline-none focus:outline-none active:bg-indigo-600"
-            >
-              评论
-            </button>
-          </div>
-          <div v-for="comment in tweet.comments" class="flex flex-row mt-3" v-bind:key="comment.id">
-            <img :src="comment.user.avatar" class="object-cover w-8 h-8 rounded-full" />
-            <div class="w-full ml-2">
-              <div class="text-xs font-medium text-gray-900">{{ comment.user.nickname }}</div>
-              <div class="text-sm text-gray-500 markdown" v-html="markdown(comment.body)"></div>
-            </div>
-          </div>
-        </div>
+        <CommentList :currentUser="currentUser" :tweet="tweet" />
       </div>
     </div>
   </div>
@@ -70,7 +44,10 @@ marked.setOptions({
 })
 
 import LoginDialog from '../common/LoginDialog.vue'
+import CommentList from './comments/CommentList'
+
 export default {
+  components: { CommentList },
   props: ['origin_tweet'],
   data() {
     return {
@@ -99,24 +76,6 @@ export default {
     },
     showLoginDialog() {
       this.$modal.show(LoginDialog, {}, { height: 'auto', width: 400 })
-    },
-    updateNewComment(e) {
-      this.new_comment = e.target.innerText
-    },
-    postComment() {
-      if (!this.new_comment) return
-
-      post('/comments', {
-        tweet_id: this.tweet.id,
-        body: this.new_comment,
-      }).then(data => {
-        this.tweet.comments.unshift({
-          user: this.currentUser,
-          body: data.body,
-        })
-        this.new_comment = ''
-        this.$refs.tweet_comment_inbox.innerText = ''
-      })
     },
     markdown(text) {
       return marked(text)

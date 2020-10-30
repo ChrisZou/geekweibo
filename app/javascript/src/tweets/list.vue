@@ -26,7 +26,7 @@
             </template>
           </v-popover>
         </div>
-        <div class="flex items-center justify-end mt-4">
+        <div aria-label="tweet operations" class="flex items-center justify-end mt-4">
           <div class="flex items-center">
             <svg
               fill="none"
@@ -79,69 +79,7 @@
             </div>
           </div>
         </div>
-        <div v-if="tweet.show_comment" class="mt-2 rounded">
-          <div class="flex flex-col p-3 bg-gray-100 rounded">
-            <div class="flex flex-row">
-              <img v-if="currentUser" :src="currentUser.avatar" class="object-cover w-8 h-8 rounded-full" />
-              <div class="flex flex-col w-full ml-3">
-                <div
-                  contenteditable="true"
-                  v-bind:ref="'tweet_comment_inbox_' + index"
-                  v-html="tweet.new_comment"
-                  @input="e => updateNewCommentOf(e, tweet)"
-                  class="w-full p-2 bg-white border-indigo-100 border-solid rounded outline-none"
-                  v-on:keydown.meta.enter="postComment(tweet, index)"
-                ></div>
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center">
-                    <span v-if="tweet.replying_comment" class="text-sm text-gray-600">
-                      回复 @{{ tweet.replying_comment.user.nickname }}: {{ tweet.replying_comment.body }}
-                    </span>
-                  </div>
-                  <button
-                    @click="postComment(tweet, index)"
-                    class="self-end px-3 py-2 mt-2 text-xs text-white bg-indigo-500 rounded outline-none focus:outline-none active:bg-indigo-600"
-                  >
-                    评论
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div v-for="comment in tweet.comments" class="flex flex-row mt-3 ml-3" v-bind:key="comment.id">
-            <img :src="scaledAvatar(comment.user.avatar, comment.user.nickname)" class="object-cover w-8 h-8 rounded-full" />
-            <div class="w-full ml-2">
-              <div class="flex items-center justify-between">
-                <div class="text-xs font-medium text-gray-900">{{ comment.user.nickname }}</div>
-                <svg
-                  class="w-5 h-5 p-1 text-gray-400 rounded-full hover:bg-gray-200 transition duration-300"
-                  aria-label="delete comment"
-                  v-if="isMyComment(comment)"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  @click="confirmDeleteComment(tweet, comment)"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div
-                class="text-sm text-gray-500 cursor-pointer markdown"
-                @click="tweet.replying_comment = tweet.replying_comment ? null : comment"
-                v-html="commentContent(comment)"
-              ></div>
-            </div>
-          </div>
-          <a
-            v-if="tweet.has_more_comment"
-            :href="`/tweets/${tweet.id}`"
-            class="inline-block w-full pt-3 mt-3 text-sm text-center border-t border-gray-200"
-            >查看更多&nbsp;&gt;</a
-          >
-        </div>
+        <CommentList v-if="tweet.show_comment" :currentUser="currentUser" :tweet="tweet" />
       </div>
     </div>
     <div v-show="loading_more" class="w-full text-center">
@@ -181,6 +119,7 @@
 <script>
 import { VPopover } from 'v-tooltip'
 import LoginDialog from '../common/LoginDialog.vue'
+import CommentList from './comments/CommentList.vue'
 import Vue from 'vue/dist/vue.esm'
 import VueQrcode from '@chenfengyuan/vue-qrcode'
 import VModal from 'vue-js-modal'
@@ -199,7 +138,7 @@ marked.setOptions({
 })
 
 export default {
-  components: { 'v-popover': VPopover },
+  components: { 'v-popover': VPopover, CommentList },
   props: ['tweets', 'tweets_url'],
   data() {
     return {
@@ -223,7 +162,11 @@ export default {
       const url = this.urlWithPage()
       get(url).then(tweets => {
         this.loading_more = false
-        tweets.data.forEach(t => (t.replying_comment = null))
+        tweets.data.forEach(t => {
+          t.has_more_comments = t.comments.length > 5
+          t.comments = t.comments.slice(0, 5)
+          t.replying_comment = null
+        })
         if (this.page > 1) {
           this.items = this.items.concat(tweets.data)
         } else {
