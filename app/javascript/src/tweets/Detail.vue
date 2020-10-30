@@ -33,6 +33,7 @@
   </div>
 </template>
 <script>
+import DOMPurify from 'dompurify'
 const marked = require('marked')
 marked.setOptions({
   renderer: new marked.Renderer(),
@@ -78,7 +79,7 @@ export default {
       this.$modal.show(LoginDialog, {}, { height: 'auto', width: 400 })
     },
     markdown(text) {
-      return marked(text)
+      return marked(DOMPurify.sanitize(text))
     },
   },
 }

@@ -127,6 +127,7 @@ import html2canvas from 'html2canvas'
 Vue.component(VueQrcode.name, VueQrcode)
 Vue.use(VModal, { dialog: true })
 
+import DOMPurify from 'dompurify'
 const marked = require('marked')
 marked.setOptions({
   renderer: new marked.Renderer(),
@@ -312,7 +313,7 @@ export default {
       }
     },
     markdown(body) {
-      return marked(body)
+      return marked(DOMPurify.sanitize(body))
     },
     downloadSharingImage() {
       html2canvas(document.querySelector('#sharing-image-root'), { useCORS: true, imageTimeout: 2000 }).then(canvas => {

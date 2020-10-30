@@ -49,7 +49,6 @@ class TweetsController < ApplicationController
   def create
     p = tweet_params
     p[:user_id] = current_user&.id
-    p[:body] = sanitize p[:body]
     @tweet = Tweet.new(p)
 
     respond_to do |format|
@@ -62,22 +61,6 @@ class TweetsController < ApplicationController
       end
     end
   end
-
-  # PATCH/PUT /tweets/1
-  # PATCH/PUT /tweets/1.json
-  # def update
-  #   tp = tweet_params
-  #   tp[:body] = sanitize tp[:body]
-  #   respond_to do |format|
-  #     if @tweet.update(tp)
-  #       format.html { redirect_to @tweet, notice: 'Tweet was successfully updated.' }
-  #       format.json { render :show, status: :ok, location: @tweet }
-  #     else
-  #       format.html { render :edit }
-  #       format.json { render json: @tweet.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
 
   # DELETE /tweets/1
   # DELETE /tweets/1.json

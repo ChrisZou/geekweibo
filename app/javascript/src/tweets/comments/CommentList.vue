@@ -66,6 +66,17 @@
 </template>
 
 <script>
+import DOMPurify from 'dompurify'
+const marked = require('marked')
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  breaks: true,
+  pedantic: false,
+  smartLists: true,
+  smartypants: false,
+})
+
 export default {
   props: ['currentUser', 'tweet'],
   data() {
@@ -76,11 +87,11 @@ export default {
       tweet.new_comment = e.target.innerText
     },
     commentContent(comment) {
+      var content = comment.body
       if (comment.parent_comment) {
-        return `@${comment.parent_comment.user.nickname} ${comment.body}`
-      } else {
-        return comment.body
+        content = `@${comment.parent_comment.user.nickname} ${content}`
       }
+      return marked(DOMPurify.sanitize(content))
     },
     isMyComment(comment) {
       return this.currentUser && this.currentUser.id == comment.user.id

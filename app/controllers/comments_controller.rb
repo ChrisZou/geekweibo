@@ -7,7 +7,6 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     cp = comment_params
-    cp[:body] = sanitize(cp[:body])
     @comment = current_user.comments.new(cp)
 
     if @comment.save
