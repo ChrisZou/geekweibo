@@ -23,6 +23,10 @@ window.delete = (url, data) => {
   })
 }
 
+window.user_signed_in = () => {
+  return sessionStorage.getItem('loggedIn')
+}
+
 window.currentUser = () => {
   if (window._currentUser) {
     return window._currentUser

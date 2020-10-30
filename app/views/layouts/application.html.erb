@@ -15,7 +15,7 @@
   <% if current_user %>
     <%= javascript_tag "sessionStorage.setItem('current_user', '#{current_user_json}');\nsessionStorage.setItem('loggedIn', 'true') " %>
   <% else %>
-    <%= javascript_tag "sessionStorage.removeItem('loggedIn')" %> 
+    <%= javascript_tag "sessionStorage.removeItem('loggedIn');\nsessionStorage.removeItem('current_user')" %> 
   <% end %>
 
 </head>
