@@ -62,10 +62,12 @@
     >
       查看更多&nbsp;&gt;
     </a>
+    <v-dialog />
   </div>
 </template>
 
 <script>
+import LoginDialog from '../../common/LoginDialog.vue'
 import DOMPurify from 'dompurify'
 const marked = require('marked')
 marked.setOptions({
@@ -76,6 +78,9 @@ marked.setOptions({
   smartLists: true,
   smartypants: false,
 })
+import Vue from 'vue/dist/vue.esm'
+import VModal from 'vue-js-modal'
+Vue.use(VModal, { dialog: true })
 
 export default {
   props: ['currentUser', 'tweet'],
@@ -83,6 +88,32 @@ export default {
     return { hello: 'world', replying_comment: null }
   },
   methods: {
+    confirmDeleteComment(tweet, comment) {
+      this.$modal.show('dialog', {
+        title: '确定删除这条评论？',
+        text: '此操作无法撤销',
+        buttons: [
+          {
+            title: '取消',
+            class: 'focus:outline-none py-3 hover:bg-gray-100 ',
+            handler: () => {
+              this.$modal.hide('dialog')
+            },
+          },
+          {
+            title: '确定',
+            default: true,
+            class: 'focus:outline-none py-3 hover:bg-gray-100',
+            handler: () => {
+              this.$modal.hide('dialog')
+              window.delete(`/comments/${comment.id}`).then(res => {
+                tweet.comments = tweet.comments.filter(c => c.id != comment.id)
+              })
+            },
+          },
+        ],
+      })
+    },
     updateNewCommentOf(e, tweet) {
       tweet.new_comment = e.target.innerText
     },
@@ -94,9 +125,16 @@ export default {
       return marked(DOMPurify.sanitize(content))
     },
     isMyComment(comment) {
-      return this.currentUser && this.currentUser.id == comment.user.id
+      return this.currentUser && this.currentUser.id === comment.user.id
+    },
+    showLoginDialog() {
+      this.$modal.show(LoginDialog, {}, { height: 'auto', width: 400 })
     },
     postComment(tweet) {
+      if (!this.currentUser) {
+        this.showLoginDialog()
+        return
+      }
       if (!tweet.new_comment) return
 
       post('/comments', {

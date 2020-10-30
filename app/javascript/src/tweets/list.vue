@@ -1,6 +1,6 @@
 <template>
   <div id="tweet-list">
-    <div class="flex flex-row mb-4 bg-white shadow sm:rounded-lg" v-for="(tweet, index) in items" :key="tweet.id">
+    <div class="flex flex-row mb-4 bg-white shadow sm:rounded-lg" v-for="tweet in items" :key="tweet.id">
       <a :href="`/users/${tweet.user.id}`">
         <img
           :src="scaledAvatar(tweet.user.avatar, tweet.user.nickname)"
@@ -126,9 +126,9 @@ import LoginDialog from '../common/LoginDialog.vue'
 import CommentList from './comments/CommentList.vue'
 import Vue from 'vue/dist/vue.esm'
 import VueQrcode from '@chenfengyuan/vue-qrcode'
-import VModal from 'vue-js-modal'
 import html2canvas from 'html2canvas'
 Vue.component(VueQrcode.name, VueQrcode)
+import VModal from 'vue-js-modal'
 Vue.use(VModal, { dialog: true })
 
 import DOMPurify from 'dompurify'
@@ -224,27 +224,6 @@ export default {
         this.$modal.show('share-tweet', {}, { resizable: true, classes: 'w-10' })
       }, 100)
     },
-    updateNewCommentOf(e, tweet) {
-      tweet.new_comment = e.target.innerText
-    },
-    postComment(tweet, index) {
-      if (!tweet.new_comment) return
-
-      post('/comments', {
-        tweet_id: tweet.id,
-        body: tweet.new_comment,
-        parent_comment_id: tweet.replying_comment ? tweet.replying_comment.id : null,
-      }).then(data => {
-        tweet.comments.unshift({
-          user: this.currentUser,
-          body: data.body,
-          parent_comment: tweet.replying_comment,
-        })
-        tweet.replying_comment = null
-        tweet.new_comment = ''
-        this.$refs['tweet_comment_inbox_' + index][0].innerText = ''
-      })
-    },
     confirmDeleteTweet(tweet) {
       this.$modal.show('dialog', {
         title: '确定删除这条推文？',
@@ -265,32 +244,6 @@ export default {
               this.$modal.hide('dialog')
               window.delete(`/tweets/${tweet.id}`).then(res => {
                 this.items = this.items.filter(t => t.id != tweet.id)
-              })
-            },
-          },
-        ],
-      })
-    },
-    confirmDeleteComment(tweet, comment) {
-      this.$modal.show('dialog', {
-        title: '确定删除这条评论？',
-        text: '此操作无法撤销',
-        buttons: [
-          {
-            title: '取消',
-            class: 'focus:outline-none py-3 hover:bg-gray-100 ',
-            handler: () => {
-              this.$modal.hide('dialog')
-            },
-          },
-          {
-            title: '确定',
-            default: true,
-            class: 'focus:outline-none py-3 hover:bg-gray-100',
-            handler: () => {
-              this.$modal.hide('dialog')
-              window.delete(`/comments/${comment.id}`).then(res => {
-                tweet.comments = tweet.comments.filter(c => c.id != comment.id)
               })
             },
           },
