@@ -43,7 +43,7 @@ export default {
   },
   data() {
     return {
-      new_tweet: '',
+      new_tweet: localStorage.getItem('new_tweet_backup'),
       new_tweets: [],
       loadMore: true,
       currentUser: window.currentUser(),
