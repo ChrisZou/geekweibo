@@ -83,48 +83,21 @@
         <CommentList v-if="tweet.show_comment" :currentUser="currentUser" :tweet="tweet" />
       </div>
     </div>
-    <div v-show="loading_more" class="w-full text-center">
-      <div class="lds-ellipsis">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    </div>
+    <Loading v-show="loading_more" />
     <v-dialog />
     <modal name="share-tweet" width="300px" height="auto" background="none">
-      <div class="flex flex-col items-center">
-        <div v-if="sharing_tweet" id="sharing-image-root" class="flex flex-col w-full bg-white">
-          <div class="flex flex-row items-center pb-4 mt-4 bg-white border-b border-gray-200">
-            <a :href="`/users/${sharing_tweet.user.id}`">
-              <img
-                :src="scaledAvatar(sharing_tweet.user.avatar, sharing_tweet.user.nickname, Math.random())"
-                crossorigin="geekweibo.com"
-                class="inline-block object-cover w-10 h-10 ml-4 bg-gray-500 rounded-full"
-              />
-            </a>
-            <h3 class="ml-2 text-lg text-gray-900 leading-6">{{ sharing_tweet.user.nickname }}</h3>
-          </div>
-          <div
-            stroke="currentColor"
-            class="p-4 pb-0 text-sm text-gray-500 leading-5 markdown sharing-image"
-            v-html="markdown(sharing_tweet.body)"
-          ></div>
-          <qrcode :value="`https://geekweibo.com/tweets/${sharing_tweet.id}`" class="self-center mb-0" :options="{ width: 150 }"></qrcode>
-          <span class="self-center mb-4 text-gray-600">geekweibo.com</span>
-        </div>
-        <svg class="w-8 h-8 mb-4" @click="downloadSharingImage" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-        </svg>
-      </div>
+      <TweetSharer :sharing_tweet="sharing_tweet" />
     </modal>
   </div>
 </template>
 
 <script>
-import { VPopover } from 'v-tooltip'
 import LoginDialog from '../common/LoginDialog.vue'
+import Loading from '../common/Loading.vue'
 import CommentList from './comments/CommentList.vue'
+import TweetSharer from './TweetSharer.vue'
+
+import { VPopover } from 'v-tooltip'
 import Vue from 'vue/dist/vue.esm'
 import VueQrcode from '@chenfengyuan/vue-qrcode'
 import html2canvas from 'html2canvas'
@@ -144,7 +117,7 @@ marked.setOptions({
 })
 
 export default {
-  components: { 'v-popover': VPopover, CommentList },
+  components: { 'v-popover': VPopover, CommentList, Loading, TweetSharer },
   props: ['tweets', 'tweets_url', 'new_tweets'],
   data() {
     return {
@@ -218,7 +191,7 @@ export default {
       window.scrollTo(0, 0)
       setTimeout(() => {
         this.sharing_tweet = tweet //
-        this.$modal.show('share-tweet', {}, { resizable: true, classes: 'w-10' })
+        this.$modal.show('share-tweet')
       }, 100)
     },
     confirmDeleteTweet(tweet) {
@@ -305,61 +278,5 @@ p {
   border-style: solid;
   border-width: 0 10px 10px 10px;
   border-color: transparent transparent #f4f5f7 transparent;
-}
-
-.lds-ellipsis {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-}
-.lds-ellipsis div {
-  position: absolute;
-  top: 33px;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #999;
-  animation-timing-function: cubic-bezier(0, 1, 1, 0);
-}
-.lds-ellipsis div:nth-child(1) {
-  left: 8px;
-  animation: lds-ellipsis1 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(2) {
-  left: 8px;
-  animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(3) {
-  left: 32px;
-  animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(4) {
-  left: 56px;
-  animation: lds-ellipsis3 0.6s infinite;
-}
-@keyframes lds-ellipsis1 {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-@keyframes lds-ellipsis3 {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
-}
-@keyframes lds-ellipsis2 {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(24px, 0);
-  }
 }
 </style>

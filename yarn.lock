@@ -949,6 +949,13 @@
     hex-rgb "^4.1.0"
     postcss-selector-parser "^6.0.2"
 
+"@types/dompurify@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.npm.taobao.org/@types/dompurify/download/@types/dompurify-2.0.4.tgz#25fce15f1f4b1bc0df0ad957040cf226416ac2d7"
+  integrity sha1-JfzhXx9LG8DfCtlXBAzyJkFqwtc=
+  dependencies:
+    "@types/trusted-types" "*"
+
 "@types/glob@^7.1.1":
   version "7.1.3"
   resolved "https://registry.npm.taobao.org/@types/glob/download/@types/glob-7.1.3.tgz#e6ba80f36b7daad2c685acd9266382e68985c183"
@@ -981,6 +988,11 @@
   version "1.5.4"
   resolved "https://registry.npm.taobao.org/@types/q/download/@types/q-1.5.4.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fq%2Fdownload%2F%40types%2Fq-1.5.4.tgz#15925414e0ad2cd765bfef58842f7e26a7accb24"
   integrity sha1-FZJUFOCtLNdlv+9YhC9+JqesyyQ=
+
+"@types/trusted-types@*":
+  version "1.0.6"
+  resolved "https://registry.npm.taobao.org/@types/trusted-types/download/@types/trusted-types-1.0.6.tgz#569b8a08121d3203398290d602d84d73c8dcf5da"
+  integrity sha1-VpuKCBIdMgM5gpDWAthNc8jc9do=
 
 "@vue/component-compiler-utils@^3.1.0":
   version "3.2.0"
