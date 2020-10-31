@@ -57,7 +57,7 @@ class TweetsController < ApplicationController
         format.json { render json: TweetBlueprint.render(@tweet), status: :created }
       else
         format.html { render :new }
-        format.json { render json: @tweet.errors, status: :unprocessable_entity }
+        format.json { render json: { result: 'error', error: @tweet.errors }, status: :unprocessable_entity }
       end
     end
   end

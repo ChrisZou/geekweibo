@@ -1,6 +1,6 @@
 <template>
   <div id="tweet-list">
-    <div class="flex flex-row mb-4 bg-white shadow sm:rounded-lg" v-for="tweet in items" :key="tweet.id">
+    <div class="flex flex-row mb-4 bg-white shadow sm:rounded-lg" v-for="tweet in allTweets" :key="tweet.id">
       <a :href="`/users/${tweet.user.id}`">
         <img
           :src="scaledAvatar(tweet.user.avatar, tweet.user.nickname)"
@@ -60,13 +60,18 @@ export default {
   props: ['tweets', 'tweets_url', 'new_tweets'],
   data() {
     return {
-      items: this.new_tweets,
+      items: [],
       page: 1,
       currentUser: window.currentUser(),
       loading_more: false,
       has_more: true,
       sharing_tweet: null,
     }
+  },
+  computed: {
+    allTweets() {
+      return this.new_tweets.concat(this.items)
+    },
   },
   methods: {
     urlWithPage() {

@@ -12,9 +12,12 @@
             placeholder="学到什么了呢？跟大家分享一下"
           ></textarea>
         </div>
-        <button class="mt-2 button" @click.stop="postTweet">
-          发布
-        </button>
+        <div class="flex items-center justify-between w-full">
+          <span class="text-xs text-red-500">{{ posting_error }}</span>
+          <button class="mt-2 button" @click.stop="postTweet">
+            发布
+          </button>
+        </div>
       </div>
     </div>
 
@@ -44,6 +47,7 @@ export default {
       new_tweets: [],
       loadMore: true,
       currentUser: window.currentUser(),
+      posting_error: '',
     }
   },
   methods: {
@@ -58,10 +62,20 @@ export default {
 
       if (this.new_tweet.trim() === '') return
 
-      post('/tweets', { tweet: { body: this.new_tweet } }).then(data => {
-        this.new_tweets.unshift({ user: this.currentUser, body: this.new_tweet })
-        localStorage.setItem('new_tweet_backup', '')
-      })
+      post('/tweets', { tweet: { body: this.new_tweet } })
+        .then(data => {
+          if (data.result !== 'error') {
+            this.new_tweets.unshift(data)
+            localStorage.setItem('new_tweet_backup', '')
+            this.new_tweet = ''
+            this.posting_error = ''
+          } else {
+            this.posting_error = data.error.body.join('; ')
+          }
+        })
+        .catch(e => {
+          console.log(e)
+        })
     },
     saveTweetLocally() {
       localStorage.setItem('new_tweet_backup', this.new_tweet)
