@@ -13,6 +13,9 @@ module.exports = {
     }
   },
   variants: {},
+  experimental: {
+    applyComplexClasses: true,
+  },
   plugins: [
     require('@tailwindcss/ui')
   ]

@@ -145,10 +145,10 @@ marked.setOptions({
 
 export default {
   components: { 'v-popover': VPopover, CommentList },
-  props: ['tweets', 'tweets_url'],
+  props: ['tweets', 'tweets_url', 'new_tweets'],
   data() {
     return {
-      items: [],
+      items: this.new_tweets,
       page: 1,
       currentUser: window.currentUser(),
       loading_more: false,
@@ -173,11 +173,7 @@ export default {
           t.comments = t.comments.slice(0, 5)
           t.replying_comment = null
         })
-        if (this.page > 1) {
-          this.items = this.items.concat(tweets.data)
-        } else {
-          this.items = tweets.data
-        }
+        this.items = this.items.concat(tweets.data)
         this.has_more = tweets.has_more
         this.page = this.page + 1
       })

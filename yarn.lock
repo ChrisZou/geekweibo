@@ -7601,10 +7601,10 @@ table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
-tailwindcss@^1.4.6:
-  version "1.9.3"
-  resolved "https://registry.npm.taobao.org/tailwindcss/download/tailwindcss-1.9.3.tgz#1f6c66026f0562ffcd7951e2d209c0ae4ffceae3"
-  integrity sha1-H2xmAm8FYv/NeVHi0gnArk/86uM=
+tailwindcss@^1.9.6:
+  version "1.9.6"
+  resolved "https://registry.npm.taobao.org/tailwindcss/download/tailwindcss-1.9.6.tgz#0c5089911d24e1e98e592a31bfdb3d8f34ecf1a0"
+  integrity sha1-DFCJkR0k4emOWSoxv9s9jzTs8aA=
   dependencies:
     "@fullhuman/postcss-purgecss" "^2.1.2"
     autoprefixer "^9.4.5"
