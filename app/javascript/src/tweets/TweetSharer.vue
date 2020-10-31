@@ -24,6 +24,9 @@
 <script>
 import { markdown, scaledAvatar } from '../common/Utils.js'
 import html2canvas from 'html2canvas'
+import Vue from 'vue/dist/vue.esm'
+import VueQrcode from '@chenfengyuan/vue-qrcode'
+Vue.component(VueQrcode.name, VueQrcode)
 
 export default {
   props: ['sharing_tweet'],

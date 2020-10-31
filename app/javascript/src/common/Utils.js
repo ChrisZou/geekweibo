@@ -1,5 +1,13 @@
 import DOMPurify from 'dompurify'
 import marked from 'marked'
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  breaks: true,
+  pedantic: false,
+  smartLists: true,
+  smartypants: false,
+})
 
 const markdown = (text) => marked(DOMPurify.sanitize(text))
 
