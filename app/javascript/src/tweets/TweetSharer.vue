@@ -15,7 +15,7 @@
       <qrcode :value="`https://geekweibo.com/tweets/${sharing_tweet.id}`" class="self-center mb-0" :options="{ width: 150 }"></qrcode>
       <span class="self-center mb-4 text-gray-600">geekweibo.com</span>
     </div>
-    <svg class="w-8 h-8 mb-4" @click="downloadSharingImage" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <svg class="w-8 h-8 mb-4 cursor-pointer" @click="downloadSharingImage" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
     </svg>
   </div>
