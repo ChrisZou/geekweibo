@@ -7,63 +7,65 @@
             v-model="new_tweet"
             rows="3"
             class="block w-full mt-1 form-textarea transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-            v-on:keydown.meta.enter="addTweet()"
+            v-on:keydown.meta.enter="postTweet()"
             v-on:keyup="saveTweetLocally"
             placeholder="学到什么了呢？跟大家分享一下"
           ></textarea>
         </div>
-        <button
-          class="px-4 py-2 mt-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue focus:bg-indigo-500 active:bg-indigo-600 transition duration-150 ease-in-out"
-          @click.stop="addTweet"
-        >发布</button>
+        <button class="mt-2 button" @click.stop="postTweet">
+          发布
+        </button>
       </div>
     </div>
 
-    <h1 class="mt-4 mb-8 text-4xl">最新动态</h1>
+    <h1 class="mt-4 text-4xl font-medium">最新动态</h1>
     <div id="app" class="mt-8">
-      <TweetList v-bind:tweets_url="tweets_url"></TweetList>
+      <TweetList :new_tweets="new_tweets" v-bind:tweets_url="tweets_url"></TweetList>
     </div>
   </div>
 </template>
 
 <script>
-import TweetList from "./list.vue";
-import LoginDialog from "../common/LoginDialog.vue";
-import Vue from "vue/dist/vue.esm";
-import VModal from "vue-js-modal";
-Vue.use(VModal, { dialog: true });
+import TweetList from './list.vue'
+import LoginDialog from '../common/LoginDialog.vue'
+import Vue from 'vue/dist/vue.esm'
+import VModal from 'vue-js-modal'
+Vue.use(VModal, { dialog: true })
 
 export default {
   components: { TweetList, LoginDialog },
-  props: ["tweets", "tweets_url"],
+  props: ['tweets', 'tweets_url'],
   mounted() {
-    autosize(document.querySelector("textarea"));
+    autosize(document.querySelector('textarea'))
   },
   data() {
     return {
-      new_tweet: "",
-      loadMore: true
-    };
+      new_tweet: '',
+      new_tweets: [],
+      loadMore: true,
+      currentUser: window.currentUser(),
+    }
   },
   methods: {
     loadMoreTweet() {
-      console.log("loading more");
+      console.log('loading more')
     },
-    addTweet() {
-      if (sessionStorage.getItem("loggedIn")) {
-        if (this.new_tweet.trim() === "") return;
-
-        post("/tweets", { tweet: { body: this.new_tweet } }).then(data => {
-          localStorage.setItem("new_tweet_backup", "");
-          location.reload();
-        });
-      } else {
-        this.$modal.show(LoginDialog, {}, { height: "auto", width: 400 });
+    postTweet() {
+      if (!this.currentUser) {
+        this.$modal.show(LoginDialog, {}, { height: 'auto', width: 400 })
+        return
       }
+
+      if (this.new_tweet.trim() === '') return
+
+      post('/tweets', { tweet: { body: this.new_tweet } }).then(data => {
+        this.new_tweets.unshift({ user: this.currentUser, body: this.new_tweet })
+        localStorage.setItem('new_tweet_backup', '')
+      })
     },
     saveTweetLocally() {
-      localStorage.setItem("new_tweet_backup", this.new_tweet);
-    }
-  }
-};
+      localStorage.setItem('new_tweet_backup', this.new_tweet)
+    },
+  },
+}
 </script>
