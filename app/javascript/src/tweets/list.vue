@@ -20,8 +20,9 @@
                 <span
                   class="px-8 py-2 text-sm tracking-wider cursor-pointer hover:bg-gray-200 transition duration-300 active:outline-none"
                   @click="confirmDeleteTweet(tweet)"
-                  >删除</span
                 >
+                  删除
+                </span>
               </div>
             </template>
           </v-popover>
