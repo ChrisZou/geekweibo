@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div>
+    <div class="px-4">
       <div class="flex flex-col items-end mt-4">
         <div class="w-full rounded-md shadow-sm">
           <textarea
             v-model="new_tweet"
             rows="3"
-            class="block w-full mt-1 form-textarea transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+            class="block w-full form-textarea transition duration-150 ease-in-out sm:text-sm sm:leading-5"
             v-on:keydown.meta.enter="postTweet()"
             v-on:keyup="saveTweetLocally"
             placeholder="学到什么了呢？跟大家分享一下"
@@ -14,15 +14,15 @@
         </div>
         <div class="flex items-center justify-between w-full">
           <span class="text-xs text-red-500">{{ posting_error }}</span>
-          <button class="mt-2 button" @click.stop="postTweet">
+          <button class="mt-4 button" @click.stop="postTweet">
             发布
           </button>
         </div>
       </div>
     </div>
 
-    <h1 class="mt-4 text-4xl font-medium">最新动态</h1>
-    <div id="app" class="mt-8">
+    <h1 class="p-4 text-xl font-medium text-gray-600">最新动态</h1>
+    <div id="app">
       <TweetList :new_tweets="new_tweets" v-bind:tweets_url="tweets_url"></TweetList>
     </div>
   </div>

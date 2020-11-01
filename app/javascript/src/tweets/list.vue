@@ -1,14 +1,14 @@
 <template>
   <div id="tweet-list">
-    <div class="flex flex-row mb-4 bg-white shadow sm:rounded-lg" v-for="tweet in allTweets" :key="tweet.id">
-      <a :href="`/users/${tweet.user.id}`">
+    <div class="flex p-4 flex-col bg-white border-b" v-for="tweet in allTweets" :key="tweet.id">
+      <a class="pb-4" :href="`/users/${tweet.user.id}`">
         <img
           :src="scaledAvatar(tweet.user.avatar, tweet.user.nickname)"
-          class="inline-block object-cover w-12 h-12 mt-4 ml-4 bg-gray-500 rounded-full"
+          class="inline-block object-cover w-10 h-10 bg-gray-500 rounded-full"
         />
+        <span class="text-lg font-medium text-gray-900 leading-6 p-2">{{ tweet.user.nickname }}</span>
       </a>
-      <div class="relative w-full p-4 overflow-x-auto">
-        <h3 class="text-lg font-medium text-gray-900 leading-6">{{ tweet.user.nickname }}</h3>
+      <div class="relative w-full overflow-x-auto">
         <div stroke="currentColor" class="mt-1 text-sm text-gray-500 leading-5 markdown" v-html="markdown(tweet.body)"></div>
         <div class="absolute top-1 right-1">
           <v-popover>
