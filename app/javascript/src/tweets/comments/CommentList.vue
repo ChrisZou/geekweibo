@@ -69,18 +69,10 @@
 <script>
 import LoginDialog from '../../common/LoginDialog.vue'
 import DOMPurify from 'dompurify'
-const marked = require('marked')
-marked.setOptions({
-  renderer: new marked.Renderer(),
-  gfm: true,
-  breaks: true,
-  pedantic: false,
-  smartLists: true,
-  smartypants: false,
-})
 import Vue from 'vue/dist/vue.esm'
 import VModal from 'vue-js-modal'
 Vue.use(VModal, { dialog: true })
+import { markdown, scaledAvatar } from '../../common/Utils'
 
 export default {
   props: ['currentUser', 'tweet'],
@@ -88,6 +80,8 @@ export default {
     return { hello: 'world', replying_comment: null }
   },
   methods: {
+    markdown,
+    scaledAvatar,
     confirmDeleteComment(tweet, comment) {
       this.$modal.show('dialog', {
         title: '确定删除这条评论？',
@@ -122,7 +116,7 @@ export default {
       if (comment.parent_comment) {
         content = `@${comment.parent_comment.user.nickname} ${content}`
       }
-      return marked(DOMPurify.sanitize(content))
+      return markdown(DOMPurify.sanitize(content))
     },
     isMyComment(comment) {
       return this.currentUser && this.currentUser.id === comment.user.id
@@ -151,12 +145,6 @@ export default {
         tweet.new_comment = ''
         this.$refs.tweet_comment_inbox.innerText = ''
       })
-    },
-    scaledAvatar(avatar, nickname, timestamps) {
-      if (!timestamps) timestamps = 0
-      return avatar
-        ? `${avatar}?x-oss-process=image/resize,m_fill,h_100,w_100&s=${timestamps}`
-        : `https://ui-avatars.com/api/?background=444444&name=${nickname}&length=1&color=eeeeee`
     },
   },
 }
