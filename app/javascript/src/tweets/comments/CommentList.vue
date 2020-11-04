@@ -2,7 +2,7 @@
   <div class="mt-2 rounded">
     <div aria-label="create comment form" class="flex flex-col p-3 bg-gray-100 rounded">
       <div class="flex flex-row">
-        <img v-if="currentUser" :src="currentUser.avatar" class="object-cover w-8 h-8 rounded-full" />
+        <img v-if="currentUser" :src="scaledAvatar(currentUser.avatar, currentUser.nickname)" class="object-cover w-8 h-8 rounded-full" />
         <div class="flex flex-col w-full ml-3">
           <div
             contenteditable="true"

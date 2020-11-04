@@ -1,10 +1,9 @@
 module ApplicationHelper
   def user_avatar(user, size = 100)
     if user && user.avatar.attached?
-      # user.avatar.variant(resize: "#{size}x#{size}")
       "#{user.avatar_url}?x-oss-process=image/resize,m_fill,h_#{size},w_#{size}"
     else
-      "avatar-not-logged-in.png"
+      "https://ui-avatars.com/api/?name=#{user.nickname}&size=#{size}&background=444444&length=1&color=eeeeee"
     end
   end
 
