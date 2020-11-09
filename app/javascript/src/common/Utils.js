@@ -1,15 +1,11 @@
-import DOMPurify from 'dompurify'
-import marked from 'marked'
-marked.setOptions({
-  renderer: new marked.Renderer(),
-  gfm: true,
-  breaks: true,
-  pedantic: false,
-  smartLists: true,
-  smartypants: false,
-})
+const md = require('markdown-it')({
+  html:         false,        // Enable HTML tags in source
+  breaks:       true,        // Convert '\n' in paragraphs into <br>
+  // langPrefix:   'language-',  // CSS language prefix for fenced blocks. Can be useful for external highlighters.
+  linkify:      true,        // Autoconvert URL-like text to links
+}).disable(['image', 'hr', 'table', 'list', 'heading', 'lheading', 'blockquote', 'reference', 'html_block', 'html_inline'])
 
-const markdown = (text) => marked(DOMPurify.sanitize(text))
+const markdown = (text) => md.render(text)
 
 const scaledAvatar = (avatar, nickname, timestamps) => {
   if (!timestamps) timestamps = 0
