@@ -2,7 +2,7 @@
   <div>
     <div>
       <div class="flex flex-col items-end mt-4">
-        <div class="w-full rounded-md shadow-sm">
+        <div class="flex flex-col w-full">
           <textarea
             v-model="new_tweet"
             rows="3"
@@ -12,9 +12,13 @@
             placeholder="学到什么了呢？跟大家分享一下"
           ></textarea>
         </div>
-        <div class="flex items-center justify-between w-full">
-          <span class="text-xs text-red-500">{{ posting_error }}</span>
-          <button class="mt-2 button" @click.stop="postTweet">
+        <span v-if="posting_error" class="text-xs text-red-500">{{ posting_error }}</span>
+        <div class="flex items-start justify-between w-full mt-2">
+          <div>
+            <input v-if="!tweet_image" type="file" @change="onFileChange" />
+            <img v-if="tweet_image" class="object-cover w-28 h-28" :src="tweet_image" />
+          </div>
+          <button class="button" @click.stop="postTweet">
             发布
           </button>
         </div>
@@ -48,11 +52,16 @@ export default {
       loadMore: true,
       currentUser: window.currentUser(),
       posting_error: '',
+      tweet_image: '',
     }
   },
   methods: {
     loadMoreTweet() {
       console.log('loading more')
+    },
+    onFileChange(e) {
+      const file = e.target.files[0]
+      this.tweet_image = URL.createObjectURL(file)
     },
     postTweet() {
       if (!this.currentUser) {
