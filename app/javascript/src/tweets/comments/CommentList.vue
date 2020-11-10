@@ -68,7 +68,6 @@
 
 <script>
 import LoginDialog from '../../common/LoginDialog.vue'
-import DOMPurify from 'dompurify'
 import Vue from 'vue/dist/vue.esm'
 import VModal from 'vue-js-modal'
 Vue.use(VModal, { dialog: true })
@@ -116,7 +115,7 @@ export default {
       if (comment.parent_comment) {
         content = `@${comment.parent_comment.user.nickname} ${content}`
       }
-      return markdown(DOMPurify.sanitize(content))
+      return markdown(content)
     },
     isMyComment(comment) {
       return this.currentUser && this.currentUser.id === comment.user.id
