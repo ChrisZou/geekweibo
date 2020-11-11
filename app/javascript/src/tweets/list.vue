@@ -27,6 +27,7 @@
             </template>
           </v-popover>
         </div>
+        <img v-if="tweet.image" :src="tweet.image" alt="" class="object-cover w-full mt-2 border border-gray-200 rounded-lg max-h-24" />
         <div aria-label="tweet operations" class="flex items-center justify-end mt-4">
           <TweetOperation :tweet="tweet" :currentUser="currentUser" :showTweetComment="showTweetComment" :shareTweet="shareTweet" />
         </div>
