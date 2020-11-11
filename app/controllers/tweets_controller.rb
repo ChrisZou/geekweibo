@@ -1,4 +1,6 @@
 class TweetsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:create]
+
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_tweet, only: [:edit, :update, :destroy]
   before_action :authorize!, only: [:edit, :update, :destroy]
@@ -47,13 +49,11 @@ class TweetsController < ApplicationController
   # POST /tweets
   # POST /tweets.json
   def create
-    p = tweet_params
-    p[:user_id] = current_user&.id
-    @tweet = Tweet.new(p)
+    @tweet = current_user.tweets.new(tweet_params)
 
     respond_to do |format|
       if @tweet.save
-        format.html { redirect_to @tweet, notice: '' }
+        format.html { render json: TweetBlueprint.render(@tweet), status: :created }
         format.json { render json: TweetBlueprint.render(@tweet), status: :created }
       else
         format.html { render :new }
@@ -80,7 +80,7 @@ class TweetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tweet_params
-      params.require(:tweet).permit(:body, :user_id)
+      params.require(:tweet).permit(:body, images: [])
     end
 
     def authorize!

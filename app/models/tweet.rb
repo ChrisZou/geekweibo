@@ -13,6 +13,8 @@ class Tweet < ApplicationRecord
   has_many :likes, as: :likable
   has_many :comments,  -> { order(:created_at => :desc) }, dependent: :destroy
 
+  has_many_attached :images
+
   scope :with_tag, -> (tag) { where("body ilike ?", "%##{tag}%") }
 
   searchkick word_middle: [:body]
