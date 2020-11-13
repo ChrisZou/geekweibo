@@ -27,7 +27,12 @@
             </template>
           </v-popover>
         </div>
-        <img v-if="tweet.image" :src="tweet.image" alt="" class="object-cover w-full mt-2 border border-gray-200 rounded-lg max-h-24" />
+        <img
+          v-if="tweet.image"
+          :src="tweet.image"
+          @click="previewImage(tweet.image)"
+          class="object-cover w-full mt-2 border border-gray-200 rounded-lg max-h-24"
+        />
         <div aria-label="tweet operations" class="flex items-center justify-end mt-4">
           <TweetOperation :tweet="tweet" :currentUser="currentUser" :showTweetComment="showTweetComment" :shareTweet="shareTweet" />
         </div>
@@ -36,6 +41,9 @@
     </div>
     <Loading v-show="loading_more" />
     <v-dialog />
+    <modal name="tweet-image" width="800px" height="auto">
+      <img :src="previewing_image" class="w-full h-full" alt="" />
+    </modal>
     <modal name="share-tweet" width="300px" height="auto" background="none">
       <TweetSharer :sharing_tweet="sharing_tweet" />
     </modal>
@@ -67,6 +75,7 @@ export default {
       loading_more: false,
       has_more: true,
       sharing_tweet: null,
+      previewing_image: '',
     }
   },
   computed: {
@@ -161,6 +170,10 @@ export default {
     },
     markdown: markdown,
     scaledAvatar: scaledAvatar,
+    previewImage(imageUrl) {
+      this.previewing_image = imageUrl
+      this.$modal.show('tweet-image')
+    },
   },
   mounted() {
     // Detect when scrolled to bottom.
@@ -182,12 +195,10 @@ p {
   font-size: 2em;
   text-align: center;
 }
-
-.angle {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 10px 10px 10px;
-  border-color: transparent transparent #f4f5f7 transparent;
+</style>
+<style>
+.vm--overlay {
+  background-color: #000000;
+  opacity: 0.7;
 }
 </style>
