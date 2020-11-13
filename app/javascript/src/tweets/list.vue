@@ -31,7 +31,7 @@
           v-if="tweet.image"
           :src="tweet.image"
           @click="previewImage(tweet.image)"
-          class="object-cover w-full mt-2 border border-gray-200 rounded-lg max-h-24"
+          class="object-cover max-w-full mt-2 border border-gray-200 rounded-lg max-h-64"
         />
         <div aria-label="tweet operations" class="flex items-center justify-end mt-4">
           <TweetOperation :tweet="tweet" :currentUser="currentUser" :showTweetComment="showTweetComment" :shareTweet="shareTweet" />
