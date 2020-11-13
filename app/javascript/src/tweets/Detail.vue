@@ -18,6 +18,9 @@
     <modal name="share-tweet" width="300px" height="auto" background="none">
       <TweetSharer :sharing_tweet="tweet" />
     </modal>
+    <modal name="tweet-image" width="800px" height="auto">
+      <img :src="previewing_image" class="w-full h-full" alt="" />
+    </modal>
   </div>
 </template>
 <script>
@@ -35,6 +38,7 @@ export default {
       tweet: this.origin_tweet,
       show_comment: true,
       currentUser: window.currentUser(),
+      previewing_image: '',
     }
   },
   methods: {
@@ -47,6 +51,16 @@ export default {
         this.$modal.show('share-tweet')
       }, 100)
     },
+    previewImage(imageUrl) {
+      this.previewing_image = imageUrl
+      this.$modal.show('tweet-image')
+    },
   },
 }
 </script>
+<style>
+.vm--overlay {
+  background-color: #000000;
+  opacity: 0.7;
+}
+</style>
