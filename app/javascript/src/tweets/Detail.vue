@@ -5,6 +5,12 @@
       <div class="w-full p-4 overflow-x-auto">
         <h3 class="text-lg font-medium text-gray-900 leading-6">{{ tweet.user.nickname }}</h3>
         <div class="mt-1 text-sm text-gray-500 leading-5 markdown" v-html="markdown(tweet.body)"></div>
+        <img
+          v-if="tweet.image"
+          :src="tweet.image"
+          @click="previewImage(tweet.image)"
+          class="object-cover max-w-full mt-2 border border-gray-200 rounded-lg max-h-64"
+        />
         <TweetOperation class="justify-end mt-8" :tweet="tweet" :currentUser="currentUser" :showTweetComment="noop" :shareTweet="shareTweet" />
         <CommentList :currentUser="currentUser" :tweet="tweet" />
       </div>
