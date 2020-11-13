@@ -80,7 +80,7 @@ export default {
   },
   computed: {
     allTweets() {
-      return this.new_tweets.concat(this.items)
+      return this.new_tweets ? this.new_tweets.concat(this.items) : this.items
     },
   },
   methods: {
