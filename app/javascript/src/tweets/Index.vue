@@ -98,8 +98,10 @@ export default {
       let formData = new FormData()
       formData.append('tweet[body]', this.new_tweet)
       formData.append('tweet[images][]', this.imageFile)
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
       fetch('/tweets', {
         method: 'POST',
+        headers: { 'X-CSRF-Token': csrfToken },
         body: formData,
       })
         .then(data => {

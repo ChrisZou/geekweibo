@@ -1,3 +1,4 @@
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 window.get = (url) => {
   return fetch(url, {
     method: 'GET',
@@ -9,7 +10,7 @@ window.get = (url) => {
 window.post = (url, data) => {
   return fetch(url, {
     method: 'POST',
-    headers: {'content-type': 'application/json', "accept": "application/json"},
+    headers: {'content-type': 'application/json', "accept": "application/json", 'X-CSRF-Token': csrfToken},
     body: JSON.stringify(data),
   })
     .then(res => res.json())
@@ -18,7 +19,7 @@ window.post = (url, data) => {
 window.delete = (url, data) => {
   return fetch(url, {
     method: 'DELETE',
-    headers: {'content-type': 'application/json', "accept": "application/json"},
+    headers: {'content-type': 'application/json', "accept": "application/json", 'X-CSRF-Token': csrfToken},
     body: JSON.stringify(data),
   })
 }
