@@ -59,15 +59,27 @@ class TweetsController < ApplicationController
   def create
     @tweet = current_user.tweets.new(tweet_params)
 
-    respond_to do |format|
+    # respond_to do |format|
       if @tweet.save
-        format.html { render json: TweetBlueprint.render(@tweet), status: :created }
-        format.json { render json: TweetBlueprint.render(@tweet), status: :created }
+        # format.html { 
+        #   puts "html"
+        #   render json: TweetBlueprint.render(@tweet), status: :created 
+        # }
+        # format.json { 
+          puts "json"
+          render json: TweetBlueprint.render(@tweet), status: :created 
+        # }
       else
-        format.html { render :new }
-        format.json { render json: { result: 'error', error: @tweet.errors }, status: :unprocessable_entity }
+        # format.html { 
+        #   puts "error html"
+        #   render :new 
+        # }
+        # format.json { 
+          puts "error json"
+          render json: { result: 'error', error: @tweet.errors }, status: :unprocessable_entity 
+        # }
       end
-    end
+    # end
   end
 
   # DELETE /tweets/1
