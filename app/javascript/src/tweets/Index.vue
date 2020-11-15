@@ -33,9 +33,7 @@
             </svg>
             <img v-if="imageUrl" @click="previewImage" class="object-cover w-28 h-28" :src="imageUrl" />
           </div>
-          <button class="button" @click.stop="postTweet">
-            发布
-          </button>
+          <button class="button" @click.stop="postTweet">发布</button>
         </div>
       </div>
     </div>
@@ -98,7 +96,7 @@ export default {
 
       let formData = new FormData()
       formData.append('tweet[body]', this.new_tweet)
-      formData.append('tweet[images][]', this.imageFile)
+      if (this.imageFile) formData.append('tweet[images][]', this.imageFile)
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
       fetch('/tweets', {
         method: 'POST',
