@@ -21,13 +21,14 @@
       </div>
       <div class="lg:block lg:ml-2">
         <div class="flex items-center">
-          <a href="https://github.com/ChrisZou/geekweibo" class="flex overflow-hidden text-sm text-white rounded-full focus:outline-none hover:text-indigo-400 transition duration-150 ease-in-out" id="user-menu" aria-label="User menu" aria-haspopup="true">
-            Github
+
+          <a href="https://github.com/ChrisZou/geekweibo" class="flex p-1 overflow-hidden text-sm text-white rounded-full opacity-50 hover:opacity-100 hover:border-red hover:border focus:outline-none hover:text-indigo-400 transition duration-150 ease-in-out" id="user-menu" aria-label="User menu" aria-haspopup="true">
+            <%= image_tag "github", class: "w-5 h-5" %>
           </a>
 
           <!-- Notifications -->
           <% if user_signed_in? %>
-            <div x-data="notificationData()" x-init="loadNotification()">
+            <div x-data="notificationData()" class="ml-2" x-init="loadNotification()">
               <button 
                 class="relative flex-shrink-0 p-1 font-bold text-gray-400 border-2 border-transparent rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out" 
                 @click="showNotifications()"
@@ -38,6 +39,7 @@
                 <span x-show="unread_notification_count > 0" x-text="unread_notification_count" class="absolute top-0 right-0 px-1 text-white bg-red-500 rounded-full" style="font-size: 0.5em;"><span>
               </button>
 
+              <!-- Notification dropdown -->
               <div class="absolute right-0 w-48 mt-2 shadow-lg origin-top-right rounded-md" x-show.transition="show_notification_list && notifications.length > 0" @click.away="show_notification_list = false">
                 <div class="py-1 bg-white rounded-md shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                   <template x-for="(notification, index) in notifications" :key="index">
