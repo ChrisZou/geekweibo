@@ -12,11 +12,15 @@ module.exports = {
     extend: {
     }
   },
-  variants: {},
+  variants: {
+    extend: {
+      // ...
+      backgroundColor: ['active'],
+    }
+  },
   experimental: {
     applyComplexClasses: true,
   },
   plugins: [
-    require('@tailwindcss/ui')
   ]
 }

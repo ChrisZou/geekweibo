@@ -20,6 +20,8 @@ window.autosize = autosize
 import "../src/common/global.js"
 
 import "css/application.scss"
+import "animate.css"
+
 //triggle build
 //triggle build
 
