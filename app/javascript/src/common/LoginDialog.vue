@@ -22,8 +22,10 @@
             <a
               type="button"
               href="/users/auth/github"
+              data-method="post"
               class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md leading-6 shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-            >Login with Github</a>
+              >Login with Github</a
+            >
           </span>
         </div>
       </div>
@@ -34,8 +36,8 @@
 <script>
 export default {
   data() {
-    return {};
+    return {}
   },
-  methods: {}
-};
+  methods: {},
+}
 </script>

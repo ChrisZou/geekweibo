@@ -75,7 +75,7 @@
                   <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out", role: "menuitem" %>
                   <%= link_to "About", "/about/index", class: "block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out", role: "menuitem" %>
                 <% else %>
-                  <%= link_to "Github 登录(由于国内网络原因，可能需要多试几次)", user_github_omniauth_authorize_path, class: "block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out", role: "menuitem" %>
+                  <%= link_to "Github 登录(由于国内网络原因，可能需要多试几次)", user_github_omniauth_authorize_path, method: :post, class: "block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out", role: "menuitem" %>
                   <%= link_to "登录意味着你同意用户协议和隐私政策", "/welcome/agreement", class: "block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out", role: "menuitem" %>
                   <%= link_to "About", "/about/index", class: "block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out", role: "menuitem" %>
                 <% end %>
