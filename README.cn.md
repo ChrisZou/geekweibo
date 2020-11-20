@@ -11,6 +11,7 @@
 - 评论微博
 - 通知（微博得到点赞、评论等）
 - 生成分享图片，分享微博，如下图
+
 ![](https://github.com/ChrisZou/geekweibo/blob/master/docs/sharing-card-en.jpg)
 
 ## 技术栈：
