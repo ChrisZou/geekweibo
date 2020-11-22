@@ -16,6 +16,15 @@ window.post = (url, data) => {
     .then(res => res.json())
 }
 
+window.put = async (url, data) => {
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers: {'content-type': 'application/json', "accept": "application/json", 'X-CSRF-Token': csrfToken},
+    body: JSON.stringify(data),
+  })
+  return await response.json()
+}
+
 window.delete = (url, data) => {
   return fetch(url, {
     method: 'DELETE',

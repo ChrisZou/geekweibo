@@ -16,15 +16,22 @@
           v-html="markdown(tweet.question)"
         />
         <div v-else class="mt-1 text-sm text-gray-500 leading-5 markdown" v-html="markdown(tweet.body)" />
-        <div class="absolute top-1 right-1">
+        <div v-if="isMyTweet(tweet)" class="absolute top-1 right-1">
           <v-popover>
-            <svg v-if="isMyTweet(tweet)" class="w-6 h-6 p-1 rounded-full hover:bg-gray-200 right-2 top-2 transition duration-300" viewBox="0 0 20 20">
+            <svg class="w-6 h-6 p-1 rounded-full hover:bg-gray-200 right-2 top-2 transition duration-300" viewBox="0 0 20 20">
               <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
             </svg>
             <template slot="popover">
-              <div class="flex items-center py-1 bg-white border border-gray-100 border-solid rounded-sm focus:outline-none active:outline-none">
+              <div
+                class="flex flex-col items-center py-1 bg-white border border-gray-100 border-solid rounded-sm focus:outline-none active:outline-none"
+              >
                 <span
-                  class="px-8 py-2 text-sm tracking-wider cursor-pointer hover:bg-gray-200 transition duration-300 active:outline-none"
+                  class="w-full px-8 py-2 text-sm tracking-wider text-center border-b border-gray-100 cursor-pointer hover:bg-gray-200 transition duration-300 active:outline-none"
+                  @click="setQuestionForTweet(tweet)"
+                  v-text="'设置问题'"
+                />
+                <span
+                  class="w-full px-8 py-2 text-sm tracking-wider text-center cursor-pointer hover:bg-gray-200 transition duration-300 active:outline-none"
                   @click="confirmDeleteTweet(tweet)"
                   v-text="'删除'"
                 />
@@ -61,6 +68,7 @@ import Loading from '../common/Loading.vue'
 import CommentList from './comments/CommentList.vue'
 import TweetSharer from './TweetSharer.vue'
 import TweetOperation from './TweetOperation.vue'
+import SetTweetQuestionDialog from './SetTweetQuestionDialog.vue'
 
 import { VPopover } from 'v-tooltip'
 import Vue from 'vue/dist/vue.esm'
@@ -160,6 +168,18 @@ export default {
           },
         ],
       })
+    },
+    setQuestionForTweet(tweet) {
+      this.$modal.show(
+        SetTweetQuestionDialog,
+        {
+          tweet: tweet,
+          onComplete: () => {
+            this.$modal.hide('set-question')
+          },
+        },
+        { name: 'set-question', height: 'auto' }
+      )
     },
     isMyTweet(tweet) {
       return this.currentUser && this.currentUser.id == tweet.user.id

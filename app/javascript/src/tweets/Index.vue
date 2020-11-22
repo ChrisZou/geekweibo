@@ -6,9 +6,10 @@
           <textarea
             v-model="new_tweet"
             rows="3"
-            class="block w-full p-2 px-3 mt-1 rounded-md shadow-sm focus:outline-none focus:border-blue-200 form-textarea transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+            class="block w-full p-2 px-3 mt-1 border border-gray-200 outline-none rounded-md shadow-sm focus:outline-none focus:border-indigo-50 form-textarea transition sm:text-sm sm:leading-5"
             v-on:keydown.meta.enter="postTweet()"
             v-on:keyup="saveTweetLocally"
+            autofocus
             placeholder="学到什么了呢？跟大家分享一下"
           ></textarea>
         </div>

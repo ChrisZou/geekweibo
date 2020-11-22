@@ -16,11 +16,13 @@ module.exports = {
     extend: {
       // ...
       backgroundColor: ['active'],
+      // border: ['active'],
     }
   },
   experimental: {
     applyComplexClasses: true,
   },
   plugins: [
+    require('@tailwindcss/forms')
   ]
 }
