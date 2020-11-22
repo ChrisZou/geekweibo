@@ -9,7 +9,13 @@
       </a>
       <div class="relative w-full p-4 overflow-x-auto">
         <h3 class="text-lg font-medium text-gray-900 leading-6">{{ tweet.user.nickname }}</h3>
-        <div stroke="currentColor" class="mt-1 text-sm text-gray-500 leading-5 markdown" v-html="markdown(tweet.body)"></div>
+        <div
+          v-if="tweet.question && tweet.show_question"
+          class="mt-1 text-lg font-medium text-center text-gray-500 cursor-pointer leading-5 markdown"
+          @click="showBody(tweet)"
+          v-html="markdown(tweet.question)"
+        />
+        <div v-else class="mt-1 text-sm text-gray-500 leading-5 markdown" v-html="markdown(tweet.body)" />
         <div class="absolute top-1 right-1">
           <v-popover>
             <svg v-if="isMyTweet(tweet)" class="w-6 h-6 p-1 rounded-full hover:bg-gray-200 right-2 top-2 transition duration-300" viewBox="0 0 20 20">
@@ -20,9 +26,8 @@
                 <span
                   class="px-8 py-2 text-sm tracking-wider cursor-pointer hover:bg-gray-200 transition duration-300 active:outline-none"
                   @click="confirmDeleteTweet(tweet)"
-                >
-                  删除
-                </span>
+                  v-text="'删除'"
+                />
               </div>
             </template>
           </v-popover>
@@ -99,6 +104,7 @@ export default {
           t.has_more_comments = t.comments.length > 5
           t.comments = t.comments.slice(0, 5)
           t.replying_comment = null
+          t.show_question = this.isMyTweet(t)
         })
         this.items = this.items.concat(tweets.data)
         this.has_more = tweets.has_more
@@ -173,6 +179,9 @@ export default {
     previewImage(imageUrl) {
       this.previewing_image = imageUrl
       this.$modal.show('tweet-image')
+    },
+    showBody(tweet) {
+      tweet.show_question = false
     },
   },
   mounted() {

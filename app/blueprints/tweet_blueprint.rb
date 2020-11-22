@@ -1,7 +1,7 @@
 class TweetBlueprint < Blueprinter::Base
   identifier :id
 
-  fields :body, :liked, :like_count
+  fields :body, :liked, :like_count, :question
 
   field :image do |tweet, options|
     tweet.images.first&.service_url
