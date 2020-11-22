@@ -54,36 +54,23 @@ class TweetsController < ApplicationController
   def edit
   end
 
-  # POST /tweets
-  # POST /tweets.json
   def create
     @tweet = current_user.tweets.new(tweet_params)
-
-    # respond_to do |format|
-      if @tweet.save
-        # format.html { 
-        #   puts "html"
-        #   render json: TweetBlueprint.render(@tweet), status: :created 
-        # }
-        # format.json { 
-          puts "json"
-          render json: TweetBlueprint.render(@tweet), status: :created 
-        # }
-      else
-        # format.html { 
-        #   puts "error html"
-        #   render :new 
-        # }
-        # format.json { 
-          puts "error json"
-          render json: { result: 'error', error: @tweet.errors }, status: :unprocessable_entity 
-        # }
-      end
-    # end
+    if @tweet.save
+      render json: TweetBlueprint.render(@tweet), status: :created 
+    else
+      render json: { result: 'error', error: @tweet.errors }, status: :unprocessable_entity 
+    end
   end
 
-  # DELETE /tweets/1
-  # DELETE /tweets/1.json
+  def update
+    if @tweet.update(tweet_params)
+      render json: TweetBlueprint.render(@tweet)
+    else
+      render json: { result: 'error', error: @tweet.errors }, status: :unprocessable_entity 
+    end
+  end
+
   def destroy
     @tweet.destroy
     respond_to do |format|
@@ -95,12 +82,12 @@ class TweetsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tweet
-      @tweet = Tweet.find(params[:id])
+      @tweet = current_user.tweets.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def tweet_params
-      params.require(:tweet).permit(:body, images: [])
+      params.require(:tweet).permit(:body, :question, images: [])
     end
 
     def authorize!
