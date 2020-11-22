@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_27_050600) do
+ActiveRecord::Schema.define(version: 2020_11_22_054251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 2020_10_27_050600) do
     t.uuid "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "question"
     t.index ["user_id"], name: "index_tweets_on_user_id"
   end
 
