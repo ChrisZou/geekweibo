@@ -11,7 +11,7 @@
         <h3 class="text-lg font-medium text-gray-900 leading-6">{{ tweet.user.nickname }}</h3>
         <div
           v-if="tweet.question && tweet.show_question"
-          class="mt-1 text-lg font-medium text-center text-gray-500 cursor-pointer leading-5 markdown"
+          class="mt-4 text-lg font-medium text-center text-indigo-400 cursor-pointer leading-5 "
           @click="showBody(tweet)"
           v-html="markdown(tweet.question)"
         />
