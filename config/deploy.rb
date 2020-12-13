@@ -8,7 +8,6 @@ set :deploy_to, "/var/www/#{fetch(:application)}"
 set :pty,             true
 
 set :user,            'chris'
-set :puma_threads,    [4, 16]
 set :puma_workers,    0
 set :puma_bind,       "unix:///var/run/rails.#{fetch(:application)}.sock"
 set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
@@ -39,18 +38,6 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/syst
 set :default_env, PATH: '$PATH:/home/linuxbrew/.linuxbrew/bin:/opt/ruby/bin', 'NODE_ENV' => 'production'
 
 
-namespace :puma do
-  desc 'Create Directories for Puma Pids and Socket'
-  task :make_dirs do
-    on roles(:app) do
-      execute "mkdir #{shared_path}/tmp/sockets -p"
-      execute "mkdir #{shared_path}/tmp/pids -p"
-    end
-  end
-
-  # before :start, :make_dirs
-end
-
 namespace :deploy do
   desc 'Make sure local git is in sync with remote.'
   task :check_revision do
@@ -71,6 +58,14 @@ namespace :deploy do
     end
   end
 
+  desc 'Create Directories for Puma Pids and Socket'
+  task :make_dirs do
+    on roles(:app) do
+      execute "mkdir #{shared_path}/tmp/sockets -p"
+      execute "mkdir #{shared_path}/tmp/pids -p"
+    end
+  end
+
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
@@ -81,34 +76,8 @@ namespace :deploy do
   before :starting,     :check_revision
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
+  after  :finishing,    :make_dirs
   after  :finishing,    :restart
-end
-
-desc 'Check info'
-task :check_info do
-  on roles(:app), in: :sequence, wait: 5 do
-    execute :echo, '$PATH'
-    execute :echo, '$NODE_ENV'
-  end
-end
-
-desc 'Restart application'
-task :restart do
-  on roles(:app), in: :sequence, wait: 5 do
-    invoke! 'puma:restart'
-  end
-end
-
-desc 'seed database'
-task :seed do
-  puts "\n=== Seeding Database ===\n"
-  on primary :db do
-    within current_path do
-      with rails_env: fetch(:stage) do
-        execute :rake, 'db:seed'
-      end
-    end
-  end
 end
 
 # Capistrano 3
