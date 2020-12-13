@@ -16,23 +16,24 @@ class TweetsController < ApplicationController
         end
       }
       format.json { 
-        tweets, has_more = if query
-          search_result = Tweet.search(query, 
-                                       page: params[:page] || 1, 
-                                       per_page: 20, 
-                                       includes: [
-                                         {user: {avatar_attachment: [:blob]}},
-                                         :likes, {images_attachments: [:blob]},
-                                         {comments: {user: {avatar_attachment: [:blob]}}}
-                                       ])
-          [search_result.results, search_result.current_page < search_result.total_pages]
-        else
-          @pagy, tweets = pagy Tweet.includes({user: {avatar_attachment: [:blob]}},
-                                              :likes, 
-                                              {images_attachments: [:blob]},
-                                              {comments: {user: {avatar_attachment: [:blob]}}}).order(created_at: :desc)
-          [tweets, @pagy.page < @pagy.pages]
-        end
+        tweets, has_more = 
+          if query
+            search_result = Tweet.search(query, 
+                                         page: params[:page] || 1, 
+                                         per_page: 20, 
+                                         includes: [
+                                           {user: {avatar_attachment: [:blob]}},
+                                           :likes, {images_attachments: [:blob]},
+                                           {comments: {user: {avatar_attachment: [:blob]}}}
+                                         ])
+            [search_result.results, search_result.current_page < search_result.total_pages]
+          else
+            @pagy, tweets = pagy Tweet.includes({user: {avatar_attachment: [:blob]}},
+                                                :likes, 
+                                                {images_attachments: [:blob]},
+                                                {comments: {user: {avatar_attachment: [:blob]}}}).order(created_at: :desc)
+            [tweets, @pagy.page < @pagy.pages]
+          end
         render json: {has_more: has_more, data: TweetBlueprint.render_as_hash(tweets) }
       }
     end
