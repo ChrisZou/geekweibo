@@ -4,7 +4,7 @@ class TweetBlueprint < Blueprinter::Base
   fields :body, :liked, :like_count, :question
 
   field :image do |tweet, options|
-    tweet.images.first&.service_url
+    tweet.images.first&.url
   end
 
   association :user, blueprint: UserBlueprint

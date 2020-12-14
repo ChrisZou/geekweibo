@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -46,26 +48,28 @@ class User < ApplicationRecord
   end
 
   def avatar_sized(size = 200)
-    avatar.attached? && avatar.service_url(params: {"x-oss-process" => "image/resize,h_#{size},w_#{size}"})
+    avatar.attached? && avatar.url(params: { "x-oss-process" => "image/resize,h_#{size},w_#{size}" })
   end
 
   def avatar_url
     return "" unless avatar.attached?
-    avatar.service_url
+
+    avatar.url
   end
 
   def nickname
     super || "某个还没有设置昵称的用户"
   end
+
   def serializable_hash(options = {})
-    h = super({only: public_infos}.merge(options))
+    h = super({ only: public_infos }.merge(options))
     h[:avatar] = avatar_url
     h
   end
 
   private
-  def public_infos
-    [:id, :nickname]
-  end
 
+  def public_infos
+    %i[id nickname]
+  end
 end
