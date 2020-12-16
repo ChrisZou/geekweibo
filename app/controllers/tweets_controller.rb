@@ -100,11 +100,12 @@ class TweetsController < ApplicationController
     def tweet_params_body_parsed
       tp = tweet_params
       body = tp[:body]
-      body_last_line = body.split("\n").last
-      if body_last_line.downcase.starts_with?("question|") || body_last_line.downcase.starts_with?("question |") 
-        tp[:body] = body.gsub(body_last_line, "").strip
-        start = "question|".length
-        tp[:question] = body_last_line[start..]
+      body_last_line = body.strip.split("\n").last.gsub("？？", "??").downcase
+      question_indicator = "??"
+      if body_last_line.starts_with?(question_indicator) || body_last_line.starts_with?(question_indicator) 
+        tp[:body] = body[...(body.length - body_last_line.length)].strip
+        start = question_indicator.length
+        tp[:question] = body_last_line[start..].strip
       end
       return tp
     end
