@@ -23,6 +23,7 @@
     "vue-click-outside": "^1.1.0",
     "vue-js-modal": "^2.0.0-rc.6",
     "vue-loader": "^15.9.2",
+    "sass-loader": "^10.1.0",
     "vue-template-compiler": "^2.6.11",
     "vue-turbolinks": "^2.1.0"
   },
@@ -33,7 +34,6 @@
     "eslint-plugin-vue": "^6.2.2",
     "postcss": "^7.0.32",
     "prettier": "^2.2.1",
-    "sass-loader": "^10.1.0",
     "webpack-bundle-analyzer": "^3.9.0",
     "webpack-dev-server": "^3.11.0"
   }
