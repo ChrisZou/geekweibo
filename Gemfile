@@ -99,3 +99,4 @@ gem "administrate", "~> 0.14.0"
 
 gem "administrate-field-image", "~> 1.1"
 gem "omniauth-rails_csrf_protection", "~> 0.1"
+gem "turbo-rails"

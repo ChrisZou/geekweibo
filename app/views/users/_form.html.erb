@@ -2,14 +2,6 @@
   <%= render "errors", item: user %>
 
   <div>
-
-    <div>
-      <h3 class="text-lg font-medium text-gray-900 leading-6">Profile</h3>
-      <p class="mt-1 text-sm text-gray-500 leading-5">
-        This information will be displayed publicly so be careful what you share.
-      </p>
-    </div>
-
     <div class="mt-6 sm:col-span-6">
       <label for="photo" class="block text-sm font-medium text-gray-700 leading-5">
         Photo
@@ -50,7 +42,7 @@
   <div class="pt-5 mt-8 border-t border-gray-200">
     <div class="flex justify-end">
       <span class="inline-flex rounded-md shadow-sm">
-        <a href="/" class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md leading-5 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
+        <a href="<%= user_path(user) %>" class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md leading-5 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
           Cancel
         </a>
       </span>

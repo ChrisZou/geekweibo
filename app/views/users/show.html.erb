@@ -1,16 +1,18 @@
 <p id="notice"><%= notice %></p>
 
-<%= image_tag user_avatar(@user, 300), class: 'w-24 h-24 object-cover rounded-full mt-20' %>
+<turbo-frame id="user_info">
+  <%= image_tag user_avatar(@user, 300), class: 'w-24 h-24 object-cover rounded-full mt-20' %>
 
-<div class="flex flex-row items-center justify-between mt-2">
-  <div class="text-2xl font-bold">
-    <%= @user.nickname %>
+  <div class="flex flex-row items-center justify-between mt-2">
+    <div class="text-2xl font-bold">
+      <%= @user.nickname %>
+    </div>
+    <%= link_to '编辑信息', edit_user_path(@user), class: "text-indigo-600 border-indigo-500 border-2 text-sm px-6 py-2 rounded-full font-semibold" %>
   </div>
-  <%= link_to '编辑信息', edit_user_path(@user), class: "text-indigo-600 border-indigo-500 border-2 text-sm px-6 py-2 rounded-full font-semibold" %>
-</div>
-<div class="mt-1 text-sm text-gray-500">
-  <%= @user.bio %>
-</div>
+  <div class="mt-1 text-sm text-gray-500">
+    <%= @user.bio %>
+  </div>
+</turbo-frame>
 
 <h1 class="mt-8 mb-4 text-4xl">最新动态</h1>
 <div id="app" class="mt-8">

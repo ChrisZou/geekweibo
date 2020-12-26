@@ -870,6 +870,19 @@
     postcss "7.0.32"
     purgecss "^3.0.0"
 
+"@hotwired/turbo-rails@^7.0.0-beta.1":
+  version "7.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo-rails/-/turbo-rails-7.0.0-beta.1.tgz#90399dd43616efee263b4c8391aa302559c3a17e"
+  integrity sha512-5Y8rq4PUAAk3+yiTFJxOEMQbrfo9cY5E9+nQYUifColm/GdX1IHV6rJvj0+ND/jdniTL6E3eaI5biBkVis57dA==
+  dependencies:
+    "@hotwired/turbo" "^7.0.0-beta.1"
+    "@rails/actioncable" "^6.1.0"
+
+"@hotwired/turbo@^7.0.0-beta.1":
+  version "7.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-7.0.0-beta.1.tgz#0111db8a80a7bb308c4cfdd2720112d06bf25c33"
+  integrity sha512-V7hhELbDkYUGaHw/Yw4tu9pDUT1WE4t3A7tRs7Zh0Uwtk2vaJnmykNZ2uq20BnLjofufA1+MLJZ6AXJ3B/Il5A==
+
 "@prettier/plugin-ruby@^1.0.0-rc1":
   version "1.0.0-rc1"
   resolved "https://registry.npm.taobao.org/@prettier/plugin-ruby/download/@prettier/plugin-ruby-1.0.0-rc1.tgz#cb48fed509553dcda4bb79a2d528ea78ba9fb099"
@@ -881,6 +894,11 @@
   version "6.0.3"
   resolved "https://registry.npm.taobao.org/@rails/actioncable/download/@rails/actioncable-6.0.3.tgz#722b4b639936129307ddbab3a390f6bcacf3e7bc"
   integrity sha1-citLY5k2EpMH3bqzo5D2vKzz57w=
+
+"@rails/actioncable@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.1.0.tgz#f336f25450b1bc43b99bc60557a70b6e6bb1d3d2"
+  integrity sha512-eDgy+vcKN9RIzxmMBfSAe77rTj2cp6kJALiVQyKrW2O9EK2MdostOmP+99At/Dit3ur5+77NVnruxD7y14ZYFA==
 
 "@rails/activestorage@^6.0.0":
   version "6.0.3"
@@ -1223,6 +1241,11 @@ alphanum-sort@^1.0.0:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/alphanum-sort/download/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
+
+alpine-turbolinks-adapter@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/alpine-turbolinks-adapter/-/alpine-turbolinks-adapter-0.3.0.tgz#29257510c8ceac3379bc70ba3c07b2c12e6e810b"
+  integrity sha512-wA+dF0hyg4WSbJEt/hNYKpDZOmh8Dk1oAyJGYrRHGpWQ5YwBmdzlsawhB4ZI2zzp0vdhzofc6rxrawpkaEYWOw==
 
 alpinejs@^2.4.1:
   version "2.7.0"

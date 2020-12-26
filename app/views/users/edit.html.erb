@@ -1,1 +1,10 @@
-<%= render 'form', user: @user %>
+<div>
+  <h3 class="text-lg font-medium text-gray-900 leading-6">Profile</h3>
+  <p class="mt-1 text-sm text-gray-500 leading-5">
+  This information will be displayed publicly so be careful what you share.
+  </p>
+</div>
+
+<turbo-frame id="user_info">
+  <%= render 'form', user: @user %>
+</turbo-frame>
