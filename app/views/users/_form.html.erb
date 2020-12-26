@@ -3,17 +3,14 @@
 
   <div>
     <div class="mt-6 sm:col-span-6">
-      <label for="photo" class="block text-sm font-medium text-gray-700 leading-5">
-        Photo
-      </label>
       <div class="flex items-center mt-2" x-data="avatarData()">
-        <span class="w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
+        <span class="w-16 h-16 overflow-hidden bg-gray-100 rounded-full">
           <%= image_tag user_avatar(@user), "x-ref" => "imagePreview", "class" => "w-full h-full object-cover" %>
         </span>
         <span class="ml-5 rounded-md shadow-sm">
           <input type="file" x-ref="file" name="user[avatar]" @change="updateAvatar($refs.file.files[0])" accept="image/*" class="hidden"/>
           <button type="button" @click="$refs.file.click()" class="px-3 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md leading-4 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
-            Change
+            修改
           </button>
         </span>
       </div>
@@ -21,18 +18,18 @@
 
     <div class="mt-6 grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
       <div class="sm:col-span-4">
-        <%= form.label :nickname, class: "block text-sm font-medium leading-5 text-gray-700" %>
+        <%= form.label :nickname, "昵称", class: "block text-sm font-medium leading-5 text-gray-700" %>
         <div class="flex mt-1 rounded-md shadow-sm">
           <%= form.text_field :nickname, class: "flex-1 form-input block w-full min-w-0 transition duration-150 ease-in-out sm:text-sm sm:leading-5" %>
         </div>
       </div>
 
-      <div class="sm:col-span-6">
-        <label for="about" class="block text-sm font-medium text-gray-700 leading-5">About</label>
+      <div class="mt-3 sm:col-span-6">
+        <label for="about" class="block text-sm font-medium text-gray-700 leading-5">简介</label>
         <div class="mt-1 rounded-md shadow-sm">
           <%= form.text_area :bio, class: "form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5", rows: "3" %>
         </div>
-        <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p>
+        <p class="mt-2 text-sm text-gray-500">写几句话，介绍下自己吧</p>
       </div>
 
     </div>
