@@ -5,7 +5,7 @@
 
 require('@rails/ujs').start()
 require('@rails/activestorage').start()
-import { Turbo, cable } from '@hotwired/turbo-rails'
+// import { Turbo, cable } from '@hotwired/turbo-rails'
 
 //import "channels"
 import 'alpine-turbolinks-adapter'
