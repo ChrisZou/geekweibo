@@ -5,9 +5,8 @@
 
 require('@rails/ujs').start()
 require('@rails/activestorage').start()
-// import { Turbo, cable } from '@hotwired/turbo-rails'
+import { Turbo } from '@hotwired/turbo'
 
-//import "channels"
 import 'alpinejs'
 
 // Uncomment to copy all static images under ../images to the output folder and reference
@@ -23,14 +22,3 @@ import '../src/common/global.js'
 
 import 'css/application.scss'
 import 'animate.css'
-
-//triggle build
-//triggle build
-
-//triggle build
-//triggle build
-//triggle build
-//triggle build
-//triggle build
-//triggle build
-//triggle build

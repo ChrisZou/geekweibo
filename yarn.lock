@@ -870,18 +870,9 @@
     postcss "7.0.32"
     purgecss "^3.0.0"
 
-"@hotwired/turbo-rails@^7.0.0-beta.1":
+"@hotwired/turbo@hotwired/turbo#refs/tags/dev-builds/ea00632":
   version "7.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@hotwired/turbo-rails/-/turbo-rails-7.0.0-beta.1.tgz#90399dd43616efee263b4c8391aa302559c3a17e"
-  integrity sha512-5Y8rq4PUAAk3+yiTFJxOEMQbrfo9cY5E9+nQYUifColm/GdX1IHV6rJvj0+ND/jdniTL6E3eaI5biBkVis57dA==
-  dependencies:
-    "@hotwired/turbo" "^7.0.0-beta.1"
-    "@rails/actioncable" "^6.1.0"
-
-"@hotwired/turbo@^7.0.0-beta.1":
-  version "7.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-7.0.0-beta.1.tgz#0111db8a80a7bb308c4cfdd2720112d06bf25c33"
-  integrity sha512-V7hhELbDkYUGaHw/Yw4tu9pDUT1WE4t3A7tRs7Zh0Uwtk2vaJnmykNZ2uq20BnLjofufA1+MLJZ6AXJ3B/Il5A==
+  resolved "https://codeload.github.com/hotwired/turbo/tar.gz/4b0799bcdc94f30ec8500eaa06b538e1b5d8cf4a"
 
 "@prettier/plugin-ruby@^1.0.0-rc1":
   version "1.0.0-rc1"
@@ -894,11 +885,6 @@
   version "6.0.3"
   resolved "https://registry.npm.taobao.org/@rails/actioncable/download/@rails/actioncable-6.0.3.tgz#722b4b639936129307ddbab3a390f6bcacf3e7bc"
   integrity sha1-citLY5k2EpMH3bqzo5D2vKzz57w=
-
-"@rails/actioncable@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.1.0.tgz#f336f25450b1bc43b99bc60557a70b6e6bb1d3d2"
-  integrity sha512-eDgy+vcKN9RIzxmMBfSAe77rTj2cp6kJALiVQyKrW2O9EK2MdostOmP+99At/Dit3ur5+77NVnruxD7y14ZYFA==
 
 "@rails/activestorage@^6.0.0":
   version "6.0.3"

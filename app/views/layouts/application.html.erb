@@ -11,6 +11,8 @@
   <%= javascript_pack_tag 'application' %>
   <%= stylesheet_pack_tag 'application', media: 'all' %>
 
+  <meta name="turbo-visit-control" content="reload">
+
   <% if current_user %>
     <%= javascript_tag "sessionStorage.setItem('current_user', '#{current_user_json}');\nsessionStorage.setItem('loggedIn', 'true') " %>
   <% else %>
