@@ -8,7 +8,6 @@ require('@rails/activestorage').start()
 // import { Turbo, cable } from '@hotwired/turbo-rails'
 
 //import "channels"
-import 'alpine-turbolinks-adapter'
 import 'alpinejs'
 
 // Uncomment to copy all static images under ../images to the output folder and reference
