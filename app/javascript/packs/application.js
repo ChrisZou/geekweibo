@@ -7,6 +7,7 @@ require('@rails/ujs').start()
 require('@rails/activestorage').start()
 import { Turbo } from '@hotwired/turbo'
 
+import 'alpine-turbo-drive-adapter'
 import 'alpinejs'
 
 // Uncomment to copy all static images under ../images to the output folder and reference

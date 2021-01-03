@@ -1228,6 +1228,11 @@ alphanum-sort@^1.0.0:
   resolved "https://registry.npm.taobao.org/alphanum-sort/download/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
+alpine-turbo-drive-adapter@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/alpine-turbo-drive-adapter/download/alpine-turbo-drive-adapter-1.0.1.tgz#c771a8674f827eee9066bacea6ecc31c27d634a0"
+  integrity sha1-x3GoZ0+Cfu6QZrrOpuzDHCfWNKA=
+
 alpinejs@^2.4.1:
   version "2.7.0"
   resolved "https://registry.npm.taobao.org/alpinejs/download/alpinejs-2.7.0.tgz#adcdb8da9b7d99bbcc020fd4fa058b78ec283bba"

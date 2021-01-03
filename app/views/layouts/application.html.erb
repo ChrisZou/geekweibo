@@ -8,9 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <%= favicon_link_tag asset_path('favicon.png') %>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/SimoTod/alpine-turbolinks-adapter@feature/turbo-support/dist/alpine-turbo-adapter.min.js"></script>
-  <%= javascript_pack_tag 'application' %>
-  <%= stylesheet_pack_tag 'application', media: 'all' %>
+  <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload'  %>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbo-track': 'reload'  %>
 
   <% if current_user %>
     <%= javascript_tag "sessionStorage.setItem('current_user', '#{current_user_json}');\nsessionStorage.setItem('loggedIn', 'true') " %>
