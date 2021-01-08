@@ -31,7 +31,9 @@ class User < ApplicationRecord
   def self.from_github_omniauth(auth)
     info = auth.info
     mock_password = Devise.friendly_token[0, 20]
+    info.email = "not_set@geekweibo.com" if info.email.nil? || info.email.strip.empty?
     user = where(email: info.email).first_or_create!(email: info.email, nickname: info.nickname, phone: "", password: mock_password)
+
     # if !user.avatar.attached? && info.image && info.image.length > 0
     #   url = info.image
     #   user.avatar.attach(io: URI.open(url), filename: File.basename(URI.parse(url).path))
