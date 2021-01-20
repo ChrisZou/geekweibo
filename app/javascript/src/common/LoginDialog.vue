@@ -19,13 +19,13 @@
         </div>
         <div class="mt-5 sm:mt-6">
           <span class="flex w-full rounded-md shadow-sm">
-            <a
-              type="button"
-              href="/users/auth/github"
-              data-method="post"
-              class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md leading-6 shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-              >Login with Github</a
-            >
+            <form data-turbo="false" class="w-48" method="post" action="/users/auth/github">
+              <input
+                class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md leading-6 shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                type="submit"
+                value="Github 登录"
+              /><input type="hidden" name="authenticity_token" v-model="csrfToken" />
+            </form>
           </span>
         </div>
       </div>
@@ -36,7 +36,10 @@
 <script>
 export default {
   data() {
-    return {}
+    return { csrfToken: '' }
+  },
+  created() {
+    this.csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
   },
   methods: {},
 }
