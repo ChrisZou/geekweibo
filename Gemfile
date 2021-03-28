@@ -93,7 +93,7 @@ gem "skylight"
 gem "blueprinter"
 gem "oj"
 
-gem "pagy"
+gem "pagy", "~> 3.0"
 
 gem "administrate", "~> 0.14.0"
 
