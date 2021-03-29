@@ -1,3 +1,15 @@
+GIT
+  remote: https://github.com/heartcombo/devise.git
+  revision: ef9a2f410413b02b5234d80a73b42e296ebcc863
+  branch: master
+  specs:
+    devise (4.7.3)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0)
+      responders
+      warden (~> 1.2.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -138,12 +150,6 @@ GEM
     datetime_picker_rails (0.0.7)
       momentjs-rails (>= 2.8.1)
     debug_inspector (1.1.0)
-    devise (4.7.3)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 4.1.0)
-      responders
-      warden (~> 1.2.3)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     elasticsearch (7.12.0)
@@ -388,7 +394,7 @@ DEPENDENCIES
   capistrano3-puma
   capybara (>= 3.26)
   coderay (~> 1.1)
-  devise (~> 4.7)
+  devise!
   honeybadger (~> 4.7)
   listen (~> 3.3)
   mini_magick
