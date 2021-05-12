@@ -23,6 +23,8 @@ default: &default
 
 development:
   <<: *default
+  username: postgres
+  password: postgres
   database: geekweibo_development
 
   # The specified database role being used to connect to postgres.

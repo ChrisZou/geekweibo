@@ -62,8 +62,9 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
-# gem "devise", "~> 4.7"
-gem "devise", github: "heartcombo/devise", branch: "master"
+gem "devise", "~> 4.8"
+
+# gem "devise", github: "heartcombo/devise", branch: "master"
 
 group :development do
   gem "capistrano", require: false
@@ -100,5 +101,5 @@ gem "pagy", "~> 3.0"
 gem "administrate", "~> 0.14.0"
 
 gem "administrate-field-image", "~> 1.1"
-gem "omniauth-rails_csrf_protection", "~> 0.1"
+gem "omniauth-rails_csrf_protection"
 gem "turbo-rails"
