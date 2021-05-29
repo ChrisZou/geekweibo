@@ -161,8 +161,13 @@ export default {
             class: 'focus:outline-none py-3 hover:bg-gray-100',
             handler: () => {
               this.$modal.hide('dialog')
-              window.delete(`/tweets/${tweet.id}`).then(res => {
-                this.items = this.items.filter(t => t.id != tweet.id)
+              window.delete(`/tweets/${tweet.id}`).then(() => {
+                const newTweetIndex = this.new_tweets.findIndex((t) => t.id === tweet.id)
+                if (newTweetIndex !== -1) {
+                  this.new_tweets.splice(newTweetIndex, 1)
+                } else {
+                  this.items = this.items.filter(t => t.id !== tweet.id)
+                }
               })
             },
           },
@@ -171,14 +176,14 @@ export default {
     },
     setQuestionForTweet(tweet) {
       this.$modal.show(
-        SetTweetQuestionDialog,
-        {
-          tweet: tweet,
-          onComplete: () => {
-            this.$modal.hide('set-question')
+          SetTweetQuestionDialog,
+          {
+            tweet: tweet,
+            onComplete: () => {
+              this.$modal.hide('set-question')
+            },
           },
-        },
-        { name: 'set-question', height: 'auto' }
+          { name: 'set-question', height: 'auto' }
       )
     },
     isMyTweet(tweet) {
