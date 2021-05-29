@@ -79,8 +79,7 @@
                   <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out", role: "menuitem" %>
                   <%= link_to "About", "/about/index", class: "block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out", role: "menuitem" %>
                 <% else %>
-                  <%= button_to "Github 登录", user_github_omniauth_authorize_path, method: :post, class: "cursor-pointer block bg-white w-full text-left px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out", form_class: "w-48", form: {"data-turbo" => "false"} %>
-                  <%= link_to "登录意味着你同意用户协议和隐私政策", "/welcome/agreement", class: "block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out", role: "menuitem" %>
+                  <%= button_to "Github 登录", user_github_omniauth_authorize_path, method: :post, data: {disable_with: "登录中..."}, class: "cursor-pointer block bg-white w-full text-left px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out", form_class: "w-48", form: {"data-turbo" => "false"} %>
                   <%= link_to "About", "/about/index", class: "block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out", role: "menuitem" %>
                 <% end %>
               </div>
