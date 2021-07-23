@@ -1,0 +1,4 @@
+<h1>Demo#cache</h1>
+<% cache 'word-of-the-hour', expires_in: 2.seconds do %>
+  <%= %w(happy developer watch me).sample %>
+<% end %>

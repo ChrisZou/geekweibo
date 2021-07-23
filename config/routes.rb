@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'demo/cache'
   namespace :admin do
       resources :users
       resources :tweets
