@@ -27,16 +27,16 @@ install_plugin Capistrano::SCM::Git
 #   https://github.com/capistrano/passenger
 #
 require "capistrano/rvm"
+
 # require "capistrano/rbenv"
 # require "capistrano/chruby"
 require "capistrano/bundler"
 require "capistrano/rails"
-require 'capistrano/puma'
+require "capistrano/puma"
 install_plugin Capistrano::Puma
-install_plugin Capistrano::Puma::Systemd  # if you use SystemD 
-
+install_plugin Capistrano::Puma::Systemd # if you use SystemD
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
 Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }
 
-require 'capistrano/honeybadger'
+# require 'capistrano/honeybadger'
