@@ -9,7 +9,7 @@ set :pty, true
 
 set :user, "chris"
 set :puma_workers, 0
-set :puma_bind, "unix:///var/run/rails.#{fetch(:application)}.sock"
+set :puma_bind, "unix:///var/www/geekweibo/shared/tmp/sockets/#{fetch(:application)}.sock"
 set :puma_state, "#{shared_path}/tmp/pids/puma.state"
 set :puma_pid, "#{shared_path}/tmp/pids/puma.pid"
 set :puma_access_log, "#{release_path}/log/puma.error.log"
