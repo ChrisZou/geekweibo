@@ -9,6 +9,7 @@
 
 server '121.199.53.242', user: 'chris', roles: %w[app db web]
 
+set :rvm_ruby_version, '2.7.2'
 
 # role-based syntax
 # ==================
